@@ -1,0 +1,34 @@
+<!--
+  sidebar panel
+-->
+<div class="off-canvas-overlay" ng-click="main.toggleMenu()"></div>
+<div class="sidebar-panel" ng-include="'views/common/sidebar-panel.html'" menu-panel show="main.menu"></div>
+<!-- /sidebar panel -->
+<!-- content panel -->
+<div class="main-panel">
+  <!-- top header -->
+  <nav class="header navbar">
+    <div ng-include="'views/common/header.html'"></div>
+  </nav>
+  <!-- /top header -->
+
+  <!-- horizontal menu header -->
+  <!--nav class="header-secondary navbar bg-faded shadow" ng-include="'views/common/secondary-header.html'"></nav-->
+  <!-- /horizontal menu header -->
+
+  <!-- main area -->
+  <div class="main-content">
+    <div class="content-view" ui-view></div>
+    <!-- bottom footer -->
+    <div class="content-footer" ng-include="'views/common/footer.html'"></div>
+    <!-- /bottom footer -->
+  </div>
+  <!-- /main area -->
+</div>
+<!-- /content panel -->
+<!-- options panel -->
+<div class="configuration layout-column flex hidden-sm-down" ng-include="'views/common/options.html'" ng-class="{'active': main.app.options}"></div>
+<!-- /options panel -->
+<!-- chat -->
+<div class="chat-panel" ng-class="{'conversation-open': app.layout.isConversationOpen}" ng-include="'views/common/chat-panel.html'"></div>
+<!-- /chat -->

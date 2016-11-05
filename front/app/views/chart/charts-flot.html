@@ -1,0 +1,13 @@
+<div class="row" data-ng-controller="FlotCtrl as flot">
+  <div class="{{ option.colsize }}" ng-repeat='option in flot.options'>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        {{ option.label }}
+      </div>
+      <div class="card-block">
+        <flot dataset="option.data" options="option.options" class="chart" height="250">
+        </flot>
+      </div>
+    </div>
+  </div>
+</div>

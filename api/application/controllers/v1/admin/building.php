@@ -7,6 +7,7 @@ class building extends admin {
     function __construct() {
         parent::__construct();
         parent::checktoken();
+        $this->load->model('v1/admin/building_model'); 
     }
 
     public function all() {

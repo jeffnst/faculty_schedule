@@ -1,0 +1,27 @@
+<div data-ng-controller="CalendarCtrl as calendar">
+  <button type="button" class="btn btn-primary btn-float shadow" ng-click="calendar.open()">
+    <i class="material-icons">create</i>
+  </button>
+  <div ui-calendar="calendar.uiConfig.calendar" class="fullcalendar" calendar="calendar.myCalendar" ng-model="calendar.eventSources">
+  </div>
+  <script type="text/ng-template" id="calendarModal.html">
+      <div class="modal-header">
+        <h6 class="modal-title">Events</h6>
+      </div>
+      <div class="modal-body">
+        <ul class="external-events p-a">
+          <li ng-repeat="e in calevents.events">
+            <div class="external-event">
+              <input ng-model="e.title" class="form-control no-border no-bg text-{{e.listColor}}">
+              <small>{{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}</small>
+              <a class="small remove" ng-click="remove($index)">Remove</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" ng-click="calevents.ok()">OK</button>
+        <button class="btn btn-warning btn-sm" ng-click="calevents.cancel()">Cancel</button>
+      </div>
+    </script>
+</div>

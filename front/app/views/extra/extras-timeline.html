@@ -1,0 +1,113 @@
+<div class="text-xs-center m-b-2">
+  <div class="btn-group btn-group-sm" role="group" aria-label="Orientation">
+    <button type="button" class="btn btn-default" ng-class="{'active': !stacked}" ng-click="stacked = false">
+      Centered
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{'active': stacked}" ng-click="stacked = true">
+      Stacked
+    </button>
+  </div>
+</div>
+<div class="timeline" ng-class="{'stacked': stacked}">
+  <div class="timeline-card">
+    <div class="timeline-icon bg-danger text-white">
+      <i class="material-icons">
+        notifications
+      </i>
+    </div>
+    <section class="timeline-content">
+      <div class="timeline-body">
+        <div class="timeline-heading">
+          Message from Rachael
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum.
+        </p>
+        <a href="javascript:;" class="btn btn-primary btn-sm">
+          Read more
+        </a>
+      </div>
+      <div class="timeline-date">
+        13:12 am
+      </div>
+    </section>
+  </div>
+  <div class="timeline-card">
+    <div class="timeline-icon bg-info text-white">
+      <i class="material-icons">
+        person
+      </i>
+    </div>
+    <section class="timeline-content">
+      <div class="timeline-body">
+        <p>
+          Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+        </p>
+      </div>
+      <div class="timeline-date">
+        13:12 am
+      </div>
+    </section>
+  </div>
+  <div class="timeline-card">
+    <div class="timeline-icon bg-primary text-white">
+      <i class="material-icons">
+        explore
+      </i>
+    </div>
+    <section class="timeline-content">
+      <div class="timeline-body">
+        <a href="javascript:;">
+          Jane Doe
+        </a>
+        <p class="m-a-0">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+      <div class="timeline-date">
+        13:12 am
+      </div>
+    </section>
+  </div>
+  <div class="timeline-card">
+    <div class="timeline-icon bg-warning text-white">
+      <i class="material-icons">
+        games
+      </i>
+    </div>
+    <section class="timeline-content">
+      <div class="timeline-body">
+        <p class="m-b-0">
+          3 more people joined your campaign.
+        </p>
+      </div>
+      <div class="timeline-date">
+        13:12 am
+      </div>
+    </section>
+  </div>
+  <div class="timeline-card">
+    <div class="timeline-icon bg-success text-white">
+      <i class="material-icons">
+        navigation
+      </i>
+    </div>
+    <section class="timeline-content">
+      <div class="timeline-body">
+        <p class="m-b-0">
+          Six new friend requests
+        </p>
+      </div>
+      <div class="timeline-date">
+        13:12 am
+      </div>
+    </section>
+  </div>
+  <div class="timeline-card">
+    <div class="timeline-icon bg-default">
+      <i class="material-icons">
+        local_library
+      </i>
+    </div>
+  </div>
+</div>

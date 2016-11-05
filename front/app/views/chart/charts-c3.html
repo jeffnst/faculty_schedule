@@ -1,0 +1,11 @@
+<div data-ng-controller="c3Ctrl as c3">
+  <div ng-repeat='option in c3.options' class="m-b-3">
+    <h6 class="m-b-1">
+      {{ option.label }}
+    </h6>
+    <div class="c3chart">
+      <ng-c3 chart-id="{{ option.id }}" series="option.series" options="option.options">
+      </ng-c3>
+    </div>
+  </div>
+</div>

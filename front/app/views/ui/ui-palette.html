@@ -1,0 +1,87 @@
+<div ng-controller="colorsCtrl as colors">
+  <h6 class="m-b-1">Brand color weights</h6>
+  <div class="color-brands row m-b-2">
+    <div ng-repeat='brand in colors.brands' class="col-lg-2 m-b-0">
+      <div class="text-capitalize title text-xs-center">
+        {{ brand }}
+      </div>
+      <div class="color-brand text-white">
+        <div class="bg-{{ brand }}-lighter">
+          10% lighter
+        </div>
+        <div class="bg-{{ brand }}-light">
+          5% lighter
+        </div>
+        <div class="bg-{{ brand }}">
+          base
+        </div>
+        <div class="bg-{{ brand }}-dark">
+          5% darker
+        </div>
+        <div class="bg-{{ brand }}-darker">
+          10% darker
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="m-b-1">Material color palette</h6>
+  <div class="color-brands row m-b-2">
+    <div ng-repeat='brand in colors.material' class="col-lg-2">
+      <div class="text-capitalize text-xs-center title">
+        {{ brand }}
+      </div>
+      <div class="color-brand text-white">
+        <div class="bg-{{ brand }}-lighter">
+          10% lighter
+        </div>
+        <div class="bg-{{ brand }}-light">
+          5% lighter
+        </div>
+        <div class="bg-{{ brand }}">
+          base
+        </div>
+        <div class="bg-{{ brand }}-dark">
+          5% darker
+        </div>
+        <div class="bg-{{ brand }}-darker">
+          10% darker
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="m-b-1">Text colors</h6>
+  <div class="row m-b-2">
+    <div class="col-md-6">
+      <p class="text-muted">
+        Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p class="text-primary">
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p class="text-success">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p class="text-info">
+        Maecenas sed diam eget risus varius blandit sit amet non magna.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p class="text-warning">
+        Etiam porta sem malesuada magna mollis euismod.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p class="text-danger">
+        Donec ullamcorper nulla non metus auctor fringilla.
+      </p>
+    </div>
+  </div>
+</div>

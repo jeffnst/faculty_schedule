@@ -76,3 +76,9 @@ $route['v1/admin/faculty/add'] = 'v1/admin/faculty/add';
 $route['v1/admin/faculty/get/(:any)'] = 'v1/admin/faculty/get';
 $route['v1/admin/faculty/delete/(:any)'] = 'v1/admin/faculty/delete';
 $route['v1/admin/faculty/put/(:any)'] = 'v1/admin/faculty/put';
+//admin major
+$route['v1/admin/major/all'] = 'v1/admin/major/all';
+$route['v1/admin/major/add'] = 'v1/admin/major/add';
+$route['v1/admin/major/get/(:any)'] = 'v1/admin/major/get';
+$route['v1/admin/major/delete/(:any)'] = 'v1/admin/major/delete';
+$route['v1/admin/major/put/(:any)'] = 'v1/admin/major/put';

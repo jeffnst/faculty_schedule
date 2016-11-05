@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-header no-bg b-a-0">
+    Base
+  </div>
+  <div class="card-block">
+    <p>
+      Stylize the HTML5
+      <code>
+        progress
+      </code>
+      element with a few extra classes and some crafty browser-specific CSS. Be sure to read up on the browser support.
+    </p>
+    <uib-progressbar value="0" max="100">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="25" max="100">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="50" max="100">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="75" max="100">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="100" max="100">
+    </uib-progressbar>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header no-bg b-a-0">
+    Contextual alternatives
+  </div>
+  <div class="card-block">
+    <p>
+      Progress bars use some of the same button and alert classes for consistent styles.
+    </p>
+    <uib-progressbar value="0" max="100">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="25" max="100" type="info">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="50" max="100" type="success">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="75" max="100" type="warning">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="100" max="100" type="danger">
+    </uib-progressbar>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header no-bg b-a-0">
+    Striped
+  </div>
+  <div class="card-block">
+    <p>
+      Uses a gradient to create a striped effect.
+    </p>
+    <uib-progressbar value="0" max="100" class="progress-striped">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="25" max="100" type="info" class="progress-striped">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="50" max="100" type="success" class="progress-striped">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="75" max="100" type="warning" class="progress-striped">
+    </uib-progressbar>
+    <br/>
+    <uib-progressbar value="100" max="100" type="danger" class="progress-striped">
+    </uib-progressbar>
+  </div>
+</div>
+<script id="uib/template/progressbar/progressbar.html" type="text/ng-template">
+<progress class="progress" ng-class="'progress-' + type">{{(percent < 100 ? percent : 100) + '%'}}</progress>
+</script>

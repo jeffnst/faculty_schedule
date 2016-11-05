@@ -1,0 +1,25 @@
+<!-- content panel -->
+<div class="main-panel">
+  <!-- top header -->
+  <nav class="header navbar">
+    <div ng-include="'views/common/horizontal/header.html'"></div>
+  </nav>
+  <!-- /top header -->
+
+  <!-- horizontal menu header -->
+  <div class="header-secondary navbar bg-faded shadow" ng-include="'views/common/horizontal/headernav.html'" menu-panel show="main.menu"></div>
+  <!-- /horizontal menu header -->
+
+  <!-- main area -->
+  <div class="main-content">
+    <div class="content-view" ui-view></div>
+    <!-- bottom footer -->
+    <div class="content-footer" ng-include="'views/common/footer.html'"></div>
+    <!-- /bottom footer -->
+  </div>
+  <!-- /main area -->
+</div>
+<!-- /content panel -->
+<!-- chat -->
+<div class="chat-panel" ng-class="{'conversation-open': app.layout.isConversationOpen}" ng-include="'views/common/chat-panel.html'"></div>
+<!-- /chat -->

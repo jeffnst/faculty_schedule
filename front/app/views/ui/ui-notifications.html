@@ -1,0 +1,63 @@
+<div class="card-deck-wrapper" data-ng-controller="NotificationsCtrl as notifications">
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Alerts
+      </div>
+      <div class="card-block">
+        <p>
+          Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+        </p>
+        <uib-alert close="closeAlert($index)" ng-repeat="alert in notifications.alerts" type="{{ alert.type }}">
+          {{ alert.msg }}
+        </uib-alert>
+        <button class="btn btn-default btn-sm" ng-click="notifications.addAlert()">
+          Add Alert
+        </button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Toast notifications
+      </div>
+      <div class="card-block">
+        <div class="controls m-r-2">
+          <label class="control-label" for="message">
+            Message
+          </label>
+          <textarea class="form-control m-b-1" id="message" placeholder="Enter a message ..." rows="2"></textarea>
+          <label class="control-label" for="messenger-type">
+            Type
+          </label>
+          <div class="m-b-1">
+            <select class="custom-select" id="messenger-type" style="width: 100%;">
+              <option>Information</option>
+              <option>Success</option>
+              <option>Error</option>
+              <option>Warning</option>
+              <option>Confirm</option>
+            </select>
+          </div>
+          <label class="control-label" for="position">
+            Position
+          </label>
+          <div class="m-b-1">
+            <select class="custom-select" id="position" style="width: 100%;">
+              <option value="topRight">Top right</option>
+              <option value="topLeft">Top left</option>
+              <option value="top">Top</option>
+              <option value="bottomLeft">Bottom left</option>
+              <option value="bottom">Bottom</option>
+              <option value="bottomRight">Bottom right</option>
+            </select>
+          </div>
+          <a class="btn btn-primary btn-sm" data-ng-click="notifications.showNoty()" href="javascript:;">
+            <span>
+              Show me
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

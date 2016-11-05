@@ -1,0 +1,42 @@
+<div data-ng-controller="easyChartCtrl as easypie">
+  <div class="card-group">
+    <div class="card" ng-repeat='option in easypie.options' easypiesize>
+      <div class="card-header no-bg b-a-0 text-xs-center">
+        {{ option.label }}
+      </div>
+      <div class="card-block p-y-3">
+        <div class="piechart">
+          <div easypiechart options="option.data" percent="option.percent">
+            <div>
+              <div class="percent h1">
+              </div>
+              <small>
+                {{ option.label }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-group">
+    <div class="card" ng-repeat='option in easypie.options2' easypiesize>
+      <div class="card-header no-bg b-a-0 text-xs-center">
+        {{ option.label }}
+      </div>
+      <div class="card-block p-y-3">
+        <div class="piechart">
+          <div easypiechart options="option.data" percent="option.percent">
+            <div>
+              <div class="percent h1">
+              </div>
+              <small>
+                {{ option.label }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

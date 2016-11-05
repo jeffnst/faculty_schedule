@@ -2,11 +2,12 @@
 
 include 'admin.php';
 
-class room extends admin {
+class major extends admin {
 
     function __construct() {
         parent::__construct();
         parent::checktoken();
+        $this->load->model('v1/admin/major_model');
     }
 
     public function all() {
@@ -30,19 +31,19 @@ class room extends admin {
     }
 
 //Custom Function
-    private function _get_building_option() {
-        $get_building = $this->room_model->get_building_option();
-        return $get_building;
+    private function _get_faculty_option() {
+        $get_faculty = $this->major_model->get_faculty_option();
+        return $get_faculty;
     }
 
 //PRIVATE FUNCTION
 
     private function _all() {
         try {
-            $get_all_room = $this->room_model->all();
-            $get_building_option = $this->_get_building_option();
-            if ($get_all_room ['response'] == OK_STATUS) {
-                $data = array("rooms" => $get_all_room['data'], "building_option" => $get_building_option['data']);
+            $get_all_major = $this->major_model->all();
+            $get_faculty_option = $this->_get_faculty_option();
+            if ($get_all_major ['response'] == OK_STATUS) {
+                $data = array("majors" => $get_all_major['data'], "faculty_option" => $get_faculty_option['data']);
                 $data = get_success($data);
             } else {
                 $data = response_fail();
@@ -59,10 +60,10 @@ class room extends admin {
             if ($datas != "") {
                 $params = new stdClass();
                 $params->name = $datas->name;
-                $params->building_seq = $datas->building_seq;
+                $params->faculty_seq = $datas->faculty_seq;
                 $params->description = $datas->description;
-                $addbuilding = $this->room_model->add($params);
-                if ($addbuilding['response'] == OK_STATUS) {
+                $addfaculty = $this->major_model->add($params);
+                if ($addfaculty['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
@@ -80,8 +81,8 @@ class room extends admin {
         try {
             $seq = $this->uri->segment(5);
             if ($seq != "") {
-                $addbuilding = $this->room_model->delete($seq);
-                if ($addbuilding['response'] == OK_STATUS) {
+                $addfaculty = $this->major_model->delete($seq);
+                if ($addfaculty['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
@@ -99,9 +100,9 @@ class room extends admin {
         try {
             $seq = $this->uri->segment(5);
             if ($seq != "") {
-                $getbuilding = $this->room_model->get($seq);
-                if ($getbuilding['response'] == OK_STATUS) {
-                    $data = get_success($getbuilding['data']);
+                $getfaculty = $this->major_model->get($seq);
+                if ($getfaculty['response'] == OK_STATUS) {
+                    $data = get_success($getfaculty['data']);
                 } else {
                     $data = response_fail();
                 }
@@ -123,10 +124,10 @@ class room extends admin {
                 $params = new stdClass();
                 $params->name = $datas->name;
                 $params->description = $datas->description;
-                $params->building_seq = $datas->building_seq;
+                $params->faculty_seq = $datas->faculty_seq;
                 $params->seq = $seq;
-                $putbuilding = $this->room_model->put($params);
-                if ($putbuilding['response'] == OK_STATUS) {
+                $putfaculty = $this->major_model->put($params);
+                if ($putfaculty['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();

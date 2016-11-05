@@ -7,6 +7,7 @@ class room extends admin {
     function __construct() {
         parent::__construct();
         parent::checktoken();
+        $this->load->model('v1/admin/room_model');   
     }
 
     public function all() {

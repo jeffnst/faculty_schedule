@@ -73,6 +73,7 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
                     templateUrl: viewsPrefix + 'admin/detail-gedung.html',
                     controller: 'AdminBuildingController',
                 })
+//                ADMIN RUANGAN
                 .state('admin.ruangan', {
                     url: '/ruangan',
                     templateUrl: viewsPrefix + 'admin/ruangan.html',
@@ -89,10 +90,22 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
 
                 // ADMIN FAKULTAS
                 .state('admin.fakultas', {
-                    url: '/fakultas',                    
+                    url: '/fakultas',
                     templateUrl: viewsPrefix + 'admin/fakultas.html',
-                    controller : 'AdminFacultyController',
+                    controller: 'AdminFacultyController',
                 })
-        $urlRouterProvider.otherwise("/front/404")
+                //ADMIN JURUSAN
+                .state('admin.jurusan', {
+                    url: '/jurusan',
+                    templateUrl: viewsPrefix + 'admin/jurusan.html',                   
+                    controller: 'AdminMajorController',
+                })
+                
+                .state('admin.matakuliah', {
+                    url: '/matakuliah',
+                    templateUrl: viewsPrefix + 'admin/matakuliah.html',                   
+                    controller: 'AdminCourseController',
+                })
+        $urlRouterProvider.otherwise("/front/login-admin")
     })])
 

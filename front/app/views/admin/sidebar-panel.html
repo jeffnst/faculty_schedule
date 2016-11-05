@@ -1,0 +1,141 @@
+<div class="brand">
+    <!-- toggle offscreen menu -->
+    <a href="javascript:;" ng-click="main.toggleMenu()" class="toggle-offscreen hidden-lg-up">
+        <i class="material-icons">menu</i>
+    </a>
+    <!-- /toggle offscreen menu -->
+    <!-- logo -->
+
+    <a class="brand-logo">
+        <!--<img class="expanding-hidden" src="images/logo.png" alt=""/>-->
+        <h5><b>{{main.app.name}}</b></h5>
+    </a>
+</div>
+<div class="nav-profile">
+    <a href="javascript:;" class="dropdown-toggle">
+        <div class="user-image">
+            <img data-ng-src="{{ main.user.avatar}}" class="avatar img-circle" alt="user" title="user"/>
+        </div>
+        <div class="user-info expanding-hidden">
+            {{ main.user.fname}} {{ main.user.lname}}
+            <small class="bold">Administrator</small>
+        </div>
+    </a>
+    <!--  <div class="dropdown-menu" uib-dropdown-menu>
+        <a class="dropdown-item" href="javascript:;">Settings</a>
+        <a class="dropdown-item" href="javascript:;">Upgrade</a>
+        <a class="dropdown-item" href="javascript:;">
+          <span>Notifications</span>
+          <span class="tag bg-primary">34</span>
+        </a>
+        <div class="dropdown-divider">
+        </div>
+        <a class="dropdown-item" href="javascript:;">Help</a>
+        <a class="dropdown-item" ui-sref="user.signin">Logout</a>
+      </div>-->
+</div>
+<!-- main navigation -->
+<nav role="navigation" side-navigation>
+    <p class="nav-title">NAVIGATION</p>
+    <ul class="nav">
+        <!-- dashboard -->
+        <li>
+            <a ui-sref="admin.dashboard">        
+                <!--<i class="material-icons text-danger">account ballance</i>-->
+                <i class="fa fa-2x fa-dashboard text-primary"></i>&nbsp;&nbsp;&nbsp;
+                <span>Beranda</span>
+            </a>            
+        </li>
+        <li>
+            <a href="javascript:;">                
+                <span class="menu-caret">
+                    <i class="material-icons">arrow_drop_down</i>
+                </span>
+
+                <i class="fa fa-2x fa-home text-success"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Gedung</span>
+
+            </a>            
+            <ul class="sub-menu">            
+                <li>
+                    <a ui-sref="admin.gedung">                                
+                        <i class="fa fa-square fa-lg text-success"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Gedung</span>
+                    </a>   
+                </li>
+                <li>
+                    <a ui-sref="admin.ruangan">                                
+                        <i class="fa fa-square fa-lg text-success"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Ruangan</span>
+                    </a>   
+                </li>
+            </ul>
+        </li>                        
+        <li>            
+            <a href="javascript:;">                        
+                <span class="menu-caret">
+                    <i class="material-icons">arrow_drop_down</i>
+                </span>
+                <i class="fa fa-2x fa-book text-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Fakultas</span>
+            </a>  
+            <ul class="sub-menu">                
+                <li>
+                    <a href="#" ui-sref="admin.fakultas">        
+                        <i class="fa fa-square fa-lg text-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Fakultas</span>
+                    </a>            
+                </li>
+                <li>
+                    <a href="#" ui-sref="admin.jurusan">        
+                        <i class="fa fa-square fa-lg text-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Jurusan</span>
+                    </a>            
+                </li>               
+                <li>
+                    <a href="javascript:;">        
+                        <i class="fa fa-square fa-lg text-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Mata Kuliah</span>
+                    </a>            
+                </li>
+                <li>
+                    <a href="javascript:;">        
+                        <i class="fa fa-square fa-lg text-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Dosen</span>
+                    </a>            
+                </li>
+            </ul>
+        </li>               
+        <li>            
+            <a href="javascript:;">                        
+                <span class="menu-caret">
+                    <i class="material-icons">arrow_drop_down</i>
+                </span>
+                <i class="fa fa-2x fa-clock-o text-danger"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Periode</span>
+            </a>  
+            <ul class="sub-menu">                
+                <li>
+                    <a href="javascript:;">        
+                        <i class="fa fa-square fa-lg text-danger"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Semester</span>
+                    </a>            
+                </li>
+                <li>
+                    <a href="javascript:;">        
+                        <i class="fa fa-square fa-lg text-danger"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Hari</span>
+                    </a>            
+                </li>
+                <li>
+                    <a href="javascript:;">        
+                        <i class="fa fa-square fa-lg text-danger"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Jam</span>
+                    </a>            
+                </li>                
+            </ul>
+        </li>               
+    </ul>
+
+</nav>
+<!-- /main navigation -->

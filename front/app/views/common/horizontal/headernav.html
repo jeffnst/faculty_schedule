@@ -1,0 +1,149 @@
+<div class="navbar-collapse">
+  <a class="navbar-heading hidden-md-down" href="javascript:;">
+    <span>{{ $state.current.title }}</span>
+  </a>
+  <ul class="nav navbar-nav pull-xs-right">
+    <li class="nav-item active">
+      <a class="nav-link" href="#/">Home</a>
+    </li>
+
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>Apps</a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" ui-sref="app.apps.calendar">Calendar</a>
+        <a class="dropdown-item" ui-sref="app.apps.media">Media</a>
+        <a class="dropdown-item" ui-sref="app.apps.messages">Messages</a>
+        <a class="dropdown-item" ui-sref="app.apps.social">Social</a>
+        <a class="dropdown-item" ui-sref="app.apps.contacts">People</a>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown mega-dropdown" uib-dropdown>
+      <a href="#" class="dropdown-toggle" uib-dropdown-toggle>Mega</a>
+      <div class="dropdown-menu" uib-dropdown-menu>  
+        <div class="row"> 
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Link header</h6>
+            <a href="#" class="dropdown-item">Link item</a>
+            <a href="#" class="dropdown-item dropdown-disabled">Link item</a>
+            <a href="#" class="dropdown-item">Link item</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Link header</h6>
+            <a href="#" class="dropdown-item">Link item</a>
+            <a href="#" class="dropdown-item dropdown-disabled">Link item</a>
+            <a href="#" class="dropdown-item">Link item</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Link header</h6>
+            <a href="#" class="dropdown-item">Link item</a>
+            <a href="#" class="dropdown-item dropdown-disabled">Link item</a>
+            <a href="#" class="dropdown-item">Link item</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Link header</h6>
+            <a href="#" class="dropdown-item">Link item</a>
+            <a href="#" class="dropdown-item dropdown-disabled">Link item</a>
+            <a href="#" class="dropdown-item">Link item</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown mega-dropdown" uib-dropdown>
+      <a href="#" class="dropdown-toggle" uib-dropdown-toggle>Components</a>
+      <div class="dropdown-menu" uib-dropdown-menu>  
+        <div class="row"> 
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Elements</h6>
+            <a class="dropdown-item" ui-sref="app.ui.buttons">Buttons</a>
+            <a class="dropdown-item" ui-sref="app.ui.social-buttons">Social buttons</a>
+            <a class="dropdown-item" ui-sref="app.ui.directives">General</a>
+            <a class="dropdown-item" ui-sref="app.ui.navs">Navs</a>
+            <a class="dropdown-item" ui-sref="app.ui.progressbars">Progress bars</a>
+            <a class="dropdown-item" ui-sref="app.ui.pagination">Pagination</a>
+            <a class="dropdown-item" ui-sref="app.ui.sliders">Sliders</a>
+            <a class="dropdown-item" ui-sref="app.ui.notifications">Notifications</a>
+            <a class="dropdown-item" ui-sref="app.ui.spinners">Spinners</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Cards</h6>
+            <a class="dropdown-item" ui-sref="app.ui.cards.basic">Basic</a>
+            <a class="dropdown-item" ui-sref="app.ui.cards.portlets">Portlets</a>
+            <a class="dropdown-item" ui-sref="app.ui.cards.draggable">Draggable</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Forms</h6>
+            <a class="dropdown-item" ui-sref="app.ui.forms.native">Basic</a>
+            <a class="dropdown-item" ui-sref="app.ui.forms.plugins">Plugins</a>
+            <a class="dropdown-item" ui-sref="app.ui.forms.editors">Editors</a>
+            <a class="dropdown-item" ui-sref="app.ui.forms.validation">Validation</a>
+            <a class="dropdown-item" ui-sref="app.ui.forms.masks">Masks</a>
+            <a class="dropdown-item" ui-sref="app.ui.forms.upload">Upload</a>
+          </div>
+          <div class="col-sm-3">
+            <h6 class="dropdown-header">Tables</h6>
+            <a class="dropdown-item" ui-sref="app.ui.tables.basic">Basic</a>
+            <a class="dropdown-item" ui-sref="app.ui.tables.responsive">Responsive</a>
+            <a class="dropdown-item" ui-sref="app.ui.tables.datatable">Datatables</a>
+            <a class="dropdown-item" ui-sref="app.ui.tables.xeditable">xeditable</a>
+            <a class="dropdown-item" ui-sref="app.ui.tables.ngtable">ngTable</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>Charts</a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" ui-sref="app.charts.flot">Flot</a>
+        <a class="dropdown-item" ui-sref="app.charts.easypie">Easypie</a>
+        <a class="dropdown-item" ui-sref="app.charts.chartjs">ChartJS</a>
+        <a class="dropdown-item" ui-sref="app.charts.rickshaw">Rickshaw</a>
+        <a class="dropdown-item" ui-sref="app.charts.c3">C3js</a>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>Maps</a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" ui-sref="app.maps.google">Google</a>
+        <a class="dropdown-item" ui-sref="app.maps.googlefull">Google fullscrenn</a>
+        <a class="dropdown-item" ui-sref="app.maps.vector">Vector</a>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>Extras</a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" ui-sref="app.extras.invoice">Invoice</a>
+        <a class="dropdown-item" ui-sref="app.extras.timeline">Timeline</a>
+        <a class="dropdown-item" ui-sref="app.extras.lists">Lists</a>
+        <a class="dropdown-item" ui-sref="user.signin">Signin</a>
+        <a class="dropdown-item" ui-sref="user.timeline">Signup</a>
+        <a class="dropdown-item" ui-sref="user.forgot">Forgot password</a>
+        <a class="dropdown-item" ui-sref="user.lockscreen">Lockscreen</a>
+        <a class="dropdown-item" ui-sref="user.404">404 Page</a>
+        <a class="dropdown-item" ui-sref="user.500">500 Page</a>
+        <a class="dropdown-item" ui-sref="app.extras.starter">Starter page</a>
+      </div>
+    </div>
+
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>
+        External
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" href="javascript:;">
+          Frontend
+        </a>
+        <a class="dropdown-item" href="javascript:;">
+          Documentation
+        </a>
+        <a class="dropdown-item" href="javascript:;">
+          Jquery version
+        </a>
+      </div>
+    </div>
+  </ul>
+</div>

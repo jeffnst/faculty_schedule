@@ -1,0 +1,77 @@
+<div data-ng-controller="chartjsCtrl as chartjs">
+  <div class="card-group text-xs-center m-b-1">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Bar chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="bar" class="chart chart-bar" chart-data="chartjs.barData" chart-options="{ scaleShowGridLines: false, barShowStroke: false }" chart-labels="chartjs.barLabels" chart-series="chartjs.barSeries">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Line chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="line" class="chart chart-line" chart-data="chartjs.lineData" chart-options="{ scaleShowGridLines: false, bezierCurve: false, pointDotRadius: 2, datasetStrokeWidth: 1, }" chart-labels="chartjs.lineLabels" chart-legend="true" chart-series="chartjs.lineSeries">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-group text-xs-center m-b-1">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Doughnut Chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="chartjs.doughnutData" chart-options="{percentageInnerCutout: 60}" chart-labels="chartjs.doughnutLabels">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Radar chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="radar" class="chart chart-radar" chart-data="chartjs.radarData" chart-labels="chartjs.radarLabels">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-group text-xs-center">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Pie chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="pie" class="chart chart-pie" chart-data="chartjs.pieData" chart-labels="chartjs.pieLabels">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Polar Area chart
+      </div>
+      <div class="card-block">
+        <div class="canvas-holder">
+          <canvas id="polar-area" class="chart chart-polar-area" chart-data="chartjs.polarData" chart-labels="chartjs.polarLabels">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

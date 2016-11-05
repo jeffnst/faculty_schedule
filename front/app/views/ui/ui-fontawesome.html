@@ -1,0 +1,20 @@
+<div class="fontawesome-list" data-ng-controller="iconsCtrl as fawesome">
+  <div class="col-sm-6 offset-sm-3 m-b-1">
+    <h6 class="text-xs-center">
+      Font Awesome gives you scalable vector icons that can instantly be customized — size, color, drop shadow, and anything that can be done with the power of CSS.
+    </h6>
+  </div>
+  <input type="text" class="form-control m-b-1 brlg" ng-model="query" placeholder="Search icons"/>
+  <div class="card" ng-repeat="icons in fawesome.iconsList.icons">
+    <div class="card-header no-bg b-a-0">
+      {{ icons.title }}
+    </div>
+    <div class="row card-block fontawesome-icon-list">
+      <div class="fa-hover col-md-3 col-sm-4" ng-repeat="icon in icons.ficons | filter:query">
+        <i class="fa {{ icon }}" aria-hidden="true">
+        </i>
+        {{ icon }}
+      </div>
+    </div>
+  </div>
+</div>

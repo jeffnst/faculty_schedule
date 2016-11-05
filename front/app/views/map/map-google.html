@@ -1,0 +1,59 @@
+<div ng-controller="mapCtrl as google">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header no-bg b-a-0">
+          Base map
+        </div>
+        <div class="card-block">
+          <div ui-map="google.baseMap" ui-options="google.baseOptions" style="min-height: 300px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header no-bg b-a-0">
+          Styled maps
+        </div>
+        <div class="card-block">
+          <div ui-map="google.styleMap" ui-options="google.styleMapOptions" style="min-height: 300px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header no-bg b-a-0">
+          Satellite maps
+        </div>
+        <div class="card-block">
+          <div ui-map="google.satelliteMap" ui-options="google.satelliteMapOptions" style="min-height: 300px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header no-bg b-a-0">
+          Directions
+        </div>
+        <div class="card-block">
+          <div ui-map="google.directionsMap" ui-options="google.directionsMapOptions" ui-event="{'map-idle': 'google.loadDirections()'}" style="min-height: 300px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header no-bg b-a-0">
+          Markers
+        </div>
+        <div class="card-block">
+          <div ui-map="google.markersMap" ui-options="google.markersMapOptions" ui-event="{'map-idle': 'google.loadMarkers()'}" style="min-height: 300px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

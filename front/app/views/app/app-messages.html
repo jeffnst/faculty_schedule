@@ -1,0 +1,179 @@
+<div class="fill-container layout-xs b-b" data-ng-controller="MessagesCtrl as msg">
+  <div class="layout-column-xs">
+    <div class="row m-x-0 fill-container">
+      <div class="col-lg-6 p-a-0 hidden-md-down messages-sidebar b-r scroll-y flexbox-xs full-height">
+        <div class="p-a-1">
+          <nav>
+            <a href="javascript:;" class="btn btn-primary btn-icon m-b-1">
+              <i class="material-icons">create</i>
+              Compose
+            </a>
+            <ul class="nav nav-pills nav-stacked m-b-1">
+              <li class="nav-item disabled text-uppercase small">
+                <a class="nav-link" href="javascript:;">
+                  <strong>
+                    mailboxes
+                  </strong>
+                </a>
+              </li>
+              <li class="nav-item" data-ng-repeat="folder in msg.folders">
+                <a class="nav-link" href="javascript:;">
+                  <div ng-if="folder.value" class="tag bg-danger pull-right">
+                    {{ folder.value }}
+                  </div>
+                  {{ folder.name }}
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-stacked nav-pills">
+              <li class="nav-item disabled text-uppercase small">
+                <a class="nav-link" href="javascript:;">
+                  <strong>
+                    Filter by Tags
+                  </strong>
+                </a>
+              </li>
+              <li class="nav-item" data-ng-click="msg.setCurrentTag(null)">
+                <a class="nav-link" href="javascript:;">
+                  <span>
+                    All tags
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item" data-ng-repeat="tag in msg.tags" data-ng-class="{'active':msg.isCurrentTag(tag)}">
+                <a class="nav-link text-{{ tag.color }}" href="javascript:;" data-ng-click="msg.setCurrentTag(tag)">
+                  <span>
+                    {{ tag.name }}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-lg-6 p-a-0 messages-list bg-white b-r flexbox-xs layout-column-xs full-height">
+        <div class="message-header">
+          <div class="message-toolbar">
+            <form class="form-inline">
+              <input class="form-control" type="text" placeholder="Search messages"/>
+            </form>
+          </div>
+        </div>
+        <div class="flex-xs scroll-y">
+          <ul class="message-list">
+            <li class="message-list-item" ng-repeat="message in filteredMessages = ( msg.messages | filter:{tag:msg.currentTag.name})">
+              <a href="javascript:;" class="b-b" data-ng-click="msg.setCurrentMessage(message.id);main.app.isMessageOpen = true">
+                <img data-ng-src="{{ message.avatar }}" class="avatar avatar-sm img-circle pull-left m-r-1" alt/>
+                <div class="message-list-item-header">
+                  <div class="time">
+                    {{ message.date | date: 'dd MMMM yyyy' }}
+                  </div>
+                  <span class="bold">
+                    {{ message.from }}
+                  </span>
+                </div>
+                <p class="overflow-hidden">
+                  {{ message.subject }} &hellip;
+                </p>
+              </a>
+            </li>
+            <li class="message-list-item" ng-hide="filteredMessages.length">
+              <a href="javascript:;">
+                <div class="message-list-item-header">
+                  <span>
+                    Nothing to display
+                  </span>
+                </div>
+                <p>
+                  You don't have any messages to view
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flexbox-xs layout-column-xs message-view">
+    <div class="message-header" ng-if="msg.currentMessage">
+      <div class="message-toolbar">
+        <div class="pull-right">
+          <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Reply to sender">
+            <i class="material-icons">
+              reply
+            </i>
+          </a>
+          <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Reply to all recipients">
+            <i class="material-icons">
+              reply_all
+            </i>
+          </a>
+          <a href="javascript:;" class="m-l-1" tooltip-placement="bottom" uib-tooltip="Forward message">
+            <i class="material-icons">
+              forward
+            </i>
+          </a>
+          <a href="javascript:;" class="m-l-1" tooltip-placement="left" uib-tooltip="Flag message">
+            <i class="material-icons">
+              flag
+            </i>
+          </a>
+        </div>
+        <a href="javascript:;" data-ng-click="main.app.isMessageOpen = false" class="hidden-lg-up">
+          <i class="material-icons m-r-1">
+            arrow_back
+          </i>
+        </a>
+      </div>
+    </div>
+    <div class="message-body flex-xs scroll-y" ng-if="msg.currentMessage">
+      <div class="p-a-1">
+        <div class="pull-left m-r-1" ng-if="msg.currentMessage">
+          <img data-ng-src="{{ msg.currentMessage.avatar }}" class="avatar avatar-md img-rounded" alt/>
+        </div>
+        <div class="overflow-hidden">
+          <div class="date">
+            {{ msg.currentMessage.date | date:'dd MMMM yyyy HH:mm:ss' }}
+          </div>
+          <h4 class="lead m-t-0">
+            {{ msg.currentMessage.subject }}
+          </h4>
+          <div class="message-sender">
+            <p>
+              <b>
+                {{ msg.currentMessage.from }}
+              </b>
+              to Jeff &amp; Suzzane
+            </p>
+          </div>
+        </div>
+      </div>
+      <div ng-bind-html="msg.currentMessage.body" class="p-a-1">
+      </div>
+      <div ng-if="msg.currentMessage.files" class="m-a-1">
+        <div class="bg-default rounded p-a-1">
+          <a href="javascript:;" class="btn btn-primary btn-sm btn-icon pull-right">
+            <i class="material-icons">
+              archive
+            </i>
+            <span>
+              Save files
+            </span>
+          </a>
+          <p ng-repeat="file in msg.currentMessage.files">
+            <a href="javascript:;" class="btn btn-sm btn-secondary btn-icon">
+              <i class="fa fa-file-{{ file.type }}-o">
+              </i>
+              <span>
+                {{ file.filename }} {{ file.size }}
+              </span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!msg.currentMessage" class="no-messages flexbox-xs full-height">
+      <div class="h3 text-shadow text-muted">No message selected</div>
+    </div>
+  </div>
+</div>

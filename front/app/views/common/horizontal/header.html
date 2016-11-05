@@ -1,0 +1,104 @@
+<div class="header-inner" ng-class="{'search-focus': main.searchFocus}">
+  <div class="navbar-item navbar-spacer-right brand">
+    <!-- toggle offscreen menu -->
+    <a href="javascript:;" ng-click="main.toggleMenu()" class="toggle-offscreen hidden-lg-up">
+      <i class="material-icons">menu</i>
+    </a>
+    <!-- /toggle offscreen menu -->
+    <!-- logo -->
+    <a class="brand-logo hidden-xs-down">
+      <img src="images/logo_white.png" alt="logo"/>
+    </a>
+    <!-- /logo -->
+  </div>
+  <div class="navbar-search navbar-item">
+    <form class="search-form">
+      <i class="material-icons">search</i>
+      <input class="form-control" type="text" placeholder="Search" ng-focus="main.focusOn()" ng-blur="main.focusOff()"/>
+    </form>
+  </div>
+  <div class="navbar-item nav navbar-nav">
+    <div class="nav-item nav-link uib-dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>
+        <span translate="LANGUAGE"></span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+        <a class="dropdown-item" href="javascript:;" ng-click="main.setLang('en_US')">English</a>
+        <a class="dropdown-item" href="javascript:;" ng-click="main.setLang('en_RU')">Russian</a>
+      </div>
+    </div>
+    
+    <div class="nav-item nav-link dropdown" uib-dropdown>
+      <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle>
+        <i class="material-icons">notifications</i>
+        <span class="label label-danger">4</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right notifications" uib-dropdown-menu>
+        <div class="dropdown-item">
+          <div class="notifications-wrapper">
+            <ul class="notifications-list">
+              <li>
+                <a href="javascript:;">
+                  <div class="notification-icon">
+                    <div class="circle-icon bg-success text-white">
+                      <i class="material-icons">arrow_upward</i>
+                    </div>
+                  </div>
+                  <div class="notification-message">
+                    <b>Sean</b>
+                    launched a new application
+                    <span class="time">2 seconds ago</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;">
+                  <div class="notification-icon">
+                    <div class="circle-icon bg-danger text-white">
+                      <i class="material-icons">check</i>
+                    </div>
+                  </div>
+                  <div class="notification-message">
+                    <b>Removed calendar</b>
+                    from app list
+                    <span class="time">4 hours ago</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;">
+                  <span class="notification-icon">
+                    <span class="circle-icon bg-info text-white">J</span>
+                  </span>
+                  <div class="notification-message">
+                    <b>Jack Hunt</b>
+                    has
+                    <b>joined</b>
+                    mailing list
+                    <span class="time">9 days ago</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;">
+                  <span class="notification-icon">
+                    <span class="circle-icon bg-primary text-white">C</span>
+                  </span>
+                  <div class="notification-message">
+                    <b>Conan Johns</b>
+                    created a new list
+                    <span class="time">9 days ago</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="notification-footer">Notifications</div>
+        </div>
+      </div>
+    </div>
+    <a href="javascript:;" class="nav-item nav-link nav-link-icon" ng-click="main.openChat()">
+      <i class="material-icons">chat_bubble</i>
+    </a>
+  </div>
+</div>

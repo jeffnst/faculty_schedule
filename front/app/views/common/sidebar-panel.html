@@ -1,0 +1,525 @@
+<div class="brand">
+  <!-- toggle offscreen menu -->
+  <a href="javascript:;" ng-click="main.toggleMenu()" class="toggle-offscreen hidden-lg-up">
+    <i class="material-icons">menu</i>
+  </a>
+  <!-- /toggle offscreen menu -->
+  <!-- logo -->
+  
+  <a class="brand-logo">
+    <!--<img class="expanding-hidden" src="images/logo.png" alt=""/>-->
+    <h5><b>{{main.app.name}}</b></h5>
+  </a>
+  
+  <!--a href="#" class="small-menu-visible brand-logo"><b>C</b></a-->
+  <!-- /logo -->
+</div>
+<div class="nav-profile">
+  <a href="javascript:;" class="dropdown-toggle">
+    <div class="user-image">
+      <img data-ng-src="{{ main.user.avatar }}" class="avatar img-circle" alt="user" title="user"/>
+    </div>
+    <div class="user-info expanding-hidden">
+      {{ main.user.fname }} {{ main.user.lname }}
+      <small class="bold">Administrator</small>
+    </div>
+  </a>
+<!--  <div class="dropdown-menu" uib-dropdown-menu>
+    <a class="dropdown-item" href="javascript:;">Settings</a>
+    <a class="dropdown-item" href="javascript:;">Upgrade</a>
+    <a class="dropdown-item" href="javascript:;">
+      <span>Notifications</span>
+      <span class="tag bg-primary">34</span>
+    </a>
+    <div class="dropdown-divider">
+    </div>
+    <a class="dropdown-item" href="javascript:;">Help</a>
+    <a class="dropdown-item" ui-sref="user.signin">Logout</a>
+  </div>-->
+</div>
+<!-- main navigation -->
+<nav role="navigation" side-navigation>
+  <p class="nav-title">NAVIGATION</p>
+  <ul class="nav">
+    <!-- dashboard -->
+    <li ui-sref-active="active">
+      <a ui-sref="app.dashboard">
+        <i class="material-icons text-primary">home</i>
+        <span translate="menu.DASHBOARD"></span>
+      </a>
+    </li>
+    <!-- /dashboard -->
+    <!-- apps -->
+    <li data-ng-class="{open: $state.includes('app.apps')}">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <i class="material-icons text-success">font_download</i>
+        <span class="badge bg-primary pull-right">08</span>
+        <span translate="menu.APPS"></span>
+      </a>
+      <ul class="sub-menu">
+        <li ui-sref-active="active">
+          <a ui-sref="app.apps.calendar">
+            <span translate="menu.CALENDAR"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.apps.media">
+            <span translate="menu.MEDIA"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.apps.messages">
+            <span translate="menu.MESSAGES"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.apps.social">
+            <span translate="menu.SOCIAL"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.apps.contacts">
+            <span translate="menu.CONTACTS"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- /apps -->
+    <!-- ui -->
+    <li data-ng-class="{open: $state.includes('app.ui')}">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <i class="material-icons text-danger">explore</i>
+        <span translate="menu.ELEMENTS"></span>
+      </a>
+      <ul class="sub-menu">
+        <!-- cards -->
+        <li data-ng-class="{open: $state.includes('app.ui.cards')}">
+          <a href="javascript:;">
+            <span class="menu-caret">
+              <i class="material-icons">arrow_drop_down</i></span>
+            <span translate="menu.CARDS"></span>
+          </a>
+          <ul class="sub-menu">
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.cards.basic"><span translate="menu.BASIC"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.cards.portlets"><span translate="menu.PORTLETS"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.cards.draggable"><span translate="menu.DRAGGABLE"></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /cards -->
+        <!-- forms -->
+        <li data-ng-class="{open: $state.includes('app.ui.forms')}">
+          <a href="javascript:;">
+            <span class="menu-caret">
+              <i class="material-icons">arrow_drop_down</i></span>
+            <span translate="menu.FORMS"></span>
+          </a>
+          <ul class="sub-menu">
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.native">
+                <span translate="menu.BASIC"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.plugins">
+                <span translate="menu.PLUGINS"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.editors">
+                <span translate="menu.EDITORS"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.validation">
+                <span translate="menu.VALIDATION"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.masks">
+                <span translate="menu.MASKS"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.upload">
+                <span translate="menu.UPLOAD"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.forms.wizard">
+                <span translate="menu.WIZARD"></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /forms -->
+        <!-- tables -->
+        <li data-ng-class="{open: $state.includes('app.ui.tables')}">
+          <a href="javascript:;">
+            <span class="menu-caret">
+              <i class="material-icons">arrow_drop_down</i></span>
+            <span translate="menu.TABLES"></span>
+          </a>
+          <ul class="sub-menu">
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.tables.basic">
+                <span translate="menu.BASIC"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.tables.responsive">
+                <span translate="menu.RESPONSIVE"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.tables.datatable">
+                <span translate="menu.DATATABLES"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.tables.xeditable">
+                <span translate="menu.XEDITABLE"></span>
+              </a>
+            </li>
+            <li ui-sref-active="active">
+              <a ui-sref="app.ui.tables.ngtable">
+                <span translate="menu.NGTABLE"></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /tables -->
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.buttons">
+            <span translate="menu.BUTTONS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.social-buttons">
+            <span translate="menu.SOCIALB"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.directives">
+            <span translate="menu.GENERAL"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.navs">
+            <span translate="menu.NAVS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.progressbars">
+            <span translate="menu.PROGRESS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.pagination">
+            <span translate="menu.PAGINATION"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.sliders">
+            <span translate="menu.SLIDERS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.notifications">
+            <span translate="menu.NOTIFICATIONS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.spinners">
+            <span translate="menu.SPINNERS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.alert">
+            <span translate="menu.ALERTS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.palette">
+            <span translate="menu.PALETTE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.material">
+            <span translate="menu.MATERIAL"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.ui.fontawesome">
+            <span translate="menu.FONTAWESOME"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- /ui -->
+    <!-- charts -->
+    <li data-ng-class="{open: $state.includes('app.charts')}">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <i class="material-icons text-warning">assessment</i>
+        <span translate="menu.CHARTS"></span>
+      </a>
+      <ul class="sub-menu">
+        <li ui-sref-active="active">
+          <a ui-sref="app.charts.flot">
+            <span translate="menu.FLOT"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.charts.easypie">
+            <span translate="menu.EASYPIE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.charts.chartjs">
+            <span translate="menu.CHARTJS"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.charts.rickshaw">
+            <span translate="menu.RICKSHAW"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.charts.c3">
+            <span translate="menu.C3JS"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- /charts -->
+  </ul>
+  <p class="nav-title">BONUS</p>
+  <ul class="nav">
+    <!-- maps -->
+    <li data-ng-class="{open: $state.includes('app.maps')}">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <i class="material-icons">beenhere</i>
+        <span translate="menu.MAPS"></span>
+      </a>
+      <ul class="sub-menu">
+        <li ui-sref-active="active">
+          <a ui-sref="app.maps.google">
+            <span translate="menu.GOOGLE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.maps.googlefull">
+            <span>Google fullscreen</span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.maps.vector">
+            <span translate="menu.VECTOR"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- /maps -->
+    <!-- extras -->
+    <li data-ng-class="{open: $state.includes('app.extras')}">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <span class="badge bg-danger pull-right">HOT</span>
+        <i class="material-icons">stars</i>
+        <span translate="menu.EXTRAS"></span>
+      </a>
+      <ul class="sub-menu">
+        <!-- emails -->
+        <li data-ng-class="{open: $state.includes('app.extras.emails')}">
+          <a href="javascript:;">
+            <span class="menu-caret">
+              <i class="material-icons">arrow_drop_down</i></span>
+            <span translate="menu.EMAILS"></span>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/action.html" target="_blank">
+                <span>Action</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/alert.html" target="_blank">
+                <span>Alert</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/billing.html" target="_blank">
+                <span>Billing</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/progress.html" target="_blank">
+                <span>Progress</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/survey.html" target="_blank">
+                <span>Survey</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://milestone.nyasha.me/latest/emails/welcome.html" target="_blank">
+                <span>Welcome</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /emails -->
+        <li ui-sref-active="active">
+          <a ui-sref="app.extras.invoice">
+            <span translate="menu.INVOICE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.extras.timeline">
+            <span translate="menu.TIMELINE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.extras.lists">
+            <span translate="menu.SORTABLE"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.signin">
+            <span translate="menu.SIGNIN"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.signup">
+            <span translate="menu.SIGNUP"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.forgot">
+            <span translate="menu.FORGOT"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.lockscreen">
+            <span translate="menu.LOCKSCREEN"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.404">
+            <span translate="menu.404"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="user.500">
+            <span translate="menu.500"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.extras.pricing">
+            <span translate="menu.PRICING"></span>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a ui-sref="app.extras.starter">
+            <span translate="menu.STARTER"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- /extras -->
+    <!-- menu levels -->
+    <li ui-sref-active="open">
+      <a href="javascript:;">
+        <span class="menu-caret">
+          <i class="material-icons">arrow_drop_down</i>
+        </span>
+        <i class="material-icons">line_weight</i>
+        <span translate="menu.MENU"></span>
+      </a>
+      <ul class="sub-menu">
+        <li ui-sref-active="active">
+          <a href="javascript:;">
+            <span class="menu-caret">
+              <i class="material-icons">arrow_drop_down</i>
+            </span>
+            <span>Menu Item 1.1</span>
+          </a>
+          <ul class="sub-menu">
+            <li ui-sref-active="active">
+              <a href="javascript:;">
+                <span class="menu-caret">
+                  <i class="material-icons">arrow_drop_down</i>
+                </span>
+                <span>Menu Item 2.1</span>
+              </a>
+              <ul class="sub-menu">
+                <li ui-sref-active="active">
+                  <a href="javascript:;">
+                    <span>Menu Item 3.1</span>
+                  </a>
+                </li>
+                <li ui-sref-active="active">
+                  <a href="javascript:;">
+                    <span>Menu Item 3.1</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li ui-sref-active="active">
+              <a href="javascript:;">
+                <span>Menu Item 2.2</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li ui-sref-active="active">
+          <a href="javascript:;">
+            <span>Menu Item 1.2</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- menu levels -->
+    <li><hr/></li>
+    <!-- static -->
+    <li ui-sref-active="active">
+      <a href="http://milestone.nyasha.me/latest/html" target="_blank">
+        <i class="material-icons">navigation</i>
+        <span>HTML version</span>
+      </a>
+    </li>
+    <!-- /static -->
+    <!-- documentation -->
+    <li ui-sref-active="active">
+      <a href="http://milestone.nyasha.me/latest/documentation" target="_blank">
+        <i class="material-icons">local_library</i>
+        <span>Documentation</span>
+      </a>
+    </li>
+    <!-- /documentation -->
+  </ul>
+</nav>
+<!-- /main navigation -->

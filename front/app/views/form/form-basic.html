@@ -1,0 +1,807 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Default Bootstrap elements
+      </div>
+      <div class="card-block">
+        <p>
+          Bootstrap provides several form control styles, layout options, and custom components for creating a wide variety of forms.
+        </p>
+        <form>
+          <fieldset class="form-group">
+            <label for="exampleInputEmail1">
+              Email address
+            </label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"/>
+            <small class="text-muted">
+              We'll never share your email with anyone else.
+            </small>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="exampleInputPassword1">
+              Password
+            </label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="exampleSelect1">
+              Example select
+            </label>
+            <select class="form-control" id="exampleSelect1">
+              <option>
+                1
+              </option>
+              <option>
+                2
+              </option>
+              <option>
+                3
+              </option>
+              <option>
+                4
+              </option>
+              <option>
+                5
+              </option>
+            </select>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="exampleSelect2">
+              Example multiple select
+            </label>
+            <select multiple class="form-control" id="exampleSelect2">
+              <option>
+                1
+              </option>
+              <option>
+                2
+              </option>
+              <option>
+                3
+              </option>
+              <option>
+                4
+              </option>
+              <option>
+                5
+              </option>
+            </select>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="exampleTextarea">
+              Example textarea
+            </label>
+            <textarea class="form-control" id="exampleTextarea" rows="3">
+            </textarea>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="exampleInputFile">
+              File input
+            </label>
+            <input type="file" class="form-control-file" id="exampleInputFile"/>
+            <small class="text-muted">
+              This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.
+            </small>
+          </fieldset>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked/>
+              Option one is this and that&mdash;be sure to include why it's great
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"/>
+              Option two can be something else and selecting it will deselect option one
+            </label>
+          </div>
+          <div class="radio disabled">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled/>
+              Option three is disabled
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"/>
+              Check me out
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Textual inputs
+      </div>
+      <div class="card-block">
+        <p>Here are examples of <code>.form-control</code> applied to each textual HTML5 <code>&lt;input&gt;</code> <code>type</code>.</p>
+        <div class="form-group row">
+          <label for="example-text-input" class="col-xs-2 col-form-label">Text</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-search-input" class="col-xs-2 col-form-label">Search</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="search" value="How do I shoot web" id="example-search-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-email-input" class="col-xs-2 col-form-label">Email</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-url-input" class="col-xs-2 col-form-label">URL</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="url" value="http://getbootstrap.com" id="example-url-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-tel-input" class="col-xs-2 col-form-label">Telephone</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-password-input" class="col-xs-2 col-form-label">Password</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="password" value="hunter2" id="example-password-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-number-input" class="col-xs-2 col-form-label">Number</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="number" value="42" id="example-number-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-datetime-local-input" class="col-xs-2 col-form-label">Date and time</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-date-input" class="col-xs-2 col-form-label">Date</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-month-input" class="col-xs-2 col-form-label">Month</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="month" value="2011-08" id="example-month-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-week-input" class="col-xs-2 col-form-label">Week</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="week" value="2011-W33" id="example-week-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-time-input" class="col-xs-2 col-form-label">Time</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-color-input" class="col-xs-2 col-form-label">Color</label>
+          <div class="col-xs-10">
+            <input class="form-control" type="color" value="#563d7c" id="example-color-input">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Form groups
+      </div>
+      <div class="card-block">
+        <p>
+          The
+          <code>
+            .form-group
+          </code>
+          class is the easiest way to add some structure to forms. Its only purpose is to provide margin-bottom around a label and control pairing. As a bonus, since it’s a class you can use it with
+          <code>
+            fieldset
+          </code>
+          s,
+          <code>
+            div
+          </code>
+          s, or nearly any other element.
+        </p>
+        <form>
+          <fieldset class="form-group">
+            <label for="formGroupExampleInput">
+              Example label
+            </label>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"/>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="formGroupExampleInput2">
+              Another label
+            </label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input"/>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Inline forms
+      </div>
+      <div class="card-block">
+        <p>
+          Use the
+          <code>
+            .form-inline
+          </code>
+          class to to display a series of labels, form controls, and buttons on a single horizontal row.
+        </p>
+        <h6>
+          Visible labels
+        </h6>
+        <form class="form-inline">
+          <div class="form-group m-b-1">
+            <label for="exampleInputName2">
+              Name
+            </label>
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe"/>
+          </div>
+          <div class="form-group m-b-1">
+            <label for="exampleInputEmail2">
+              Email
+            </label>
+            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"/>
+          </div>
+          <button type="submit" class="btn btn-primary m-b-1">
+            Send invitation
+          </button>
+        </form>
+        <br/>
+        <h6>
+          Hidden labels
+        </h6>
+        <form class="form-inline">
+          <div class="form-group m-b-1">
+            <label class="sr-only" for="exampleInputEmail3">
+              Email address
+            </label>
+            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email"/>
+          </div>
+          <div class="form-group m-b-1">
+            <label class="sr-only" for="exampleInputPassword3">
+              Password
+            </label>
+            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password"/>
+          </div>
+          <div class="checkbox m-b-1">
+            <label>
+              <input type="checkbox"/>
+              Remember me
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary m-b-1">
+            Sign in
+          </button>
+        </form>
+        <br/>
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="exampleInputAmount">
+              Amount (in dollars)
+            </label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                $
+              </div>
+              <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"/>
+              <div class="input-group-addon">
+                .00
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Transfer cash
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Grid
+      </div>
+      <div class="card-block">
+        <p>
+          For more structured form layouts, you can utilize Bootstrap’s predefined grid classes (or mixins). Add the
+          <code>
+            .row
+          </code>
+          class to form groups and use the
+          <code>
+            .col-*
+          </code>
+          classes to specify the width of your labels and controls. To vertically center the labels with the textual inputs—nearly anything with
+          <code>
+            .form-control
+          </code>
+          —use the
+          <code>
+            .form-control-label
+          </code>
+          class.
+        </p>
+        <form>
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 form-control-label">
+              Email
+            </label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 form-control-label">
+              Password
+            </label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2">
+              Radios
+            </label>
+            <div class="col-sm-10">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="gridRadios" id="gridRadios1" value="option1" checked/>
+                  Option one is this and that&mdash;be sure to include why it's great
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="gridRadios" id="gridRadios2" value="option2"/>
+                  Option two can be something else and selecting it will deselect option one
+                </label>
+              </div>
+              <div class="radio disabled">
+                <label>
+                  <input type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled/>
+                  Option three is disabled
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2">
+              Checkbox
+            </label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"/>
+                  Check me out
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-secondary">
+                Sign in
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Static controls
+      </div>
+      <div class="card-block">
+        <p>
+          When you need to place plain text next to a form label within a form, use the
+          <code class="highlighter-rouge">
+            .form-control-static
+          </code>
+          class on a
+          <code class="highlighter-rouge">
+            &lt;p&gt;
+          </code>
+          .
+        </p>
+        <form>
+          <div class="form-group row">
+            <label class="col-sm-2 form-control-label">
+              Email
+            </label>
+            <div class="col-sm-10">
+              <p class="form-control-static">
+                email@example.com
+              </p>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 form-control-label">
+              Password
+            </label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password"/>
+            </div>
+          </div>
+        </form>
+        <br/>
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only">
+              Email
+            </label>
+            <p class="form-control-static">
+              email@example.com
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword2" class="sr-only">
+              Password
+            </label>
+            <input type="password" class="form-control" id="inputPassword2" placeholder="Password"/>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Confirm identity
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Checkboxes and radios
+      </div>
+      <div class="card-block">
+        <p>
+          Checkboxes are for selecting one or several options in a list, while radios are for selecting one option from many.
+        </p>
+        <h6>
+          Default (stacked)
+        </h6>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value=""/>
+            Option one is this and that&mdash;be sure to include why it's great
+          </label>
+        </div>
+        <div class="checkbox disabled">
+          <label>
+            <input type="checkbox" value="" disabled/>
+            Option two is disabled
+          </label>
+        </div>
+        <br/>
+        <div class="radio">
+          <label>
+            <input type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
+            Option one is this and that&mdash;be sure to include why it's great
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
+            Option two can be something else and selecting it will deselect option one
+          </label>
+        </div>
+        <div class="radio disabled">
+          <label>
+            <input type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled/>
+            Option three is disabled
+          </label>
+        </div>
+        <br/>
+        <h6>
+          Inline
+        </h6>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"/>
+          1
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"/>
+          2
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox3" value="option3"/>
+          3
+        </label>
+        <br/>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+          1
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+          2
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"/>
+          3
+        </label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Disabled states
+      </div>
+      <div class="card-block">
+        <p>
+          Add the
+          <code class="highlighter-rouge">
+            disabled
+          </code>
+          boolean attribute on an input to prevent user interactions. Disabled inputs appear lighter and add a
+          <code class="highlighter-rouge">
+            not-allowed
+          </code>
+          cursor.
+        </p>
+        <form>
+          <fieldset disabled>
+            <div class="form-group">
+              <label for="disabledTextInput">
+                Disabled input
+              </label>
+              <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input"/>
+            </div>
+            <div class="form-group">
+              <label for="disabledSelect">
+                Disabled select menu
+              </label>
+              <select id="disabledSelect" class="form-control">
+                <option>
+                  Disabled select
+                </option>
+              </select>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"/>
+                Can't check this
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Control sizing
+      </div>
+      <div class="card-block">
+        <p>
+          Set heights using classes like
+          <code class="highlighter-rouge">
+            .form-control-lg
+          </code>
+          , and set widths using grid column classes like
+          <code class="highlighter-rouge">
+            .col-lg-*
+          </code>
+          .
+        </p>
+        <input class="form-control form-control-lg" type="text" placeholder=".form-control-lg"/>
+        <br/>
+        <input class="form-control" type="text" placeholder="Default input"/>
+        <br/>
+        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"/>
+        <br/>
+        <select class="form-control form-control-lg">
+        </select>
+        <br/>
+        <select class="form-control">
+        </select>
+        <br/>
+        <select class="form-control form-control-sm">
+        </select>
+        <br/>
+        <h6>
+          Column sizing
+        </h6>
+        <p>
+          Wrap inputs in grid columns, or any custom parent element, to easily enforce desired widths.
+        </p>
+        <div class="row">
+          <div class="col-xs-2">
+            <input type="text" class="form-control" placeholder=".col-xs-2"/>
+          </div>
+          <div class="col-xs-3">
+            <input type="text" class="form-control" placeholder=".col-xs-3"/>
+          </div>
+          <div class="col-xs-4">
+            <input type="text" class="form-control" placeholder=".col-xs-4"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Validation
+      </div>
+      <div class="card-block">
+        <p>
+          Bootstrap includes validation styles for danger, warning, and success states on form controls. To use, add
+          <code class="highlighter-rouge">
+            .has-warning
+          </code>
+          ,
+          <code class="highlighter-rouge">
+            .has-danger
+          </code>
+          , or
+          <code class="highlighter-rouge">
+            .has-success
+          </code>
+          to the parent element. Any
+          <code class="highlighter-rouge">
+            .form-control-label
+          </code>
+          ,
+          <code class="highlighter-rouge">
+            .form-control
+          </code>
+          , and
+          <code class="highlighter-rouge">
+            .text-help
+          </code>
+          within that element will receive the validation styles.
+        </p>
+        <div class="form-group has-success">
+          <label class="form-control-label" for="inputSuccess1">
+            Input with success
+          </label>
+          <input type="text" class="form-control form-control-success" id="inputSuccess1"/>
+        </div>
+        <div class="form-group has-warning">
+          <label class="form-control-label" for="inputWarning1">
+            Input with warning
+          </label>
+          <input type="text" class="form-control form-control-warning" id="inputWarning1"/>
+        </div>
+        <div class="form-group has-danger">
+          <label class="form-control-label" for="inputDanger1">
+            Input with danger
+          </label>
+          <input type="text" class="form-control form-control-danger" id="inputDanger1"/>
+        </div>
+        <div class="checkbox has-success">
+          <label>
+            <input type="checkbox" id="checkboxSuccess" value="option1"/>
+            Checkbox with success
+          </label>
+        </div>
+        <div class="checkbox has-warning">
+          <label>
+            <input type="checkbox" id="checkboxWarning" value="option1"/>
+            Checkbox with warning
+          </label>
+        </div>
+        <div class="checkbox has-danger">
+          <label>
+            <input type="checkbox" id="checkboxDanger" value="option1"/>
+            Checkbox with danger
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header no-bg b-a-0">
+        Custom forms
+      </div>
+      <div class="card-block">
+        <p>
+          For even more customization and cross browser consistency, use our completely custom form elements to replace the browser defaults. They’re built on top of semantic and accessible markup, so they’re solid replacements for any default form control.
+        </p>
+        <h6 class="m-t-1">
+          Checkboxes
+        </h6>
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Check this custom checkbox</span>
+        </label>
+        <br/>
+        <h6 class="m-t-1">
+          Radios
+        </h6>
+        <label class="custom-control custom-radio">
+          <input id="radio1" name="radio" type="radio" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Toggle this custom radio</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input id="radio2" name="radio" type="radio" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Or toggle this other custom radio</span>
+        </label>
+        <br/>
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" disabled>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Check this custom checkbox</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+          <input id="radio3" name="radioDisabled" type="radio" class="custom-control-input" disabled>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Toggle this custom radio</span>
+        </label>
+        <br/>
+        <h6 class="m-t-1">Validation states</h6>
+        <div class="form-group has-success">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Check this custom checkbox</span>
+          </label>
+        </div>
+        <div class="form-group has-warning">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Check this custom checkbox</span>
+          </label>
+        </div>
+        <div class="form-group has-danger m-b-0">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Check this custom checkbox</span>
+          </label>
+        </div>
+        <h6 class="m-t-1">Stacked</h6>
+        <div class="custom-controls-stacked">
+          <label class="custom-control custom-radio">
+            <input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Toggle this custom radio</span>
+          </label>
+          <label class="custom-control custom-radio">
+            <input id="radioStacked2" name="radio-stacked" type="radio" class="custom-control-input">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Or toggle this other custom radio</span>
+          </label>
+        </div>
+        <h6 class="m-t-1">
+          Select menu
+        </h6>
+        <select class="custom-select">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <br/>
+        <h6 class="m-t-1">
+          File browser
+        </h6>
+        <label class="custom-file">
+          <input type="file" id="file" class="custom-file-input">
+          <span class="custom-file-control"></span>
+        </label>
+      </div>
+    </div>
+  </label>
+</div>

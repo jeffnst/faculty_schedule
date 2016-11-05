@@ -1,0 +1,27 @@
+<div class="session bg-danger" data-ng-controller="sessionCtrl as session">
+  <div class="session-content text-xs-center">
+    <div>
+      <div class="card b-a-0 no-bg no-shadow">
+        <div class="card-block">
+          <div class="lockscreen-avatar">
+            <img data-ng-src="{{ main.user.avatar }}" class="avatar avatar-lg img-circle" alt="user" title="user"/>
+          </div>
+          <h6 class="center-block m-t-1">
+            {{ main.user.fname }} {{ main.user.lname }}
+          </h6>
+          <small>
+            Please enter your lock code
+          </small>
+          <div class="center-block lockcode m-t-1">
+            <form role="form">
+              <input type="password" class="form-control b-a-0 m-b-1" id="password" placeholder="Password"/>
+              <button class="btn btn-success btn-block b-a-0" type="submit" data-ng-click="session.submit()">
+                Unlock
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

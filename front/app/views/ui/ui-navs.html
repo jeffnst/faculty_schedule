@@ -1,0 +1,193 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h6 class="text-center m-b-1">
+      Base nav
+    </h6>
+    <div class="card">
+      <div class="card-block">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Another link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">
+              Disabled
+            </a>
+          </li>
+        </ul>
+        <br/>
+        <nav class="nav">
+          <a class="nav-link active" href="#">
+            Active
+          </a>
+          <a class="nav-link" href="#">
+            Link
+          </a>
+          <a class="nav-link" href="#">
+            Another link
+          </a>
+          <a class="nav-link disabled" href="#">
+            Disabled
+          </a>
+        </nav>
+        <br/>
+        <h6>
+          Inline
+        </h6>
+        <nav class="nav nav-inline">
+          <a class="nav-link active" href="#">
+            Active
+          </a>
+          <a class="nav-link" href="#">
+            Link
+          </a>
+          <a class="nav-link" href="#">
+            Another link
+          </a>
+          <a class="nav-link disabled" href="#">
+            Disabled
+          </a>
+        </nav>
+      </div>
+    </div>
+    <h6 class="text-center m-b-1 m-t-1">
+      Pills
+    </h6>
+    <div class="card">
+      <div class="card-block">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              Active
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Another link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">
+              Disabled
+            </a>
+          </li>
+        </ul>
+        <br/>
+        <h6>
+          Stacked pills
+        </h6>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              Active
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Another link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">
+              Disabled
+            </a>
+          </li>
+        </ul>
+        <br/>
+        <h6>
+          Pills with dropdowns
+        </h6>
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              Active
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">
+                Action
+              </a>
+              <a class="dropdown-item" href="#">
+                Another action
+              </a>
+              <a class="dropdown-item" href="#">
+                Something else here
+              </a>
+              <div class="dropdown-divider">
+              </div>
+              <a class="dropdown-item" href="#">
+                Separated link
+              </a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Another link
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">
+              Disabled
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <h6 class="text-center m-b-1 m-t-1">
+      Tabs
+    </h6>
+    <uib-tabset class="m-b-0" active="active">
+      <uib-tab heading="This is tab one" index="0">
+        <p>
+          Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        </p>
+      </uib-tab>
+      <uib-tab heading="This is tab two" index="1">
+        <p>
+          Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        </p>
+      </uib-tab>
+      <uib-tab heading="This is tab three" index="2">
+        <p>
+          Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        </p>
+      </uib-tab>
+      <uib-tab heading="This is tab four" index="3">
+        <p>
+          Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+        </p>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+</div>
+<script id="uib/template/tabs/tab.html" type="text/ng-template">
+  <li class="nav-item">
+    <a href class="nav-link" ng-click="select()" uib-tab-heading-transclude ng-class="{active: active, disabled: disabled}">{{heading}}</a>
+  </li>
+</script>

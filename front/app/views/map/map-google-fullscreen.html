@@ -1,0 +1,26 @@
+<div class="fill-container" ng-controller="mapFullCtrl as fullmap">
+  <div ng-repeat="marker in fullmap.myMarkers" ui-map-marker="fullmap.myMarkers[$index]" ui-event="{'map-click': 'fullmap.openMarkerInfo(marker)'}">
+  </div>
+  <div ui-map-info-window="fullmap.myInfoWindow">
+    <h3>
+      Marker
+    </h3>
+    <div class="form-group">
+      <label>
+        Latitude
+      </label>
+      <input ng-model="fullmap.currentMarkerLat" class="form-control input-sm"/>
+    </div>
+    <div class="form-group">
+      <label>
+        Longitude
+      </label>
+      <input ng-model="fullmap.currentMarkerLng" class="form-control input-sm"/>
+    </div>
+    <a ng-click="fullmap.setMarkerPosition(fullmap.currentMarker, fullmap.currentMarkerLat, fullmap.currentMarkerLng)" class="btn btn-default btn-sm">
+      Set Position
+    </a>
+  </div>
+  <div ui-map="fullmap.myMap" ui-options="fullmap.mapOptions" ui-event="{'map-click': 'fullmap.addMarker($event, $params)', 'map-zoom_changed': 'fullmap.setZoomMessage(fullmap.myMap.getZoom())' }" id="google-container">
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="row media" data-ng-controller="galleryCtrl as media">
+  <div class="col-md-3 col-sm-4 col-xs-6 media-item" data-ng-repeat="id in media.ran">
+    <a class="card card-block text-xs-center" href="javascript:;" title="caption image {{ id }}">
+      <img class="img-fluid center-block" data-ng-src="https://placeimg.com/400/200?{{ id }}" alt="Card image cap"/>
+    </a>
+    <div class="text-xs-center">
+      <p class="m-b-0 bold">
+        Media image
+        <span>
+          {{ id }}
+        </span>
+      </p>
+      <small>
+        <a href="javascript:;">
+          Betty Simmons
+        </a>
+        ·
+        <span class="text-muted">
+          2 days ago
+        </span>
+      </small>
+    </div>
+  </div>
+</div>

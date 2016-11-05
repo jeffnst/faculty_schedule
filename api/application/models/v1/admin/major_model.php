@@ -2,18 +2,18 @@
 
 //include 'Admin_model.php';
 
-class room_model extends admin_model {
+class major_model extends admin_model {
 
     public function all() {
         try {
             $sql = $this->db
-                    ->select('room.seq as seq')
-                    ->select('room.name as name')
-                    ->select('room.description as description')
-                    ->select('room.building_seq as building_seq')
-                    ->select('building.name as building_name')
-                    ->from('room')->join('building', 'room.building_seq = building.seq', 'inner')
-                    ->order_by('room.seq');
+                    ->select('major.seq as seq')
+                    ->select('major.name as name')
+                    ->select('major.description as description')
+                    ->select('major.faculty_seq as faculty_seq')
+                    ->select('faculty.name as faculty_name')
+                    ->from('major')->join('faculty', 'major.faculty_seq = faculty.seq', 'inner')
+                    ->order_by('major.seq');
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -35,7 +35,7 @@ class room_model extends admin_model {
 
     public function get($seq) {
         try {
-            $sql = $this->db->select('*')->from('room')->where('seq', $seq);
+            $sql = $this->db->select('*')->from('major')->where('seq', $seq);
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -57,8 +57,8 @@ class room_model extends admin_model {
 
     public function add($params) {
         try {
-            $data = array('name' => $params->name, 'building_seq' => $params->building_seq, 'description' => $params->description);
-            $query = $this->db->insert('room', $data);
+            $data = array('name' => $params->name, 'faculty_seq' => $params->faculty_seq, 'description' => $params->description);
+            $query = $this->db->insert('major', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;
@@ -76,7 +76,7 @@ class room_model extends admin_model {
 
     public function delete($seq) {
         try {
-            $query = $this->db->delete('room', array('seq' => $seq));
+            $query = $this->db->delete('major', array('seq' => $seq));
             if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;
@@ -94,9 +94,9 @@ class room_model extends admin_model {
 
     public function put($params) {
         try {
-            $data = array('name' => $params->name, 'building_seq' => $params->building_seq, 'description' => $params->description);
+            $data = array('name' => $params->name, 'faculty_seq' => $params->faculty_seq, 'description' => $params->description);
             $where = $this->db->where('seq', $params->seq);
-            $query = $this->db->update('room', $data);
+            $query = $this->db->update('major', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;
@@ -112,9 +112,9 @@ class room_model extends admin_model {
         return $data;
     }
 
-    public function get_building_option() {
+    public function get_faculty_option() {
         try {
-            $sql = $this->db->select('*')->from('building')->order_by('seq');
+            $sql = $this->db->select('*')->from('faculty')->order_by('seq');
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;

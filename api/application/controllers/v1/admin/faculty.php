@@ -7,6 +7,7 @@ class faculty extends admin {
     function __construct() {
         parent::__construct();
         parent::checktoken();
+        $this->load->model('v1/admin/faculty_model'); 
     }
 
     public function all() {

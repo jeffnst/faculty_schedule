@@ -1,0 +1,120 @@
+<div class="layout-xs contacts-container" ng-controller="contactsCtrl as cn">
+  <div class="flexbox-xs layout-column-xs contacts-list b-r">
+    <div class="contact-header bg-default">
+      <div class="contact-toolbar">
+        <form class="form-inline">
+          <input class="form-control" type="text" placeholder="Search"/>
+        </form>
+      </div>
+    </div>
+    <div class="flex-xs scroll-y">
+      <a href="javascript:;" ng-repeat="contact in cn.contacts | orderBy: 'surname'" ng-class="{'active':cn.isCurrentIndex(cn.contacts.indexOf(contact))}" ng-click="cn.setCurrentContact(cn.contacts.indexOf(contact));cn.setCurrentIndex(cn.contacts.indexOf(contact));main.app.isContactOpen = true" class="column-equal">
+        <div class="col v-align-middle contact-avatar">
+          <div class="circle-icon" ng-class="{
+          'bg-success': contact.tag==='Family',
+          'bg-danger': contact.tag==='Clients',
+          'bg-info': contact.tag==='Archives',
+          'bg-dark': contact.tag==='Personal',
+          'bg-primary': contact.tag==='Friends'
+          }">{{ contact.name.charAt(0) }}</div>
+        </div>
+        <div class="col v-align-middle contact-details p-l-1">
+          <span class="bold">{{ contact.surname }} {{ contact.name }}</span>
+          <span class="small">{{ contact.role }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="flexbox-xs layout-column-xs contact-view">
+    <div class="contact-header hidden-lg-up" ng-if="cn.currentContact">
+      <div class="contact-toolbar">
+        <a href="javascript:;" data-ng-click="main.app.isContactOpen = false">
+          <i class="material-icons visible-xs m-r-1">
+            arrow_back
+          </i>
+        </a>
+      </div>
+    </div>
+    <div class="flex-xs scroll-y p-a-3" ng-if="cn.currentContact">
+      <div class="column-equal m-b-2">
+        <div class="col" ng-if="cn.currentContact" style="width:128px;">
+          <img data-ng-src="{{ cn.currentContact.avatar }}" class="avatar avatar-lg img-circle" alt/>
+        </div>
+        <div class="col v-align-middle p-l-2">
+          <h1>
+            <b>
+              {{ cn.currentContact.surname }}
+            </b>
+            {{ cn.currentContact.name }}
+          </h1>
+          <h3>
+            {{ cn.currentContact.role }}
+          </h3>
+        </div>
+      </div>
+      <div class="column-equal m-b-2">
+        <div class="col p-l-2 text-xs-right" style="width:128px;">
+          <span class="text-muted">
+            Email
+          </span>
+        </div>
+        <div class="col p-l-2">
+          <a ng-href="{{ cn.currentContact.home }}">
+            {{ cn.currentContact.home }}
+          </a>
+        </div>
+      </div>
+      <div class="column-equal m-b-2">
+        <div class="col p-l-2 text-xs-right" style="width:128px;">
+          <span class="text-muted">
+            Mobile
+          </span>
+        </div>
+        <div class="col p-l-2">
+          <span>
+            {{ cn.currentContact.mobile }}
+          </span>
+        </div>
+      </div>
+      <div class="column-equal m-b-2">
+        <div class="col p-l-2 text-xs-right" style="width:128px;">
+          <span class="text-muted">
+            Home
+          </span>
+        </div>
+        <div class="col p-l-2">
+          <a ng-href="{{ currentContact.profile }}">
+            {{ cn.currentContact.profile }}
+          </a>
+        </div>
+      </div>
+      <div class="column-equal m-b-2">
+        <div class="col p-l-2 text-xs-right" style="width:128px;">
+          <span class="text-muted">
+            Country
+          </span>
+        </div>
+        <div class="col p-l-2">
+          <span>
+            {{ cn.currentContact.country }}
+          </span>
+        </div>
+      </div>
+      <div class="column-equal m-b-2">
+        <div class="col p-l-2 text-xs-right" style="width:128px;">
+          <span class="text-muted">
+            Note
+          </span>
+        </div>
+        <div class="col p-l-2">
+          <span>
+            Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!cn.currentContact" class="no-contacts flexbox-xs fill-container p-a-3">
+      <div class="h3 text-shadow text-muted">Please select a person</div>
+    </div>
+  </div>
+</div>

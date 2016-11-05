@@ -1,0 +1,15 @@
+<div data-ng-controller="rickshawCtrl as rickshaw">
+  <div ng-repeat='option in rickshaw.options' class="m-b-3">
+    <h6 class="m-b-1">
+      {{ option.label }}
+    </h6>
+    <rickshaw class="rickshaw_graph m-b-2" rickshaw-options="option.options" rickshaw-features="option.features" rickshaw-series="option.series">
+    </rickshaw>
+    <div class="chart_container">
+      <div class="y_axis" id="y_axis">
+      </div>
+      <div class="rickshaw-chart" id="chart2">
+      </div>
+    </div>
+  </div>
+</div>

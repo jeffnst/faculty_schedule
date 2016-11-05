@@ -1,0 +1,45 @@
+<div class="header-inner" data-ng-controller="AdminHeaderController">
+    <div class="navbar-item navbar-spacer-right brand hidden-lg-up">
+        <!-- toggle offscreen menu -->
+        <a href="javascript:;" ng-click="main.toggleMenu()" class="toggle-offscreen">
+            <i class="material-icons">menu</i>
+        </a>
+        <!-- /toggle offscreen menu -->
+        <!-- logo -->
+        <a class="brand-logo hidden-xs-down">
+            <!--      <img src="images/logo_white.png" alt="logo"/>-->
+            <!--{{vm.app.name}}-->
+        </a>
+        <!-- /logo -->
+    </div>
+    <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="#">
+        <span>{{ title}}</span>
+    </a>
+    <!--  <div class="navbar-search navbar-item">
+        <form class="search-form">
+          <i class="material-icons">search</i>
+          <input class="form-control" type="text" placeholder="Search" ng-focus="main.focusOn()" ng-blur="main.focusOff()" autofocus="true" />
+        </form>
+      </div>-->
+
+    <div class="navbar-item nav navbar-nav" >            
+        <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" ng-click="logoutModal()">
+        <i class="fa fa-sign-out"> </i>&nbsp; Keluar
+    </a>
+        <!--        <a href="javascript:;" class="nav-item nav-link nav-link-icon" ng-click="main.openChat()">
+                    <i class="material-icons">input</i>
+                </a>-->
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="header-logout-modal.html">
+    <div class="modal-header"> <h5>Konfirmasi</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+    <h5>Anda yakin keluar ?</h5>
+    </div>
+    <div class="modal-footer">            
+            <button class="btn btn-icon btn-success" type="button" ng-click="doLogout()"><i class="fa fa-sign-out"></i>&nbsp;Ya</button> 
+            <button class="btn btn-warning btn-icon"  ng-click="closeLogoutModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
+</script>

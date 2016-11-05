@@ -123,7 +123,7 @@ controllers.controller('AdminBuildingController', function ($rootScope, $scope, 
             })
         }
     }
-    
+
 // FUNCTION TO GET BUILDING DETAIL
 
     var getBuilding = function (seq) {
@@ -183,6 +183,7 @@ controllers.controller('AdminBuildingController', function ($rootScope, $scope, 
 controllers.controller('AdminRoomController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
     $rootScope.title = "Ruangan";
+    $rootScope.parent_title = "Gedung";
     var refreshRoomData = function () {
         AdminFactory.GetAllRoom().success(function (response) {
             if (response.response == "OK") {
@@ -318,7 +319,7 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
     var refreshFacultyData = function () {
         AdminFactory.GetAllFaculty().success(function (response) {
             if (response.response == "OK") {
-                $scope.data = response.data;                
+                $scope.data = response.data;
             } else {
                 toastr.error(response.message);
             }
@@ -385,7 +386,7 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
             })
         }
     }
-    
+
 // FUNCTION TO GET Faculty DETAIL
 
     var getFaculty = function (seq) {
@@ -431,6 +432,139 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
                 if (response.response != "FAIL") {
                     $scope.$uibModalInstance.dismiss();
                     refreshFacultyData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+
+})
+
+controllers.controller('AdminMajorController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
+{
+
+    $rootScope.title = "Jurusan";
+    $rootScope.parent_title = "Fakultas";
+    var refreshMajorData = function () {
+        AdminFactory.GetAllMajor().success(function (response) {
+            if (response.response == "OK") {
+                $scope.data = response.data.majors;
+                $scope.facultyOption = response.data.faculty_option;
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+
+    refreshMajorData();
+
+    $scope.addModal = function () {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'major-add-modal.html',
+                    controller: 'AdminMajorController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.majorAdd = function (data_input) {
+            if (data_input.description == "" || data_input.description == undefined) {
+                data_input.description = "";
+            }
+            input = {name: data_input.name, faculty_seq: data_input.faculty_seq, description: data_input.description};
+            AdminFactory.AddDataMajor(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshMajorData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+    $scope.deleteModal = function (seq) {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'major-delete-modal.html',
+                    controller: 'AdminMajorController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.majorDelete = function () {
+            AdminFactory.DeleteDataMajor(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshMajorData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+
+// FUNCTION TO GET Major DETAIL
+
+    var getMajor = function (seq) {
+        AdminFactory.GetMajor(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataMajor = response.data;
+            } else {
+                $scope.dataMajor = "";
+            }
+        })
+    }
+
+// IF DETAIL Major
+    if ($stateParams.gedungSeq) {
+        var seq = $stateParams.gedungSeq
+        getMajor(seq);
+    }
+
+// EDIT MODAL
+    $scope.editModal = function (seq) {
+        getMajor(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'major-edit-modal.html',
+                    controller: 'AdminMajorController',
+                    size: 'lg'
+                });
+
+        $scope.closeEditModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.majorEdit = function (dataMajor) {
+            if (dataMajor.description == "" || dataMajor.description == undefined) {
+                dataMajor.description = "";
+            }
+            input = {name: dataMajor.name, faculty_seq: dataMajor.faculty_seq,description: dataMajor.description, seq: $scope.dataMajor.seq};
+            AdminFactory.PutDataMajor(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshMajorData();
                     toastr.success(response.message);
                 } else {
                     toastr.warning(response.message);

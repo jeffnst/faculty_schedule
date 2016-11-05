@@ -70,7 +70,26 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataFaculty = function (datas) {
         return $http.get(api + 'admin/faculty/delete/' + datas, getToken());
     };
+    
+    // MAJOR / JURUSAN
+    data.GetAllMajor = function () {
+        return $http.get(api + 'admin/major/all', getToken());
+    };
+    data.GetMajor = function (datas) {
+        return $http.get(api + 'admin/major/get/' + datas, getToken());
+    };
 
+    data.AddDataMajor = function (datas) {
+        return $http.post(api + 'admin/major/add', datas, getToken());
+    };
+
+    data.PutDataMajor = function (datas) {
+        return $http.post(api + 'admin/major/put/' + datas.seq, datas, getToken());
+    };
+
+    data.DeleteDataMajor = function (datas) {
+        return $http.get(api + 'admin/major/delete/' + datas, getToken());
+    };
     return data;
 });
 

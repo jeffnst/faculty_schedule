@@ -1,0 +1,18 @@
+<div class="fontawesome-list" data-ng-controller="iconsCtrl as material">
+  <div class="col-sm-6 offset-sm-3 m-b-1">
+    <h6 class="text-xs-center">
+      Material icons are beautifully crafted, delightful, and easy to use in your web, Android, and iOS projects.
+    </h6>
+  </div>
+  <input type="text" class="form-control m-b-1 brlg" ng-model="query" placeholder="Search icons"/>
+  <div class="card card-block fontawesome-icon-list">
+    <div class="row">
+      <div class="fa-hover col-md-3 col-sm-4" ng-repeat="icon in material.iconsMaterial.icons | filter:query">
+        <i class="material-icons" aria-hidden="true">
+          {{ icon }}
+        </i>
+        {{ icon }}
+      </div>
+    </div>
+  </div>
+</div>
