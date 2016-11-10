@@ -32,6 +32,11 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
                     abstract: true,
                     templateUrl: viewsPrefix + 'admin/layout.html',
                 })
+                .state('admin.not-found', {
+                    url: '/404',
+                    templateUrl: viewsPrefix + 'extra/extras-404.html',
+                    title: 'Tidak Ditemukan'
+                })
                 .state('admin.dashboard', {
                     url: '/dashboard',
                     templateUrl: viewsPrefix + 'admin/dashboard.html',
@@ -97,14 +102,58 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
                 //ADMIN JURUSAN
                 .state('admin.jurusan', {
                     url: '/jurusan',
-                    templateUrl: viewsPrefix + 'admin/jurusan.html',                   
+                    templateUrl: viewsPrefix + 'admin/jurusan.html',
                     controller: 'AdminMajorController',
                 })
-                
+
+                //ADMIN MATKUL
+
                 .state('admin.matakuliah', {
                     url: '/matakuliah',
-                    templateUrl: viewsPrefix + 'admin/matakuliah.html',                   
+                    templateUrl: viewsPrefix + 'admin/matakuliah.html',
                     controller: 'AdminCourseController',
+                })
+
+                .state('admin.detail_matakuliah', {
+                    url: '/matakuliah/detail/:matakuliahSeq',
+                    templateUrl: viewsPrefix + 'admin/detail-matakuliah.html',
+                    controller: 'AdminCourseController',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([{
+                                        insertBefore: '#load_styles_before',
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
+                                    }, {
+                                        serie: true,
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
+                                    }])
+                            }]
+                    },
+                })
+
+                //ADMIN Dosen
+
+                .state('admin.dosen', {
+                    url: '/dosen',
+                    templateUrl: viewsPrefix + 'admin/dosen.html',
+                    controller: 'AdminTeacherController',
+                })
+
+                .state('admin.detail_dosen', {
+                    url: '/dosen/detail/:dosenSeq',
+                    controller: 'AdminTeacherController',
+                    templateUrl: viewsPrefix + 'admin/detail-dosen.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([{
+                                        insertBefore: '#load_styles_before',
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
+                                    }, {
+                                        serie: true,
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
+                                    }])
+                            }]
+                    },
                 })
         $urlRouterProvider.otherwise("/front/login-admin")
     })])

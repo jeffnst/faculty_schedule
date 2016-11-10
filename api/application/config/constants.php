@@ -97,6 +97,8 @@ define('OK_MESSAGE', "Proses Berhasil");
 define('OK_UPLOAD_MESSAGE', "Proses Upload Berhasil");
 define('NO_DATA_STATUS', "NONE");
 define('NO_DATA_MESSAGE', "Data tidak ditemukan");
+define('EMPTY_POST_STATUS', "NONE");
+define('EMPTY_POST_MESSAGE', "Data kosong");
 define('SERVER_SECRET_KEY', '313R354');
 define('JWT_ALGHORITMA', 'HS256');
 define('IMAGE_DIRECTORY', 'assets/images/content_image/');

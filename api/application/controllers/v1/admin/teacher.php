@@ -2,12 +2,12 @@
 
 include 'admin.php';
 
-class major extends admin {
+class teacher extends admin {
 
     function __construct() {
         parent::__construct();
         parent::checktoken();
-        $this->load->model('v1/admin/major_model');
+        $this->load->model('v1/admin/teacher_model');
     }
 
     public function all() {
@@ -30,20 +30,32 @@ class major extends admin {
         echo json_encode($this->_put());
     }
 
+    public function get_course() {
+        echo json_encode($this->_get_course());
+    }
+
+    public function add_course() {
+        echo json_encode($this->_add_course());
+    }
+
+    public function delete_course() {
+        echo json_encode($this->_delete_course());
+    }
+
 //Custom Function
-    private function _get_faculty_option() {
-        $get_faculty = $this->major_model->get_faculty_option();
-        return $get_faculty;
+    private function _get_major_option() {
+        $get_major = $this->teacher_model->get_major_option();
+        return $get_major;
     }
 
 //PRIVATE FUNCTION
 
     private function _all() {
         try {
-            $get_all_major = $this->major_model->all();
-            $get_faculty_option = $this->_get_faculty_option();
-            if ($get_all_major ['response'] == OK_STATUS) {
-                $data = array("majors" => $get_all_major['data'], "faculty_option" => $get_faculty_option['data']);
+            $get_all_teacher = $this->teacher_model->all();
+            $get_major_option = $this->_get_major_option();
+            if ($get_all_teacher ['response'] == OK_STATUS) {
+                $data = array("teachers" => $get_all_teacher['data'], "major_option" => $get_major_option['data']);
                 $data = get_success($data);
             } else {
                 $data = response_fail();
@@ -59,11 +71,13 @@ class major extends admin {
             $datas = json_decode(file_get_contents('php://input'));
             if ($datas != "") {
                 $params = new stdClass();
+                $params->nidn = $datas->nidn;
                 $params->name = $datas->name;
-                $params->faculty_seq = $datas->faculty_seq;
-                $params->description = $datas->description;
-                $addfaculty = $this->major_model->add($params);
-                if ($addfaculty['response'] == OK_STATUS) {
+                $params->contact = $datas->contact;
+                $params->address = $datas->address;
+                $params->education_degree = $datas->education_degree;
+                $add = $this->teacher_model->add($params);
+                if ($add['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
@@ -81,8 +95,8 @@ class major extends admin {
         try {
             $seq = $this->uri->segment(5);
             if ($seq != "") {
-                $addfaculty = $this->major_model->delete($seq);
-                if ($addfaculty['response'] == OK_STATUS) {
+                $addmajor = $this->teacher_model->delete($seq);
+                if ($addmajor['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
@@ -100,9 +114,13 @@ class major extends admin {
         try {
             $seq = $this->uri->segment(5);
             if ($seq != "") {
-                $getfaculty = $this->major_model->get($seq);
-                if ($getfaculty['response'] == OK_STATUS) {
-                    $data = get_success($getfaculty['data']);
+                $get = $this->teacher_model->get($seq);
+                if ($get['response'] == OK_STATUS) {
+                    if ($get['data'] == NULL) {
+                        $data = get_not_found();
+                    } else {
+                        $data = get_success($get['data']);
+                    }
                 } else {
                     $data = response_fail();
                 }
@@ -117,17 +135,89 @@ class major extends admin {
 
     private function _put() {
         try {
-
             $datas = json_decode(file_get_contents('php://input'));
             $seq = $this->uri->segment(5);
             if ($datas != "" AND $seq != "") {
                 $params = new stdClass();
+                $params->nidn = $datas->nidn;
                 $params->name = $datas->name;
-                $params->description = $datas->description;
-                $params->faculty_seq = $datas->faculty_seq;
+                $params->contact = $datas->contact;
+                $params->address = $datas->address;
+                $params->education_degree = $datas->education_degree;
                 $params->seq = $seq;
-                $putfaculty = $this->major_model->put($params);
-                if ($putfaculty['response'] == OK_STATUS) {
+                $put = $this->teacher_model->put($params);
+                if ($put['response'] == OK_STATUS) {
+                    $data = response_success();
+                } else {
+                    $data = response_fail();
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _get_course() {
+        try {
+            $seq = $this->uri->segment(6);
+            if ($seq != "") {
+                $get = $this->teacher_model->get_course($seq);
+                if ($get['response'] == OK_STATUS) {
+                    $data = get_success($get['data']);
+                } else {
+                    $data = response_fail();
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _add_course() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            if ($datas != "") {
+                $pick_course_seq = $datas->seq;
+                $teacher_seq = $datas->teacher_seq;
+                if (empty($pick_course_seq)) {
+                    $data = post_empty();
+                } else {
+                    foreach ($pick_course_seq as $each) {
+                        $params = new stdClass();
+                        $params->teacher_seq = $teacher_seq;
+                        $params->course_seq = $each;
+                        $check = $this->teacher_model->check_add_course($params);
+                        if ($check['response'] == OK_STATUS) {
+                            $add[] = $this->teacher_model->add_course($params);
+                        }
+                    }
+                    if ($add == TRUE) {
+                        $data = response_success();
+                    } else {
+                        $data = response_fail();
+                    }
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _delete_course() {
+        try {
+            $seq = $this->uri->segment(6);
+            if ($seq != "") {
+                $get = $this->teacher_model->delete_course($seq);
+                if ($get['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();

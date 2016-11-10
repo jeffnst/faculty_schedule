@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-block">
-        <button class="btn btn-icon btn-info" ng-click="addModal()"><i class="fa fa-plus"></i>Tambah {{title}}</button>        
+        <button class="btn btn-icon btn-info " ng-click="addModal()"><i class="fa fa-plus"></i>Tambah {{title}}</button>        
         <form class="form-inline pull-right">
             <div class="form-group">                    
                 <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
@@ -21,11 +21,12 @@
             <tbody>
                 <tr ng-repeat="item in data">
                 <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                        
-                    <td><a href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.seq})">{{ item.name}}</a></td>
+                    <td>{{item.name}}</td>
                     <td>{{item.major_count}} Jurusan </td>
-                    <td>Mata Kuliah</td>
+                    <td>{{item.course_count}} Mata Kuliah</td>
                     <td>Orang</td>
                     <td>
+                        <a href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
                         <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
                         <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.seq)"><i class="fa fa-trash"></i></button>
                     </td>

@@ -70,7 +70,7 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataFaculty = function (datas) {
         return $http.get(api + 'admin/faculty/delete/' + datas, getToken());
     };
-    
+
     // MAJOR / JURUSAN
     data.GetAllMajor = function () {
         return $http.get(api + 'admin/major/all', getToken());
@@ -90,6 +90,61 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataMajor = function (datas) {
         return $http.get(api + 'admin/major/delete/' + datas, getToken());
     };
+    // COURSE / MATAKULIAH
+    data.GetAllCourse = function () {
+        return $http.get(api + 'admin/course/all', getToken());
+    };
+    data.GetCourse = function (datas) {
+        return $http.get(api + 'admin/course/get/' + datas, getToken());
+    };
+
+    data.AddDataCourse = function (datas) {
+        return $http.post(api + 'admin/course/add', datas, getToken());
+    };
+
+    data.PutDataCourse = function (datas) {
+        return $http.post(api + 'admin/course/put/' + datas.seq, datas, getToken());
+    };
+
+    data.DeleteDataCourse = function (datas) {
+        return $http.get(api + 'admin/course/delete/' + datas, getToken());
+    };
+    
+    data.AddDataClassCourse = function (datas) {
+        return $http.post(api + 'admin/course/class/add', datas, getToken());
+    };
+    // Teacher / DOSEN    
+    data.GetAllTeacher = function () {
+        return $http.get(api + 'admin/teacher/all', getToken());
+    };
+    data.GetTeacher = function (datas) {
+        return $http.get(api + 'admin/teacher/get/' + datas, getToken());
+    };
+
+    data.AddDataTeacher = function (datas) {
+        return $http.post(api + 'admin/teacher/add', datas, getToken());
+    };
+
+    data.PutDataTeacher = function (datas) {
+        return $http.post(api + 'admin/teacher/put/' + datas.seq, datas, getToken());
+    };
+
+    data.DeleteDataTeacher = function (datas) {
+        return $http.get(api + 'admin/teacher/delete/' + datas, getToken());
+    };
+
+    data.GetCourseTeacher = function (datas) {
+        return $http.get(api + 'admin/teacher/course/get/' + datas, getToken());
+    };
+
+    data.AddCourseTeacher = function (datas) {
+        return $http.post(api + 'admin/teacher/course/add', datas, getToken());
+    };
+
+    data.DeleteCourseTeacher = function (datas) {
+        return $http.get(api + 'admin/teacher/course/delete/' + datas, getToken());
+    };
+
     return data;
 });
 

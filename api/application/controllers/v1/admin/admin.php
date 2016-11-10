@@ -11,7 +11,7 @@ class admin extends CI_Controller {
         parent::__construct();
         $this->load->helper('jwt_helper');
         $this->load->helper('rest_response_helper');
-        $this->load->model('v1/admin/admin_model');                           
+        $this->load->model('v1/admin/admin_model');                                   
         $this->load->helper(array('form', 'url'));
     }
     

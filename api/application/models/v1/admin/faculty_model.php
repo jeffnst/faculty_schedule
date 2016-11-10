@@ -105,18 +105,45 @@ class faculty_model extends admin_model {
         return $data;
     }
 
-    public function get_major_option($faculty_seq, $option) {
+    public function get_major_option($faculty_seq) {
         try {
             $sql = $this->db->select('*')->from('major')->where('faculty_seq', $faculty_seq);
             $query = $this->db->get();
-            if ($option == GET_COUNT) {
-                $response = OK_STATUS;
-                $message = OK_MESSAGE;
-                $rows = $query->num_rows();
-            } elseif ($option == GET_DETAIL) {
+            if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;
                 $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function get_course_option($faculty_seq) {
+        try {
+            $sql = $this->db
+                    ->select('*')
+                    ->from('course')
+                    ->join('major', 'course.major_seq = major.seq')
+                    ->join('faculty', 'major.faculty_seq = faculty.seq')
+                    ->where('faculty.seq', $faculty_seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
             }
         } catch (Exception $e) {
             $response = FAIL_STATUS;

@@ -560,7 +560,7 @@ controllers.controller('AdminMajorController', function ($rootScope, $scope, $lo
             if (dataMajor.description == "" || dataMajor.description == undefined) {
                 dataMajor.description = "";
             }
-            input = {name: dataMajor.name, faculty_seq: dataMajor.faculty_seq,description: dataMajor.description, seq: $scope.dataMajor.seq};
+            input = {name: dataMajor.name, faculty_seq: dataMajor.faculty_seq, description: dataMajor.description, seq: $scope.dataMajor.seq};
             AdminFactory.PutDataMajor(input).success(function (response) {
                 if (response.response != "FAIL") {
                     $scope.$uibModalInstance.dismiss();
@@ -576,3 +576,430 @@ controllers.controller('AdminMajorController', function ($rootScope, $scope, $lo
 
 })
 
+controllers.controller('AdminCourseController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
+{
+
+    $rootScope.title = "Mata Kuliah";
+    $rootScope.parent_title = "Jurusan";
+    var refreshCourseData = function () {
+        AdminFactory.GetAllCourse().success(function (response) {
+            if (response.response == "OK") {
+                $scope.data = response.data.courses;
+                $scope.majorOption = response.data.major_option;
+                $scope.sksOption = ["1", "2", "3"];
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+    if (!$stateParams.matakuliahSeq) {
+        refreshCourseData();
+    }
+
+    $scope.addModal = function () {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'course-add-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.courseAdd = function (data_input) {
+            if (data_input.description == "" || data_input.description == undefined) {
+                data_input.description = "";
+            }
+            input = {name: data_input.name, major_seq: data_input.major_seq, description: data_input.description, sks: data_input.sks};
+            AdminFactory.AddDataCourse(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshCourseData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+    // ADD CLASS
+    $scope.addClassModal = function () {
+        $scope.alphabetics = ["Awal", "A", "B", "C", "D", "E", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Akhir"]
+        $scope.datainput = [];
+        $scope.datainput.first_selected = $scope.alphabetics[0];
+        $scope.datainput.last_selected = $scope.alphabetics[28];
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'add-class-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+
+        $scope.closeClassModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.addClassSubmit = function (datainput) {
+            if (datainput.first_selected == "Awal") {
+                datainput.first_selected = "A";
+            }
+
+            if (datainput.last_selected == "Akhir") {
+                datainput.last_selected = "Z";
+            }
+            var start = $scope.alphabetics.indexOf(datainput.first_selected);
+            var end = $scope.alphabetics.indexOf(datainput.last_selected);
+            if (end < start) {
+                toastr.warning("Kelas tidak sesuai ");
+            } else {
+                var last = end + 1;
+                var classes = $scope.alphabetics.slice(start, last);
+                var input = {
+                    classes: classes,
+                    course_seq: $scope.dataCourse.seq
+                };
+
+//                console.log(input);
+
+                AdminFactory.AddDataClassCourse(input).success(function (response) {
+                    if (response.response != "FAIL") {
+                        $scope.$uibModalInstance.dismiss();
+                        toastr.success(response.message);
+                        getCourse(seq);
+                    } else {
+                        toastr.warning(response.message);
+                    }
+                });
+            }
+        }
+    }
+    $scope.deleteModal = function (seq) {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'course-delete-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.courseDelete = function () {
+            AdminFactory.DeleteDataCourse(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshCourseData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+
+// FUNCTION TO GET Course DETAIL
+
+    var getCourse = function (seq) {
+        AdminFactory.GetCourse(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataCourse = response.data.course_data;
+                $scope.dataCourseClasses = response.data.course_classes;
+            } else {
+                $scope.dataCourse = "";
+            }
+            $scope.getCourse = response.response;
+        })
+    }
+
+// IF DETAIL Course
+    if ($stateParams.matakuliahSeq) {
+        var seq = $stateParams.matakuliahSeq
+        getCourse(seq);
+    }
+
+// EDIT MODAL
+    $scope.editModal = function (seq) {
+        getCourse(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'course-edit-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+
+        $scope.closeEditModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.courseEdit = function (dataCourse) {
+            if (dataCourse.description == "" || dataCourse.description == undefined) {
+                dataCourse.description = "";
+            }
+            input = {name: dataCourse.name, major_seq: dataCourse.major_seq, description: dataCourse.description, seq: $scope.dataCourse.seq, sks: dataCourse.sks};
+            AdminFactory.PutDataCourse(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshCourseData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+
+})
+
+controllers.controller('AdminTeacherController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
+{
+
+    $rootScope.title = "Dosen";
+    $rootScope.parent_title = "";
+    var refreshTeacherData = function () {
+        AdminFactory.GetAllTeacher().success(function (response) {
+            if (response.response == "OK") {
+                $scope.data = response.data.teachers;
+                $scope.educationDegreeOption = ["S1", "S2", "S3"];
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+    if (!$stateParams.dosenSeq) {
+        refreshTeacherData();
+    }
+
+    $scope.addModal = function () {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'teacher-add-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.teacherAdd = function (data_input) {
+//            if (data_input.description == "" || data_input.description == undefined) {
+//                data_input.description = "";
+//            }
+            input = {
+                nidn: data_input.nidn,
+                name: data_input.name,
+                contact: data_input.contact,
+                address: data_input.address,
+                education_degree: data_input.education_degree,
+                degree: data_input.degree
+            };
+
+            AdminFactory.AddDataTeacher(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshTeacherData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+    $scope.deleteModal = function (seq) {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'teacher-delete-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.teacherDelete = function () {
+            AdminFactory.DeleteDataTeacher(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshTeacherData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+
+// FUNCTION TO GET Teacher DETAIL
+
+    var getTeacher = function (seq) {
+        AdminFactory.GetTeacher(seq).success(function (response) {
+            if (response.response == "OK") {
+                $scope.dataTeacher = response.data;
+                $scope.getTeacher = response.response;
+            } else {
+                $scope.dataTeacher = "";
+                $rootScope.getTeacher = response.response;
+            }
+        })
+
+    }
+    var getAllCourse = function () {
+        AdminFactory.GetAllCourse(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataCourse = response.data;
+            } else {
+                $scope.dataCourse = "";
+
+            }
+        })
+    }
+
+    var getCourseTeacher = function () {
+        AdminFactory.GetCourseTeacher(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataCourseTeacher = response.data.teacher_courses;
+                $scope.dataCourse = response.data.all_courses;
+            } else {
+                $scope.dataCourse = "";
+            }
+        })
+    }
+
+// IF DETAIL Teacher
+    if ($stateParams.dosenSeq) {
+        var seq = $stateParams.dosenSeq
+        getTeacher(seq);
+        getCourseTeacher(seq);
+    }
+
+    $scope.addCourseModal = function () {
+//        getAllCourse();
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'teacher-add-course-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddCourseModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.AddCourseTeacher = function (data) {
+            input = {
+                seq: data.pick_course_seq,
+                teacher_seq: $scope.dataTeacher.seq
+
+            };
+//            console.log(JSON.stringify(input));
+            AdminFactory.AddCourseTeacher(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    getCourseTeacher($stateParams.dosenSeq);
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+    $scope.deleteCourseModal = function (seq) {
+        $scope.courseSeq = seq;
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'teacher-course-delete-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.teacherCourseDelete = function () {
+            console.log($scope.courseSeq);
+            input = $scope.courseSeq;
+            AdminFactory.DeleteCourseTeacher(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    getCourseTeacher($stateParams.dosenSeq);
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+// EDIT MODAL
+    $scope.editModal = function (seq) {
+        getTeacher(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'teacher-edit-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+
+        $scope.closeEditModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.teacherEdit = function (dataTeacher) {
+            input = {
+                nidn: dataTeacher.nidn,
+                name: dataTeacher.name,
+                contact: dataTeacher.contact,
+                address: dataTeacher.address,
+                education_degree: dataTeacher.education_degree,
+                degree: dataTeacher.degree,
+                seq: dataTeacher.seq
+            };
+            AdminFactory.PutDataTeacher(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshTeacherData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+
+})

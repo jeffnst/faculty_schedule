@@ -17,6 +17,13 @@ function get_not_found() {
     return $results;
 }
 
+function post_empty() {
+    $response = EMPTY_POST_STATUS;
+    $message = EMPTY_POST_MESSAGE;
+    $results = array("response" => $response, "message" => $message);
+    return $results;
+}
+
 function response_success() {
     $response = OK_STATUS;
     $message = OK_MESSAGE;

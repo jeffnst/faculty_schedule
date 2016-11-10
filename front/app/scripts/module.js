@@ -1,5 +1,5 @@
 'use strict';
-var apps = angular.module('app', [    
+var apps = angular.module('app', [
     'ui.router',
     'app.routes',
     'app.factories',
@@ -9,7 +9,7 @@ var apps = angular.module('app', [
     'angular-md5',
     'angular-jwt',
 //    'ngTable',    
-
+    'checklist-model',
     'ngResource',
     'ui.bootstrap',
     'oc.lazyLoad',
@@ -22,5 +22,5 @@ var apps = angular.module('app', [
     'pascalprecht.translate',
     'toastr',
 //    'datatables',     
-'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination'
 ]);

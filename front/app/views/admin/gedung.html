@@ -21,11 +21,12 @@
             <tbody>
                 <!--<tr ng-repeat="item in data">-->
                 <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                        
-                    <td><a href="#" ui-sref="admin.gedung_detail({gedungSeq: item.seq})">{{ item.name}}</a></td>
+                    <td>{{ item.name}}</td>
                     <td>{{ item.rooms_count}} Ruangan</td>
                     <td></td>
                     <td>{{ item.description}}</td>
                     <td>
+                        <a href="#" ui-sref="admin.gedung_detail({gedungSeq: item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
                         <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
                         <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.seq)"><i class="fa fa-trash"></i></button>
                     </td>
@@ -47,17 +48,17 @@
     <h4 class="modal-title" id="modal-title-{{name}}">Tambah Gedung</h4>
     </div>
     <div class="modal-body" id="modal-body-{{name}}">
-     <div class="form-group">
+    <div class="form-group">
     <input class="form-control" type="text" placeholder="Nama gedung" ng-model="data_input.name">
     </div>
-     <div class="form-group">
+    <div class="form-group">
     <input class="form-control" type="text" placeholder="Deskripsi" ng-model="data_input.description">
     </div>
     </div>
     <div class="modal-footer">            
-            <button class="btn btn-icon btn-success" type="button" ng-click="buildingAdd(data_input)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
-            <button class="btn btn-warning btn-icon"  ng-click="closeAddModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
+    <button class="btn btn-icon btn-success" type="button" ng-click="buildingAdd(data_input)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeAddModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
 </script>
 
 <script type="text/ng-template" id="building-delete-modal.html">
@@ -66,9 +67,9 @@
     <h5>Anda yakin menghapus data ini ?</h5>
     </div>
     <div class="modal-footer">            
-            <button class="btn btn-icon btn-danger" type="button" ng-click="buildingDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
-            <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
+    <button class="btn btn-icon btn-danger" type="button" ng-click="buildingDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
 </script>
 
 <script type="text/ng-template" id="building-edit-modal.html">
@@ -77,15 +78,15 @@
     <h4 class="modal-title">Edit Gedung</h4>
     </div>
     <div class="modal-body">
-     <div class="form-group">
+    <div class="form-group">
     <input class="form-control" type="text" placeholder="Nama gedung" ng-model="dataBuilding.name">
     </div>
-     <div class="form-group">
+    <div class="form-group">
     <input class="form-control" type="text" placeholder="Deskripsi" ng-model="dataBuilding.description">
     </div>
     </div>
     <div class="modal-footer">            
-            <button class="btn btn-icon btn-success" type="button" ng-click="buildingEdit(dataBuilding)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
-            <button class="btn btn-warning btn-icon"  ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
+    <button class="btn btn-icon btn-success" type="button" ng-click="buildingEdit(dataBuilding)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
 </script>
