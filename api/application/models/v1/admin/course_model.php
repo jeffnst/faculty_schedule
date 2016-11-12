@@ -138,9 +138,18 @@ class course_model extends admin_model {
         return $data;
     }
 
-    public function get_teacher_option($course_seq) {
+    public function get_teacher_option($course_seq, $option) {
         try {
-            $sql = $this->db->select('*')->from('teacher_courses')->where('course_seq', $course_seq);
+            if ($option == GET_COUNT) {
+                $sql = $this->db->select('*')->from('teacher_classes')->where('course_seq', $course_seq);
+            } elseif ($option == GET_DETAIL) {
+                $sql = $this->db->distinct()
+                        ->select('t.name as teacher_name')
+                        ->select('t.seq as teacher_seq')
+                        ->from('teacher_classes as tc')
+                        ->join('teacher as t', 'tc.teacher_seq = t.seq')
+                        ->where('tc.course_seq', $course_seq);
+            }
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -157,6 +166,31 @@ class course_model extends admin_model {
             $rows = "";
         }
         $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function check_class($label, $course_seq) {
+        try {
+            $sql = $this->db->select('seq')->from('class')->where('course_seq', $course_seq)->where('label', $label);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($query == TRUE) {
+                if ($count == '0') {
+                    $response = OK_STATUS;
+                    $message = OK_MESSAGE;
+                } else {
+                    $response = FAIL_STATUS;
+                    $message = FAIL_MESSAGE;
+                }
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
         return $data;
     }
 
@@ -183,6 +217,7 @@ class course_model extends admin_model {
         try {
             $sql = $this->db
                     ->select('class.label as class_label')
+                    ->select('class.seq as class_seq')
                     ->select('class.student_total as class_student_total')
 //                    ->select('teacher.name as teacher_name')
                     ->from('class')
@@ -206,6 +241,108 @@ class course_model extends admin_model {
             $rows = "";
         }
         $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function get_teacher_class($class_seq) {
+        try {
+            $sql = "SELECT `teacher`.`name` FROM `teacher_classes` JOIN `class` on `teacher_classes`.`class_seq` = `class`.`seq` JOIN `teacher` on `teacher_classes`.`teacher_seq` = `teacher`.`seq` WHERE `teacher_classes`.`class_seq` = '{$class_seq}'";
+//            $sql = $this->db
+//                    ->select('teacher.name as teacher_name')
+//                    ->from('teacher_classes as tc')
+//                    ->join('class as c', 'tc.class_seq = c.seq')
+//                    ->join('teacher as t', 'tc.teacher_seq = t.seq')
+//                    ->where('tc.class_seq', $class_seq);
+//                    ->order_by('course.seq');
+            $query = $this->db->query($sql);
+//            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->row();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function check_class_teacher($params) {
+        try {
+            $sql = $this->db
+                    ->select('seq')
+                    ->from('teacher_classes')
+                    ->where('course_seq', $params->course_seq)
+//                    ->where('teacher_seq', $params->teacher_seq)
+                    ->where('class_seq', $params->class_seq);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($query == TRUE) {
+                if ($count == '0') {
+                    $response = OK_STATUS;
+                    $message = OK_MESSAGE;
+                } else {
+                    $response = FAIL_STATUS;
+                    $message = FAIL_MESSAGE;
+                }
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
+
+    public function update_class_teacher($params) {
+        try {
+//            $data = array('class_seq' => $params->class_seq);
+//            $where = $this->db->where('course_seq', $params->course_seq)->where('class_seq', $params->class_seq);
+//            $query = $this->db->update('teacher_classes', $data);            
+            $sql = "UPDATE `teacher_classes` SET `teacher_seq` = '{$params->teacher_seq}'  WHERE `class_seq` = '{$params->class_seq}'  AND `course_seq` = '{$params->course_seq}'; ";
+            $query = $this->db->query($sql);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+
+        return $data;
+    }
+    
+    public function add_class_teacher($params) {
+        try {
+            $data = array('teacher_seq' => $params->teacher_seq, 'course_seq' => $params->course_seq, 'class_seq' => $params->class_seq);
+            $query = $this->db->insert('teacher_classes', $data);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
         return $data;
     }
 

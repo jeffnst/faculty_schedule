@@ -89,6 +89,8 @@ $route['v1/admin/course/get/(:any)'] = 'v1/admin/course/get';
 $route['v1/admin/course/delete/(:any)'] = 'v1/admin/course/delete';
 $route['v1/admin/course/put/(:any)'] = 'v1/admin/course/put';
 $route['v1/admin/course/class/add'] = 'v1/admin/course/add_class';
+$route['v1/admin/course/teacher/get/(:any)'] = 'v1/admin/course/get_teacher';
+$route['v1/admin/course/teacher/class/add'] = 'v1/admin/course/add_teacher_class';
 //admin teacher
 $route['v1/admin/teacher/all'] = 'v1/admin/teacher/all';
 $route['v1/admin/teacher/add'] = 'v1/admin/teacher/add';

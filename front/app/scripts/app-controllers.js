@@ -723,7 +723,17 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
             $scope.getCourse = response.response;
         })
     }
-
+//FUNCTION TO GET TEACHER ON COURSE
+    var getTeacherCourse = function (seq) {
+        AdminFactory.GetTeacherCourse(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataTeacherCourse = response.data;
+                console.log(response.data);
+            } else {
+                $scope.dataTeacherCourse = "";
+            }
+        })
+    }
 // IF DETAIL Course
     if ($stateParams.matakuliahSeq) {
         var seq = $stateParams.matakuliahSeq
@@ -765,6 +775,43 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
         }
     }
 
+    $scope.assigneTeacherModal = function (classSeq) {
+        $scope.class_seq = classSeq;
+        getTeacherCourse(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'course-assigne-teacher-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+
+        $scope.CloseAssigneTeacherModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.assigneTeacherSubmit = function (pick_teacher_seq) {
+            input = {
+                teacher_seq: pick_teacher_seq,
+                class_seq: $scope.class_seq,
+                course_seq: $scope.dataCourse.seq
+
+            };
+            console.log(input);
+            AdminFactory.AssigneTeacherCourseClass(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    getCourse(seq);
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
 
 })
 

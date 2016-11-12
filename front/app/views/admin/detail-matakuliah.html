@@ -35,6 +35,7 @@
                         <button class="btn btn-info btn-icon btn-sm" ng-click="addClassModal()"><i class="fa fa-paper-plane-o"></i>Buat kelas</button>
                     </div>
                 </div>                
+                
                 <div ng-repeat="item in dataCourseClasses">
                     <div class="col-lg-6 " style="margin-bottom: 10px;">
                         <div class="card card-block">
@@ -45,57 +46,20 @@
                             </div>
                             <div class="col-lg-10">
                                 <p class="card-text">
-                                    <strong>    {{item.teacher_name}}</strong>
+                                    <strong>Dosen : {{item.class_teacher.name}}</strong>
                                     <br>
-                                    {{item.class_student_total}} Orang
+                                    <strong>Jumlah : {{item.class_student_total}} Orang</strong>
                                 </p>
                                 <hr>
                                 <button class="btn btn-icon btn-sm btn-danger" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-trash"></i> Hapus</button>
                                 <button class="btn btn-icon btn-sm btn-instagram" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-bars"></i> Penjadwalan</button>
-                                <button class="btn btn-icon btn-sm btn-warning" ng-click=""><i class="fa fa-flag"></i> Kelas</button>
+                                <button class="btn btn-icon btn-sm btn-warning" ng-click="assigneTeacherModal(item.class_seq)"><i class="fa fa-user"></i> Dosen</button>
                             </div>
 
                         </div>                       
                     </div>
                 </div>
-            </div>
-            <!--            <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card card-block">
-                                    <h5 class="card-title">
-                                        Tambahkan Mata Kuliah
-                                    </h5>
-                                    <p class="card-text">
-                                        Klik di bawah ini untuk menambahkan mata kuliah.
-                                    </p>
-                                    <button class="btn btn-info btn-icon btn-sm" ng-click="addCourseModal()"><i class="fa fa-plus"></i>Pilih Mata Kuliah</button>
-                                </div>
-                            </div>
-                            <div ng-repeat="item in dataCourseTeacher">
-                                <div class="col-lg-6 " style="margin-bottom: 10px;">
-                                    <div class="card card-block">
-                                        <h5 class="card-title">
-                                            {{item.name}}
-                                        </h5>
-                                        <p class="card-text">
-                                            {{item.major_name}} - {{item.faculty_name}} - {{item.sks}} SKS
-                                        </p>
-                                        <button class="btn btn-icon btn-sm btn-danger" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-trash"></i> Hapus</button>
-                                        <button class="btn btn-icon btn-sm btn-instagram" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-bars"></i> Penjadwalan</button>
-                                        <button class="btn btn-icon btn-sm btn-warning" ng-click=""><i class="fa fa-flag"></i> Kelas</button>
-                                    </div>
-                                </div>
-                            </div>
-            
-                        </div>-->
-            <!--            <hr>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="pull-right">
-                                    <button class="btn btn-info btn-icon " ng-click="addCourseModal()"><i class="fa fa-plus" ></i>Pilih Mata Kuliah</button>
-                                </div>
-                            </div>
-                        </div>-->
+            </div>            
         </uib-tab>
         </uib-tab>
 
@@ -104,7 +68,7 @@
     <!--</div>-->
 
     <div class="card-header">
-        <a href="#" ui-sref="admin.dosen" class="btn btn-icon  btn-success"><i class="fa fa-arrow-left"></i>Kembali</a>
+        <a href="#" ui-sref="admin.matakuliah" class="btn btn-icon  btn-success"><i class="fa fa-arrow-left"></i>Kembali</a>
     </div>
     <script type="text/ng-template" id="add-class-modal.html">
         <div class="modal-header">
@@ -113,11 +77,10 @@
         <div class="modal-body" id="modal-body-{{name}}">
         <div class="form-group">
         <label>Label Kelas</label>    
-        <select ng-model="datainput.first_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>                  
+        <select style="margin-bottom:3px;" ng-model="datainput.first_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>                  
         <select ng-model="datainput.last_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>      
         </div>
         <div class="modal-footer">
-
         <button class="btn btn-icon btn-success" type="button" ng-click="addClassSubmit(datainput)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
         <button class="btn btn-warning btn-icon" ng-click="closeClassModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
@@ -132,6 +95,26 @@
         <div class="modal-footer">
         <button class="btn btn-icon btn-danger" type="button" ng-click="teacherCourseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
         <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="course-assigne-teacher-modal.html">
+        
+        <div class="modal-header">
+        <h4 class="modal-title" id="modal-title-{{name}}">Pilih Dosen</h4>
+        </div>
+        <div class="modal-body" id="modal-body-{{name}}">        
+        <div class="form-group">
+        <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
+        </div>
+        <div class="form-group">                    
+        <div ng-repeat="item in dataTeacherCourse | filter:search">
+         <div><input class="to-labelauty" type="radio" name="rd1" data-labelauty="{{item.teacher_name}}" ng-value="item.teacher_seq" ng-model="dataTeacherCourse.pick_teacher_seq" checked ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}"/></div>
+        </div>
+        </div>
+        <div class="modal-footer">
+
+        <button class="btn btn-icon btn-success" type="button" ng-click="assigneTeacherSubmit(dataTeacherCourse.pick_teacher_seq)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+        <button class="btn btn-warning btn-icon" ng-click="CloseAssigneTeacherModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
     </script>
 </div>

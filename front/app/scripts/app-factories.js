@@ -109,10 +109,19 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataCourse = function (datas) {
         return $http.get(api + 'admin/course/delete/' + datas, getToken());
     };
-    
+
     data.AddDataClassCourse = function (datas) {
         return $http.post(api + 'admin/course/class/add', datas, getToken());
     };
+
+    data.GetTeacherCourse = function (datas) {
+        return $http.get(api + 'admin/course/teacher/get/' + datas, getToken());
+    };
+
+    data.AssigneTeacherCourseClass = function (datas) {
+        return $http.post(api + 'admin/course/teacher/class/add', datas, getToken());
+    };
+
     // Teacher / DOSEN    
     data.GetAllTeacher = function () {
         return $http.get(api + 'admin/teacher/all', getToken());

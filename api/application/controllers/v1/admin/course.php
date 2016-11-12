@@ -34,14 +34,22 @@ class course extends admin {
         echo json_encode($this->_add_class());
     }
 
+    public function get_teacher() {
+        echo json_encode($this->_get_teacher());
+    }
+
+    public function add_teacher_class() {
+        echo json_encode($this->_add_teacher_class());
+    }
+
 //Custom Function
     private function _get_major_option() {
         $get_major = $this->course_model->get_major_option();
         return $get_major;
     }
 
-    private function _get_teacher_option($teacher_seq) {
-        $get_major = $this->course_model->get_teacher_option($teacher_seq);
+    private function _get_teacher_option($course_seq, $option) {
+        $get_major = $this->course_model->get_teacher_option($course_seq, $option);
         return $get_major;
     }
 
@@ -53,7 +61,7 @@ class course extends admin {
             $get_major_option = $this->_get_major_option();
             if ($get_all_course ['response'] == OK_STATUS) {
                 foreach ($get_all_course["data"] as $each) {
-                    $get_teacher = $this->_get_teacher_option($each->seq);
+                    $get_teacher = $this->_get_teacher_option($each->seq, GET_COUNT);
                     $count_teacher = count($get_teacher['data']);
                     $record[] = array(
                         "seq" => $each->seq,
@@ -130,7 +138,20 @@ class course extends admin {
                     if ($get['data'] == NULL) {
                         $data = get_not_found();
                     } else {
-                        $record = array("course_data" => $get['data'], "course_classes" => $class['data']);
+                        foreach ($class['data'] as $each) {
+                            $teacher = $this->course_model->get_teacher_class($each->class_seq);
+                            $class_teacher[] = array(
+                                "class_label" => $each->class_label,
+                                "class_seq" => $each->class_seq,
+                                "class_student_total" => $each->class_student_total,
+                                "class_teacher" => $teacher['data']
+                            );
+                        }
+
+                        if (empty($class_teacher)) {
+                            $class_teacher = "";
+                        }
+                        $record = array("course_data" => $get['data'], "course_classes" => $class_teacher);
                         $data = get_success($record);
                     }
                 } else {
@@ -179,16 +200,74 @@ class course extends admin {
                 $params = new stdClass();
                 $params->classes = $datas->classes;
                 $params->course_seq = $datas->course_seq;
+                $success = FALSE;
                 foreach ($params->classes as $each) {
-                    $add = $this->course_model->add_class($each, $params->course_seq);
-                    if ($add['response'] == OK_STATUS) {
-                        $success[] = TRUE;
+                    $check = $this->course_model->check_class($each, $params->course_seq);
+                    if ($check['response'] == OK_STATUS) {
+                        $add = $this->course_model->add_class($each, $params->course_seq);
+                        if ($add['response'] == OK_STATUS) {
+                            $success[] = TRUE;
+                        } else {
+                            $success[] = FALSE;
+                        }
+                    } else {
+                        $success == FALSE;
                     }
                 }
                 if ($success == TRUE) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _get_teacher() {
+        try {
+            $course_seq = $this->uri->segment(6);
+            if ($course_seq != "") {
+                $get = $this->_get_teacher_option($course_seq, GET_DETAIL);
+                $data = get_success($get['data']);
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _add_teacher_class() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            if ($datas != "") {
+                $params = new stdClass();
+                $params->teacher_seq = $datas->teacher_seq;
+                $params->course_seq = $datas->course_seq;
+                $params->class_seq = $datas->class_seq;
+                $check = $this->course_model->check_class_teacher($params);
+//                print_r($check);
+//                exit();
+                if ($check['response'] == FAIL_STATUS) {
+                    $update = $this->course_model->update_class_teacher($params);
+                    if ($update['response'] == OK_STATUS) {
+                        $data = response_success();
+                    } else {
+                        $data = response_fail();
+                    }
+                } else {
+                    $add = $this->course_model->add_class_teacher($params);
+                    if ($add['response'] == OK_STATUS) {
+                        $data = response_success();
+                    } else {
+                        $data = response_fail();
+                    }
                 }
             } else {
                 $data = response_fail();
