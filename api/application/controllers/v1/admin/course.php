@@ -42,6 +42,10 @@ class course extends admin {
         echo json_encode($this->_add_teacher_class());
     }
 
+    public function delete_class() {
+        echo json_encode($this->_delete_class());
+    }
+
 //Custom Function
     private function _get_major_option() {
         $get_major = $this->course_model->get_major_option();
@@ -113,8 +117,8 @@ class course extends admin {
         try {
             $seq = $this->uri->segment(5);
             if ($seq != "") {
-                $addmajor = $this->course_model->delete($seq);
-                if ($addmajor['response'] == OK_STATUS) {
+                $delete = $this->course_model->delete($seq);
+                if ($delete['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
                     $data = response_fail();
@@ -252,14 +256,15 @@ class course extends admin {
                 $params->course_seq = $datas->course_seq;
                 $params->class_seq = $datas->class_seq;
                 $check = $this->course_model->check_class_teacher($params);
-//                print_r($check);
-//                exit();
+//                print_r($check);exit();
                 if ($check['response'] == FAIL_STATUS) {
-                    $update = $this->course_model->update_class_teacher($params);
-                    if ($update['response'] == OK_STATUS) {
-                        $data = response_success();
-                    } else {
-                        $data = response_fail();
+                    if ($check['data'] == '0') {
+                        $update = $this->course_model->update_class_teacher($params);
+                        if ($update['response'] == OK_STATUS) {
+                            $data = response_success();
+                        } else {
+                            $data = response_fail();
+                        }
                     }
                 } else {
                     $add = $this->course_model->add_class_teacher($params);
@@ -268,6 +273,25 @@ class course extends admin {
                     } else {
                         $data = response_fail();
                     }
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _delete_class() {
+        try {
+            $seq = $this->uri->segment(6);
+            if ($seq != "") {
+                $delete = $this->course_model->delete_class($seq);
+                if ($delete['response'] == OK_STATUS) {
+                    $data = response_success();
+                } else {
+                    $data = response_fail();
                 }
             } else {
                 $data = response_fail();

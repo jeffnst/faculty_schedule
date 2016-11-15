@@ -168,7 +168,7 @@ class teacher_model extends admin_model {
 
     public function add_course($params) {
         try {
-            $data = array('teacher_seq' => $params->teacher_seq, 'course_seq' => $params->course_seq);
+            $data = array('teacher_seq' => $params->teacher_seq, 'course_seq' => $params->course_seq, 'class_seq' => '0');
             $query = $this->db->insert('teacher_classes', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;

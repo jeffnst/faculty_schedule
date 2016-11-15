@@ -113,6 +113,10 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.AddDataClassCourse = function (datas) {
         return $http.post(api + 'admin/course/class/add', datas, getToken());
     };
+    
+    data.DeleteClassCourse = function (datas) {
+        return $http.get(api + 'admin/course/class/delete/' + datas, getToken());
+    };
 
     data.GetTeacherCourse = function (datas) {
         return $http.get(api + 'admin/course/teacher/get/' + datas, getToken());

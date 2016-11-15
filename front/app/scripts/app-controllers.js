@@ -812,6 +812,35 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
             });
         }
     }
+    
+    $scope.deleteClassModal = function (classSeq) {
+        $scope.class_to_delete_seq = classSeq;
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'course-delete-class-modal.html',
+                    controller: 'AdminCourseController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.classDelete = function () {
+            var classSeq = $scope.class_to_delete_seq;
+            AdminFactory.DeleteClassCourse(classSeq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    getCourse(seq);
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
 
 })
 

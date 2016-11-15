@@ -51,8 +51,8 @@
                                     <strong>Jumlah : {{item.class_student_total}} Orang</strong>
                                 </p>
                                 <hr>
-                                <button class="btn btn-icon btn-sm btn-danger" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-trash"></i> Hapus</button>
-                                <button class="btn btn-icon btn-sm btn-instagram" ng-click="deleteCourseModal(item.teacher_courses_seq)"><i class="fa fa-bars"></i> Penjadwalan</button>
+                                <button class="btn btn-icon btn-sm btn-danger" ng-click="deleteClassModal(item.class_seq)"><i class="fa fa-trash"></i> Hapus</button>
+                                <button class="btn btn-icon btn-sm btn-instagram" ng-click="deleteClassModal(item.teacher_courses_seq)"><i class="fa fa-bars"></i> Penjadwalan</button>
                                 <button class="btn btn-icon btn-sm btn-warning" ng-click="assigneTeacherModal(item.class_seq)"><i class="fa fa-user"></i> Dosen</button>
                             </div>
 
@@ -117,6 +117,17 @@
         <button class="btn btn-warning btn-icon" ng-click="CloseAssigneTeacherModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
     </script>
+    
+    <script type="text/ng-template" id="course-delete-class-modal.html">
+    <div class="modal-header"> <h5>Konfirmasi</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+    <h5>Anda yakin menghapus data ini ?</h5>
+    </div>
+    <div class="modal-footer">            
+    <button class="btn btn-icon btn-danger" type="button" ng-click="classDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
+</script>
 </div>
 
 
