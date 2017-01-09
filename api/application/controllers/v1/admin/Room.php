@@ -1,6 +1,6 @@
 <?php
 
-include 'admin.php';
+include 'Admin.php';
 
 class room extends admin {
 

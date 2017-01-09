@@ -101,3 +101,15 @@ $route['v1/admin/teacher/put/(:any)'] = 'v1/admin/teacher/put';
 $route['v1/admin/teacher/course/add'] = 'v1/admin/teacher/add_course';
 $route['v1/admin/teacher/course/get/(:any)'] = 'v1/admin/teacher/get_course';
 $route['v1/admin/teacher/course/delete/(:any)'] = 'v1/admin/teacher/delete_course';
+//admin day
+$route['v1/admin/day/all'] = 'v1/admin/day/all';
+$route['v1/admin/day/add'] = 'v1/admin/day/add';
+$route['v1/admin/day/get/(:any)'] = 'v1/admin/day/get';
+$route['v1/admin/day/delete/(:any)'] = 'v1/admin/day/delete';
+$route['v1/admin/day/put/(:any)'] = 'v1/admin/day/put';
+// admin hour
+$route['v1/admin/hour/all'] = 'v1/admin/hour/all';
+$route['v1/admin/hour/add'] = 'v1/admin/hour/add';
+$route['v1/admin/hour/get/(:any)'] = 'v1/admin/hour/get';
+$route['v1/admin/hour/delete/(:any)'] = 'v1/admin/hour/delete';
+$route['v1/admin/hour/put/(:any)'] = 'v1/admin/hour/put';

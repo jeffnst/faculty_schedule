@@ -155,6 +155,17 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
                             }]
                     },
                 })
+                .state('admin.hari', {
+                    url: '/hari',
+                    templateUrl: viewsPrefix + 'admin/hari.html',
+                    controller: 'AdminDayController',
+                })
+                
+                .state('admin.jam', {
+                    url: '/jam',
+                    templateUrl: viewsPrefix + 'admin/jam.html',
+                    controller: 'AdminHourController',
+                })
         $urlRouterProvider.otherwise("/front/login-admin")
     })])
 

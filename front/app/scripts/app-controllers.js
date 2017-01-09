@@ -1,6 +1,6 @@
 var controllers = angular.module('app.controllers', [])
-
-controllers.controller('AdminHeaderController', function ($scope, AdminTokenService, $localStorage, $state, $stateParams, toastr, $uibModal) {
+//HEADER CONTROLLER
+controllers.controller('AdminHeaderController', function ($scope, $rootScope, AdminTokenService, $localStorage, $state, $stateParams, toastr, $uibModal) {
     AdminTokenService.checkToken();
     $scope.logoutModal = function () {
         $scope.$uibModalInstance =
@@ -19,13 +19,16 @@ controllers.controller('AdminHeaderController', function ($scope, AdminTokenServ
         };
         $scope.doLogout = function () {
             delete $localStorage.faculty_schedule_token;
+            $rootScope.title = "";
+            $scope = "";
             $state.go('front.login-admin');
             toastr.success('Berhasil keluar');
         }
     }
 
 })
-controllers.controller('AdminLoginController', function ($scope, $localStorage, $state, $stateParams, jwtHelper, md5, toastr, AdminFactory) {
+//LOGIN CONTROLLER
+controllers.controller('AdminLoginController', function ($scope, $rootScope, $localStorage, $state, $stateParams, jwtHelper, md5, toastr, AdminFactory) {
     $scope.doLogin = function () {
         input = {
             username: $scope.inputdata.username
@@ -38,6 +41,7 @@ controllers.controller('AdminLoginController', function ($scope, $localStorage, 
                 dataAuth = {
                     token: response
                 };
+                $rootScope.title = "Dashboard";
                 $localStorage.faculty_schedule_token = dataAuth;
                 $state.go('admin.dashboard');
             } else {
@@ -47,8 +51,7 @@ controllers.controller('AdminLoginController', function ($scope, $localStorage, 
 
     }
 })
-
-
+//BUILDING CONTROLLER
 controllers.controller('AdminBuildingController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
 
@@ -179,7 +182,7 @@ controllers.controller('AdminBuildingController', function ($rootScope, $scope, 
 
 
 })
-
+//ROOM CONTROLLER
 controllers.controller('AdminRoomController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
     $rootScope.title = "Ruangan";
@@ -311,7 +314,7 @@ controllers.controller('AdminRoomController', function ($rootScope, $scope, $loc
     }
 
 })
-
+//FACULTY CONTROLLER
 controllers.controller('AdminFacultyController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
 
@@ -442,7 +445,7 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
 
 
 })
-
+//MAJOR CONTROLLER
 controllers.controller('AdminMajorController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
 
@@ -575,7 +578,7 @@ controllers.controller('AdminMajorController', function ($rootScope, $scope, $lo
 
 
 })
-
+//COURSE CONTROLLER
 controllers.controller('AdminCourseController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
 
@@ -668,8 +671,6 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
                     classes: classes,
                     course_seq: $scope.dataCourse.seq
                 };
-
-//                console.log(input);
 
                 AdminFactory.AddDataClassCourse(input).success(function (response) {
                     if (response.response != "FAIL") {
@@ -812,7 +813,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
             });
         }
     }
-    
+
     $scope.deleteClassModal = function (classSeq) {
         $scope.class_to_delete_seq = classSeq;
         $scope.$uibModalInstance =
@@ -843,7 +844,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $scope, $l
     }
 
 })
-
+//TEACHER CONTROLLER
 controllers.controller('AdminTeacherController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
 {
 
@@ -974,7 +975,6 @@ controllers.controller('AdminTeacherController', function ($rootScope, $scope, $
     }
 
     $scope.addCourseModal = function () {
-//        getAllCourse();
         $scope.$uibModalInstance =
                 $uibModal.open({
                     scope: $scope,
@@ -995,7 +995,6 @@ controllers.controller('AdminTeacherController', function ($rootScope, $scope, $
                 teacher_seq: $scope.dataTeacher.seq
 
             };
-//            console.log(JSON.stringify(input));
             AdminFactory.AddCourseTeacher(input).success(function (response) {
                 if (response.response != "FAIL") {
                     $scope.$uibModalInstance.dismiss();
@@ -1079,3 +1078,297 @@ controllers.controller('AdminTeacherController', function ($rootScope, $scope, $
 
 
 })
+//DAY CONTROLLER
+controllers.controller('AdminDayController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
+{
+
+    $rootScope.title = "Hari";
+    $rootScope.parent_title = "";
+    var refreshDayData = function () {
+        AdminFactory.GetAllDay().success(function (response) {
+            if (response.response == "OK") {
+                $scope.data = response.data;
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+    if (!$stateParams.dosenSeq) {
+        refreshDayData();
+    }
+
+    $scope.addModal = function () {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'day-add-modal.html',
+                    controller: 'AdminDayController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.dayAdd = function (data_input) {
+            input = {
+                name: data_input.name,
+            };
+
+            AdminFactory.AddDataDay(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshDayData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+    $scope.deleteModal = function (seq) {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'day-delete-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.dayDelete = function () {
+            AdminFactory.DeleteDataDay(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshDayData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+
+// FUNCTION TO GET Day DETAIL
+
+    var getDay = function (seq) {
+        AdminFactory.GetDay(seq).success(function (response) {
+            if (response.response == "OK") {
+                $scope.dataDay = response.data;
+                $scope.getDay = response.response;
+            } else {
+                $scope.dataDay = "";
+                $rootScope.getDay = response.response;
+            }
+        })
+
+    }
+    var getAllDay = function () {
+        AdminFactory.GetAllDay(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataDay = response.data;
+            } else {
+                $scope.dataDay = "";
+
+            }
+        })
+    }
+
+// IF DETAIL Day
+//    if ($stateParams.dosenSeq) {
+//        var seq = $stateParams.dosenSeq
+//        getTeacher(seq);
+//        getCourseTeacher(seq);
+//    } 
+// EDIT MODAL
+    $scope.editModal = function (seq) {
+        getDay(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'day-edit-modal.html',
+                    controller: 'AdminDayController',
+                    size: 'lg'
+                });
+
+        $scope.closeEditModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.dayEdit = function (dataDay) {
+            input = {
+                name: dataDay.name,
+                seq: dataDay.seq
+            };
+            AdminFactory.PutDataDay(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshDayData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+})
+//HOUR CONTROLLER
+controllers.controller('AdminHourController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal)
+{
+
+    $rootScope.title = "Jam";
+    $rootScope.parent_title = "";
+    var refreshHourData = function () {
+        AdminFactory.GetAllHour().success(function (response) {
+            if (response.response == "OK") {
+                $scope.data = response.data;
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+    if (!$stateParams.dosenSeq) {
+        refreshHourData();
+    }
+
+    $scope.addModal = function () {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'hour-add-modal.html',
+                    controller: 'AdminHourController',
+                    size: 'lg'
+                });
+
+        $scope.closeAddModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.hourAdd = function (data_input) {
+            start =
+                    input = {
+                        name: data_input.name,
+                        start: new Date(data_input.start),
+                        end: new Date(data_input.end),
+                    };
+
+            AdminFactory.AddDataHour(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshHourData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+    $scope.deleteModal = function (seq) {
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'hour-delete-modal.html',
+                    controller: 'AdminTeacherController',
+                    size: 'lg'
+                });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+        $scope.hourDelete = function () {
+            AdminFactory.DeleteDataHour(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshHourData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+    }
+
+// FUNCTION TO GET Hour DETAIL
+
+    var getHour = function (seq) {
+        AdminFactory.GetHour(seq).success(function (response) {
+            if (response.response == "OK") {
+                $scope.dataHour = response.data;
+                $scope.getHour = response.response;
+            } else {
+                $scope.dataHour = "";
+                $rootScope.getHour = response.response;
+            }
+        })
+
+    }
+    var getAllHour = function () {
+        AdminFactory.GetAllHour(seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataHour = response.data;
+            } else {
+                $scope.dataHour = "";
+
+            }
+        })
+    }
+
+// IF DETAIL Hour
+//    if ($stateParams.dosenSeq) {
+//        var seq = $stateParams.dosenSeq
+//        getTeacher(seq);
+//        getCourseTeacher(seq);
+//    } 
+// EDIT MODAL
+    $scope.editModal = function (seq) {
+        getHour(seq);
+        $scope.$uibModalInstance =
+                $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    ariaLabelledBy: 'modal-title-top',
+                    ariaDescribedBy: 'modal-body-top',
+                    templateUrl: 'hour-edit-modal.html',
+                    controller: 'AdminHourController',
+                    size: 'lg'
+                });
+
+        $scope.closeEditModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.hourEdit = function (dataHour) {
+            input = {
+                name: dataHour.name,
+                seq: dataHour.seq
+            };
+            AdminFactory.PutDataHour(input).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    refreshHourData();
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            });
+        }
+    }
+
+})
+
