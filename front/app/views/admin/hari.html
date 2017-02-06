@@ -44,7 +44,14 @@
     <div class="form-group">
      <label class="label">Nama {{title}}</label>
     <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="data_input.name">
-    </div>         
+    </div>
+             
+    <div class="form-group">
+    <label class="label">Jam Perkuliahan</label>     
+    <div ng-repeat="each in dataHour">
+        <input class="to-labelauty" type="checkbox" data-labelauty="{{each.name}} ( {{each.start_hour}}:{{each.start_min}} - {{each.end_hour}}:{{each.end_min}})   " checklist-model="data_input.hours.hours_pick_seq" checklist-value="each.seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
+        </div>
+    </div>
             
     </div>
     <div class="modal-footer">            
@@ -75,6 +82,12 @@
      <label class="label">Nama {{title}}</label>
     <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="dataDay.name">
     </div>        
+    <div class="form-group">
+     <label class="label">Jam Perkuliahan</label>
+    <div ng-repeat="item in dataHour">
+        <input class="to-labelauty" type="checkbox" data-labelauty="{{item.name}} - {{item.major_name}} - {{item.faculty_name}} - {{item.sks}} SKS " checklist-model="dataCourse.courses.pick_course_seq" checklist-value="item.seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
+        </div>
+    </div>
     </div>
     <div class="modal-footer">            
             <button class="btn btn-icon btn-success" type="button" ng-click="dayEdit(dataDay)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 

@@ -21,6 +21,7 @@ var apps = angular.module('app', [
     'ngTouch',
     'pascalprecht.translate',
     'toastr',
+    'multiStepForm',
 //    'datatables',     
     'angularUtils.directives.dirPagination'
 ]);

@@ -50,7 +50,12 @@ class hour_model extends admin_model {
 
     public function add($params) {
         try {
-            $data = array('name' => $params->name, 'start' => $params->start, 'end' => $params->end);
+            $data = array('name' => $params->name,
+                'start_hour' => $params->start_hour,
+                'start_min' => $params->start_min,
+                'end_hour' => $params->end_hour,
+                'end_min' => $params->end_min,
+            );
             $query = $this->db->insert('hour', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -87,7 +92,12 @@ class hour_model extends admin_model {
 
     public function put($params) {
         try {
-            $data = array('name' => $params->name, 'start' => $params->start, 'end' => $params->end);
+            $data = array('name' => $params->name,
+                'start_hour' => $params->start_hour,
+                'start_min' => $params->start_min,
+                'end_hour' => $params->end_hour,
+                'end_min' => $params->end_min,
+            );
             $where = $this->db->where('seq', $params->seq);
             $query = $this->db->update('hour', $data);
             if ($query == TRUE) {

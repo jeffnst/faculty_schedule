@@ -1,0 +1,89 @@
+<br> Pilih hari :
+<br>
+<br>
+<!--<select class='form-control' ng-model="data_input.pick_course_seq" ng-options="item.seq as item.name for item in dataCourse.courses" ng-change="setCourse()"></select>-->
+
+<div class="row">
+
+    <!--
+    <div ng-repeat="each in dataDay">
+        <div class="col-md-6">
+
+            <input class="to-labelauty" type="checkbox" data-labelauty="{{each.name}}" checklist-model="data_input.pick_day_seq" checklist-value="each.seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" ng-click="pickHourModal(each.seq)" />
+
+        </div>
+    </div>
+
+-->
+
+    <div ng-repeat="each in dataDay.day_hours">
+        <div class="col-md-12">
+            <div class="card card-default card-collapsed">
+                <div class="card-header">
+                    {{each.day_name}}
+                    <div class="card-controls">
+                        <a href="javascript:;" class="card-collapse" card-control-collapse=""></a>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Label</th>
+                            <th>Durasi</th>
+                            <th>Ruangan</th>
+                            <th>Status</th>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in each.hour | orderBy : 'hour_seq'">
+                                <td>{{ item.hour_name}}</td>
+                                <td>{{ item.start_hour}} : {{item.start_min}} - {{ item.end_hour}} : {{item.end_min}} </td>
+                                <td>
+                                    <!--
+                                    <div ng-init="checkRoom(item.day_hour_seq)">
+                                        <button class="btn btn-warning btn-flat btn-sm" ng-click="pickHourModal(item.day_hour_seq)">Pilih Ruangan</button>
+
+                                    </div>
+-->
+                                    <select ng-model="item.room_seq" ng-options="room.seq as room.name for room in dataRoom" ng-change="checkRoom(item.day_hour_seq,item.room_seq)" ng-attr-id="{{ 'room_options_' + item.day_hour_seq }}">
+                                    </select>
+                                </td>
+                                <td>
+                                    <span ng-attr-id="{{ 'availability_status_' + item.day_hour_seq }}">
+                                            
+                                    </span>
+                                    <a ng-click="removePickedRoom(item.day_hour_seq)" style="display:none;" ng-attr-id="{{ 'remove_btn_' + item.day_hour_seq }}"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="pick-hour-modal.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title-{{name}}">Pilih Ruangan</h4>
+    </div>
+    <div class="modal-body" id="modal-body-{{name}}">
+        <!--        {{dataDay.rooms}}-->
+        <!--        {{dataDayRoom}}-->
+        <div class="row">
+
+            <div ng-repeat="each in dataDayRoom">
+                <div class="col-md-12">
+                    <input class="to-labelauty" type="radio" data-labelauty="{{each.room_name}}" ng-model="dataDayRoom.pick_room_seq" ng-value="each.room_seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" ng-if="each.room_availability == 'YES' " </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-icon btn-success" type="button" ng-click="addRoom(dataDayRoom)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+            <button class="btn btn-warning btn-icon" ng-click="closeAddModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
+</script>
+<!--{{dataDay}}-->

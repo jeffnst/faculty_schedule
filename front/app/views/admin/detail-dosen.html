@@ -20,28 +20,28 @@
                 <span class="form-control">{{dataTeacher.address}}</span>
             </div>
         </uib-tab>
-        <uib-tab index="1" heading="Mata Kuliah">
+        <uib-tab index="1" heading="Kelas">
 
-            Mata kuliah yang diambil oleh dosen :
+            Kelas yang diambil oleh dosen :
             <br>
             <br>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card card-block">
                         <h5 class="card-title">
-                            Tambahkan Mata Kuliah
+                            Tambahkan Kelas
                         </h5>
                         <p class="card-text">
-                            Klik di bawah ini untuk menambahkan mata kuliah.
+                            Klik di bawah ini untuk menambahkan kelas.
                         </p>
-                        <button class="btn btn-info btn-icon btn-sm" ng-click="addCourseModal()"><i class="fa fa-plus"></i>Pilih Mata Kuliah</button>
+                        <button class="btn btn-info btn-icon btn-sm" ng-click="addCourseModal()"><i class="fa fa-plus"></i>Pilih Kelas</button>
                     </div>
                 </div>
                 <div ng-repeat="item in dataCourseTeacher">
                     <div class="col-lg-6 " style="margin-bottom: 10px;">
                         <div class="card card-block">
                             <h5 class="card-title">
-                                {{item.name}}
+                                {{item.name}} - Kelas {{item.label}}
                             </h5>
                             <p class="card-text">
                                 {{item.major_name}} - {{item.faculty_name}} - {{item.sks}} SKS
@@ -58,7 +58,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="pull-right">
-                                    <button class="btn btn-info btn-icon " ng-click="addCourseModal()"><i class="fa fa-plus" ></i>Pilih Mata Kuliah</button>
+                                    <button class="btn btn-info btn-icon " ng-click="addCourseModal()"><i class="fa fa-plus" ></i>Pilih Kelas</button>
                                 </div>
                             </div>
                         </div>-->
@@ -74,14 +74,14 @@
     </div>
     <script type="text/ng-template" id="teacher-add-course-modal.html">
         <div class="modal-header">
-        <h4 class="modal-title" id="modal-title-{{name}}">Pilih Mata Kuliah</h4>
+        <h4 class="modal-title" id="modal-title-{{name}}">Pilih Kelas</h4>
         </div>
         <div class="modal-body" id="modal-body-{{name}}">
         <div class="form-group">
         <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
         </div>
-        <div ng-repeat="item in dataCourse | filter:search">
-        <input class="to-labelauty" type="checkbox" data-labelauty="{{item.name}} - {{item.major_name}} - {{item.faculty_name}} - {{item.sks}} SKS " checklist-model="dataCourse.courses.pick_course_seq" checklist-value="item.seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
+        <div ng-repeat="item in dataCourse | filter:search">        
+        <input class="to-labelauty" type="checkbox" data-labelauty="{{item.name}} - Kelas {{item.label}} - {{item.major_name}} - {{item.faculty_name}} - {{item.sks}} SKS " checklist-model="dataCourse.courses.pick_class_seq" checklist-value="item.class_seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
         </div>
         </div>
         <div class="modal-footer">

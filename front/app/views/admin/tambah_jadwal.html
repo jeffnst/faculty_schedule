@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-block">
+        <multi-step-container steps="steps" class="simple-prev-next">
+            <div class="row">
+                <div class="col-md-4">
+                    <button ng-disabled="$isFirst()" class="btn btn-default" ng-click="$previousStep()"> <span class="fa fa-chevron-left"></span> Previous </button>
+                </div>
+                <div class="col-md-4">
+                    <!--                    <center><strong ng-bind-template="{{$getActiveIndex()}}. {{$getActiveStep().title}}"></strong></center>-->
+                    <center>
+                        <h4>{{$getActiveStep().title}}</h4>
+                    </center>
+
+                </div>
+                <div class="col-md-4 ">
+                    <button ng-disabled="$isLast() " class="pull-right btn btn-default " ng-click="$nextStep() ">
+                        Next <span class="fa fa-chevron-right "></span>
+                    </button>
+                </div>
+            </div>
+            <main step-container></main>
+        </multi-step-container>
+    </div>
+    <div class="card card-footer" ng-if="$root.LastStep == 'pick_day_hour'">
+        <button class="btn btn-primary pull-right" ng-click="addRoomData()">Simpan</button>
+    </div>
+
+</div>

@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="card-block">
+        <div class="form-group">
+            <label class="label">Nama {{title}}</label>
+            <span class="form-control">{{dataDay.name}}</span>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Jam Perkuliahan</label>
+            <div class="form-group">
+                <button class="btn btn-info btn-icon btn-sm" ng-click="addHourModal()"><i class="fa fa-plus"></i>Pilih jam kuliah</button>
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Jam Perkuliahan</th>
+                            <th>Waktu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="each in dataDayHour.picked_hour">
+                        <tr ng-if="each.day_hour_seq != null">
+                            <td>{{each.hour_name}}</td>
+                            <td>{{each.start_hour}} : {{each.start_min}} - {{each.end_hour}} : {{each.end_min}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteHourModal(each.day_hour_seq)"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-header">
+        <a href="#" ui-sref="admin.hari" class="btn btn-icon  btn-success"><i class="fa fa-arrow-left"></i>Kembali</a>
+    </div>
+</div>
+</div>
+
+<script type="text/ng-template" id="add-hour-modal.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title-{{name}}">Tambahkan Jam Perkuliahan</h4>
+    </div>
+    <div class="modal-body" id="modal-body-{{name}}">
+        <div class="form-group">
+            <label class="label">Jam Perkuliahan</label>
+            <div class="row">
+
+                <div ng-repeat="each in dataDayHour.unpicked_hour">
+                    <div class="col-md-6">
+
+                        <input class="to-labelauty" type="checkbox" data-labelauty="{{each.name}} ( {{each.start_hour}}:{{each.start_min}} - {{each.end_hour}} : {{each.end_min}} )   " checklist-model="dataDayHour.hour.pick_hour_seq" checklist-value="each.seq" ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-icon btn-success" type="button" ng-click="addHourSubmit(dataDayHour.hour)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+            <button class="btn btn-warning btn-icon" ng-click="closeHourModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
+</script>
+
+<script type="text/ng-template" id="day-hour-delete-modal.html">
+    <div class="modal-header">
+        <h5>Konfirmasi</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+        <h5>Anda yakin menghapus data ini ?</h5>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-icon btn-danger" type="button" ng-click="hourDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
+</script>

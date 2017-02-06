@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class admin extends CI_Controller {
 
-//PUBLIC FUNCTION
+//PUBLIC FUNCTION 
     function __construct() {
         parent::__construct();
         $this->load->helper('jwt_helper');

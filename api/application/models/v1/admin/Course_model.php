@@ -58,7 +58,54 @@ class course_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
+    
+    
+    
+    public function get_schedule($seq) {
+        try {
+            $sql = $this->db->select('*')->from('course')->where('seq', $seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->row();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
 
+    
+     public function get_class($seq) {
+        try {
+            $sql = $this->db->select('*')->from('class')->where('course_seq', $seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+    
     public function add($params) {
         try {
             $data = array('name' => $params->name, 'major_seq' => $params->major_seq, 'description' => $params->description, 'sks' => $params->sks);
@@ -101,6 +148,25 @@ class course_model extends admin_model {
             $data = array('name' => $params->name, 'major_seq' => $params->major_seq, 'description' => $params->description, 'sks' => $params->sks);
             $where = $this->db->where('seq', $params->seq);
             $query = $this->db->update('course', $data);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
+    
+    public function put_schedule($params) {        
+        try {            
+            $where = $this->db->where('seq', $params['seq']);
+            $query = $this->db->update('schedule', $params);
             if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;

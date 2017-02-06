@@ -161,14 +161,15 @@ class teacher extends admin {
     }
 
     private function _get_course() {
+        
         try {
             $seq = $this->uri->segment(6);
             if ($seq != "") {
-                $get = $this->teacher_model->get_course($seq);
+                $get = $this->teacher_model->get_course($seq);                                               
                 if ($get['response'] == OK_STATUS) {
                     $data = get_success($get['data']);
                 } else {
-                    $data = response_fail();
+                    $data = response_fail();    
                 }
             } else {
                 $data = response_fail();
@@ -183,15 +184,15 @@ class teacher extends admin {
         try {
             $datas = json_decode(file_get_contents('php://input'));
             if ($datas != "") {
-                $pick_course_seq = $datas->seq;
+                $pick_class_seq = $datas->seq;
                 $teacher_seq = $datas->teacher_seq;
-                if (empty($pick_course_seq)) {
+                if (empty($pick_class_seq)) {
                     $data = post_empty();
                 } else {
-                    foreach ($pick_course_seq as $each) {
+                    foreach ($pick_class_seq as $each) {
                         $params = new stdClass();
                         $params->teacher_seq = $teacher_seq;
-                        $params->course_seq = $each;
+                        $params->class_seq = $each;
                         $check = $this->teacher_model->check_add_course($params);
                         if ($check['response'] == OK_STATUS) {
                             $add[] = $this->teacher_model->add_course($params);

@@ -67,6 +67,7 @@ $route['v1/admin/building/put/(:any)'] = 'v1/admin/building/put';
 // admin room
 $route['v1/admin/room/all'] = 'v1/admin/room/all';
 $route['v1/admin/room/add'] = 'v1/admin/room/add';
+$route['v1/admin/room/course/(:any)'] = 'v1/admin/room/get_course';
 $route['v1/admin/room/get/(:any)'] = 'v1/admin/room/get';
 $route['v1/admin/room/delete/(:any)'] = 'v1/admin/room/delete';
 $route['v1/admin/room/put/(:any)'] = 'v1/admin/room/put';
@@ -85,13 +86,19 @@ $route['v1/admin/major/put/(:any)'] = 'v1/admin/major/put';
 //admin course
 $route['v1/admin/course/all'] = 'v1/admin/course/all';
 $route['v1/admin/course/add'] = 'v1/admin/course/add';
+$route['v1/admin/course/schedule/(:any)'] = 'v1/admin/course/get_schedule';
 $route['v1/admin/course/get/(:any)'] = 'v1/admin/course/get';
 $route['v1/admin/course/delete/(:any)'] = 'v1/admin/course/delete';
 $route['v1/admin/course/put/(:any)'] = 'v1/admin/course/put';
+$route['v1/admin/course/class/get/(:any)'] = 'v1/admin/course/get_class';
 $route['v1/admin/course/class/add'] = 'v1/admin/course/add_class';
 $route['v1/admin/course/class/delete/(:any)'] = 'v1/admin/course/delete_class';
 $route['v1/admin/course/teacher/get/(:any)'] = 'v1/admin/course/get_teacher';
 $route['v1/admin/course/teacher/class/add'] = 'v1/admin/course/add_teacher_class';
+$route['v1/admin/course/schedule/delete/(:any)'] = 'v1/admin/course/delete_schedule';
+$route['v1/admin/course/schedule_put'] = 'v1/admin/course/put_schedule';
+$route['v1/admin/course/schedule/get/(:any)'] = 'v1/admin/course/get_schedule';
+
 //admin teacher
 $route['v1/admin/teacher/all'] = 'v1/admin/teacher/all';
 $route['v1/admin/teacher/add'] = 'v1/admin/teacher/add';
@@ -107,9 +114,18 @@ $route['v1/admin/day/add'] = 'v1/admin/day/add';
 $route['v1/admin/day/get/(:any)'] = 'v1/admin/day/get';
 $route['v1/admin/day/delete/(:any)'] = 'v1/admin/day/delete';
 $route['v1/admin/day/put/(:any)'] = 'v1/admin/day/put';
+$route['v1/admin/day/hour/add'] = 'v1/admin/day/add_hour';
+$route['v1/admin/day/hour/get/(:any)'] = 'v1/admin/day/get_hour';
+$route['v1/admin/day/hour/delete/(:any)'] = 'v1/admin/day/delete_hour';
 // admin hour
 $route['v1/admin/hour/all'] = 'v1/admin/hour/all';
 $route['v1/admin/hour/add'] = 'v1/admin/hour/add';
 $route['v1/admin/hour/get/(:any)'] = 'v1/admin/hour/get';
 $route['v1/admin/hour/delete/(:any)'] = 'v1/admin/hour/delete';
 $route['v1/admin/hour/put/(:any)'] = 'v1/admin/hour/put';
+
+//admin schedule
+//$route['v1/admin/schedule/get/(:any'] = 'v1/admin/schedule/get';
+$route['v1/admin/schedule/course/(:any)'] = 'v1/admin/schedule/get_course';
+$route['v1/admin/schedule/check_room'] = 'v1/admin/schedule/check_room';
+$route['v1/admin/schedule/add_room'] = 'v1/admin/schedule/add_room';

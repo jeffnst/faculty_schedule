@@ -29,11 +29,34 @@ class room extends admin {
     public function put() {
         echo json_encode($this->_put());
     }
+    
+    public function get_course() {
+        echo json_encode($this->_get_room_by_course());
+    }
 
 //Custom Function
     private function _get_building_option() {
         $get_building = $this->room_model->get_building_option();
         return $get_building;
+    }
+    
+    private function _get_room_by_course(){
+        try {            
+            $course_seq = $this->uri->segment(5);                        
+            if ($course_seq != "") {
+                $get_rooms = $this->room_model->get_by_course($course_seq);
+                if ($get_rooms['response'] == OK_STATUS) {
+                    $data = get_success($get_rooms['data']);
+                } else {
+                    $data = response_fail();
+                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
     }
 
 //PRIVATE FUNCTION

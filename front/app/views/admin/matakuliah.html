@@ -1,26 +1,26 @@
 <div class="card">
     <div class="card-block">
-        <button class="btn btn-icon btn-info" ng-click="addModal()"><i class="fa fa-plus"></i>Tambah {{title}}</button>        
+        <button class="btn btn-icon btn-info" ng-click="addModal()"><i class="fa fa-plus"></i>Tambah {{title}}</button>
         <form class="form-inline pull-right">
-            <div class="form-group">                    
+            <div class="form-group">
                 <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
             </div>
         </form>
-    </div>    
-    <div class="card-block">        
+    </div>
+    <div class="card-block">
         <table class="table table-hover ">
             <thead class="thead-default">
-                <tr >                        
+                <tr>
                     <th>Nama</th>
-                    <th>Jurusan</th>                    
+                    <th>Jurusan</th>
                     <th>Jumlah SKS</th>
                     <th>Jumlah Kelas</th>
                     <th>Jumlah Dosen</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody>             
-                <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                        
+            <tbody>
+                <tr dir-paginate="item in data|filter:search|itemsPerPage:20">
                     <td>{{ item.name}}</td>
                     <td>{{ item.major_name}}</td>
                     <td>{{ item.sks}} SKS</td>
@@ -46,72 +46,73 @@
 
 <script type="text/ng-template" id="course-add-modal.html">
     <div class="modal-header">
-    <h4 class="modal-title" id="modal-title-{{name}}">Tambah {{title}}</h4>
+        <h4 class="modal-title" id="modal-title-{{name}}">Tambah {{title}}</h4>
     </div>
     <div class="modal-body" id="modal-body-{{name}}">
-    <div class="form-group">
-    <label class="label">Nama {{title}}</label>
-    <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="data_input.name">
+        <div class="form-group">
+            <label class="label">Nama {{title}}</label>
+            <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="data_input.name">
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih {{parent_title}}</label>
+            <select class='form-control' ng-model="data_input.major_seq" ng-options="item.seq as item.name for item in majorOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih SKS</label>
+            <select class='form-control' ng-model="data_input.sks" ng-options="item for item in sksOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Deskripsi {{title}}</label>
+            <input class="form-control" type="text" placeholder="Deskripsi" ng-model="data_input.description">
+        </div>
     </div>
-    <div class="form-group">                                          
-    <label class="label">Pilih {{parent_title}}</label>
-    <select  class='form-control' ng-model="data_input.major_seq" ng-options="item.seq as item.name for item in majorOption">                                                
-    </select>
-    </div>
-    <div class="form-group">                                          
-    <label class="label">Pilih SKS</label>     
-    <select  class='form-control' ng-model="data_input.sks" ng-options="item for item in sksOption">                                                
-    </select>
-    </div>
-    <div class="form-group">
-    <label class="label">Deskripsi {{title}}</label>
-    <input class="form-control" type="text" placeholder="Deskripsi" ng-model="data_input.description">
-    </div>
-    </div>
-    <div class="modal-footer">            
-    <button class="btn btn-icon btn-success" type="button" ng-click="courseAdd(data_input)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
-    <button class="btn btn-warning btn-icon"  ng-click="closeAddModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    <div class="modal-footer">
+        <button class="btn btn-icon btn-success" type="button" ng-click="courseAdd(data_input)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeAddModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
     </div>
 </script>
 
 <script type="text/ng-template" id="course-delete-modal.html">
-    <div class="modal-header"> <h5>Konfirmasi</h5></div>
+    <div class="modal-header">
+        <h5>Konfirmasi</h5></div>
     <div class="modal-body" id="modal-body-{{name}}">
-    <h5>Anda yakin menghapus data ini ?</h5>
+        <h5>Anda yakin menghapus data ini ?</h5>
     </div>
-    <div class="modal-footer">            
-    <button class="btn btn-icon btn-danger" type="button" ng-click="courseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
-    <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    <div class="modal-footer">
+        <button class="btn btn-icon btn-danger" type="button" ng-click="courseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
     </div>
 </script>
 
 <script type="text/ng-template" id="course-edit-modal.html">
 
     <div class="modal-header">
-    <h4 class="modal-title">Edit {{title}}</h4>
+        <h4 class="modal-title">Edit {{title}}</h4>
     </div>
     <div class="modal-body">
-    <div class="form-group">
-    <label class="label">Nama {{title}}</label>
-    <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="dataCourse.name">
+        <div class="form-group">
+            <label class="label">Nama {{title}}</label>
+            <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="dataCourse.name">
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih {{parent_title}}</label>
+            <select class='form-control' ng-model="dataCourse.major_seq" ng-options="item.seq as item.name for item in majorOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih SKS</label>
+            <select class='form-control' ng-model="dataCourse.sks" ng-options="item for item in sksOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Deskripsi {{title}}</label>
+            <input class="form-control" type="text" placeholder="Deskripsi" ng-model="dataCourse.description">
+        </div>
     </div>
-    <div class="form-group">                                          
-    <label class="label">Pilih {{parent_title}}</label>
-    <select  class='form-control' ng-model="dataCourse.major_seq" ng-options="item.seq as item.name for item in majorOption">                                                
-    </select>
-    </div>
-    <div class="form-group">                                          
-    <label class="label">Pilih SKS</label>     
-    <select  class='form-control' ng-model="dataCourse.sks" ng-options="item for item in sksOption">                                                
-    </select>
-    </div>
-    <div class="form-group">
-    <label class="label">Deskripsi {{title}}</label>
-    <input class="form-control" type="text" placeholder="Deskripsi" ng-model="dataCourse.description">
-    </div>
-    </div>
-    <div class="modal-footer">            
-    <button class="btn btn-icon btn-success" type="button" ng-click="courseEdit(dataCourse)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
-    <button class="btn btn-warning btn-icon"  ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    <div class="modal-footer">
+        <button class="btn btn-icon btn-success" type="button" ng-click="courseEdit(dataCourse)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
     </div>
 </script>

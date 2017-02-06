@@ -8,6 +8,7 @@ class course extends admin {
         parent::__construct();
         parent::checktoken();
         $this->load->model('v1/admin/course_model');
+        $this->load->model('v1/admin/schedule_model');
     }
 
     public function all() {
@@ -30,6 +31,22 @@ class course extends admin {
         echo json_encode($this->_put());
     }
 
+    public function get_class() {
+        echo json_encode($this->_get_class());
+    }
+
+    public function delete_schedule() {
+        echo json_encode($this->_delete_schedule());
+    }
+
+    public function get_schedule() {
+        echo json_encode($this->_get_schedule());
+    }
+
+    public function put_schedule() {
+        echo json_encode($this->_put_schedule());
+    }
+
     public function add_class() {
         echo json_encode($this->_add_class());
     }
@@ -50,6 +67,50 @@ class course extends admin {
     private function _get_major_option() {
         $get_major = $this->course_model->get_major_option();
         return $get_major;
+    }
+
+    private function _get_schedule() {
+        $get_day = $this->schedule_model->get_days();
+        $course_seq = $this->uri->segment(6);
+        $building = $this->schedule_model->get_building($course_seq);
+        $building_seq = $building['data']->building_seq;
+        $get_rooms = $this->schedule_model->get_room($building_seq);
+        $rooms = $get_rooms['data'];
+        $course_schedule = $this->schedule_model->check_schedule('', $course_seq);
+        $results = $course_schedule;
+        return $results;
+    }
+
+    private function _delete_schedule() {
+        $schedule_seq = $seq = $this->uri->segment(6);
+        $delete = $this->schedule_model->delete('seq', $schedule_seq);
+        if ($delete['response'] == OK_STATUS) {
+            $data = response_success();
+        } else {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _put_schedule() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            if ($datas != "") {
+                $params = array('day_hour_seq' => $datas->pick_dh_seq,
+                    'class_seq' => $datas->pick_class_seq,
+                    'room_seq' => $datas->pick_room_seq,
+                    'seq' => $datas->schedule_seq);
+                $put = $this->course_model->put_schedule($params);
+                if ($put['response'] == OK_STATUS) {
+                    $data = response_success();
+                } else {
+                    $data = response_fail();
+                }
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
     }
 
     private function _get_teacher_option($course_seq, $option) {
@@ -172,7 +233,6 @@ class course extends admin {
 
     private function _put() {
         try {
-
             $datas = json_decode(file_get_contents('php://input'));
             $seq = $this->uri->segment(5);
             if ($datas != "" AND $seq != "") {
@@ -237,6 +297,21 @@ class course extends admin {
             $course_seq = $this->uri->segment(6);
             if ($course_seq != "") {
                 $get = $this->_get_teacher_option($course_seq, GET_DETAIL);
+                $data = get_success($get['data']);
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _get_class() {
+        try {
+            $course_seq = $this->uri->segment(6);
+            if ($course_seq != "") {
+                $get = $this->course_model->get_class($course_seq);
                 $data = get_success($get['data']);
             } else {
                 $data = response_fail();

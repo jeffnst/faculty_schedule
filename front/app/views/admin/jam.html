@@ -20,10 +20,10 @@
             <tbody>             
                 <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                                            
                     <td>{{ item.name}}</td> 
-                    <td>{{ item.start}}</td>     
-                    <td>{{ item.end}}</td>     
+                    <td>{{ item.start_hour}} : {{item.start_min}}</td>     
+                    <td>{{ item.end_hour}} : {{item.end_min}}</td>     
                     <td>
-                        <a href="#" ui-sref="admin.detail_jam({jamSeq : item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>                        
+                        <!--<a href="#" ui-sref="admin.detail_jam({jamSeq : item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>-->                        
                         <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
                         <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.seq)"><i class="fa fa-trash"></i></button>
                     </td>
@@ -48,14 +48,23 @@
     <div class="form-group">
      <label class="label">Nama {{title}}</label>
     <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="data_input.name">
-    </div>         
+    </div>                  
+   
     <div class="form-group">
-     <label class="label">Mulai </label>
-    <input class="form-control" type="time" placeholder="00:00" ng-model="data_input.start" step='900' min="00:00" max="24:00">
+     <label class="label">Mulai</label>          
+    <div class="input-group">
+    <input type="number" max="24" min="0" class="form-control input-sm" ng-model="data_input.start_hour" placeholder="jam" >
+    <span class="input-group-btn" style="width:0px;"></span>
+    <input type="number" max="59" min="0" class="form-control input-sm" ng-model="data_input.start_min" placeholder="menit" >
+    </div>    
     </div>         
-    <div class="form-group">
-     <label class="label">Sampai</label>
-    <input class="form-control" type="time" placeholder="00:00" ng-model="data_input.end" step='900' min="00:00" max="24:00">
+     <div class="form-group">
+     <label class="label">Selesai</label>          
+    <div class="input-group">
+    <input type="number" max="24" min="00" class="form-control input-sm" ng-model="data_input.end_hour" placeholder="jam"/>
+    <span class="input-group-btn" style="width:0px;"></span>
+    <input type="number" max="59" min="00" class="form-control input-sm" ng-model="data_input.end_min" placeholder="menit"/>
+    </div>    
     </div> 
     </div>
     <div class="modal-footer">            
@@ -70,9 +79,9 @@
     <h5>Anda yakin menghapus data ini ?</h5>
     </div>
     <div class="modal-footer">            
-            <button class="btn btn-icon btn-danger" type="button" ng-click="hourDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
-            <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
+    <button class="btn btn-icon btn-danger" type="button" ng-click="hourDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
 </script>
 
 <script type="text/ng-template" id="hour-edit-modal.html">
@@ -81,14 +90,32 @@
     <h4 class="modal-title">Edit {{title}}</h4>
     </div>
     <div class="modal-body">
-     <div class="modal-body" id="modal-body-{{name}}">
+    <div class="modal-body" id="modal-body-{{name}}">
     <div class="form-group">
-     <label class="label">Nama {{title}}</label>
+    <label class="label">Nama {{title}}</label>
     <input class="form-control" type="text" placeholder="Nama {{title}}" ng-model="dataHour.name">
-    </div>        
+    </div> 
+    <div class="form-group">    
+     <label class="label">Mulai</label>          
+    <div class="input-group">
+    <input type="number" max="24" min="0" class="form-control input-sm" ng-model="dataHour.start_hour" value="{{dataHour.start_hour}}" placeholder="jam" >    
+    <span class="input-group-btn" style="width:0px;"></span>
+    <input type="number" max="59" min="0" class="form-control input-sm" ng-model="dataHour.start_min" value="{{dataHour.start_min}}" placeholder="menit" >
+    <input type="hidden" ng-model="dataHour.start_hour"><input type="hidden" ng-model="dataHour.start_min">
+    </div>    
+    </div>         
+     <div class="form-group">
+     <label class="label">Selesai</label>           
+    <div class="input-group">
+    <input type="number" max="24" min="00" class="form-control input-sm" ng-model="dataHour.end_hour" value="{{dataHour.end_hour}}" placeholder="jam"/>
+    <span class="input-group-btn" style="width:0px;"></span>
+    <input type="number" max="59" min="00" class="form-control input-sm" ng-model="dataHour.end_min" value="{{dataHour.end_min}}" placeholder="menit"/>
+    <input type="hidden" ng-model="dataHour.end_hour"><input type="hidden" ng-model="dataHour.end_min">
+    </div>    
+    </div>       
     </div>
     <div class="modal-footer">            
-            <button class="btn btn-icon btn-success" type="button" ng-click="hourEdit(dataHour)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
-            <button class="btn btn-warning btn-icon"  ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
+    <button class="btn btn-icon btn-success" type="button" ng-click="hourEdit(dataHour)"><i class="fa fa-check"></i>&nbsp;Simpan</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeEditModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
 </script>

@@ -134,4 +134,33 @@ class room_model extends admin_model {
         return $data;
     }
 
+    
+     public function get_by_course($course_seq) {
+        try {
+            $sql = $this->db->select('ro.seq as room_seq')
+                    ->select('ro.name as room_name')                    
+                    ->from('room as ro')
+                    ->join('faculty as fc','fc.building_seq = ro.building_seq')
+                    ->join('major as mj','mj.faculty_seq = fc.seq')
+                    ->join('course as cs','cs.major_seq = mj.seq')
+                    ->where('cs.seq', $course_seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+    
 }

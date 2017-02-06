@@ -5,7 +5,11 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     var getToken = function () {
         var text = $localStorage.faculty_schedule_token.token;
         var encode = text.trim(text);
-        var headers = {headers: {'data-token': encode}};
+        var headers = {
+            headers: {
+                'data-token': encode
+            }
+        };
         return headers;
     }
 
@@ -38,6 +42,11 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.GetRoom = function (datas) {
         return $http.get(api + 'admin/room/get/' + datas, getToken());
     };
+
+    data.GetRoomsByCourse = function (datas) {
+        return $http.get(api + 'admin/room/course/' + datas, getToken());
+    };
+
     data.AddDataRoom = function (datas) {
         return $http.post(api + 'admin/room/add', datas, getToken());
     };
@@ -47,6 +56,7 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataRoom = function (datas) {
         return $http.get(api + 'admin/room/delete/' + datas, getToken());
     };
+
 
     //FACULTY
     data.GetAllFaculty = function () {
@@ -89,6 +99,7 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.GetCourse = function (datas) {
         return $http.get(api + 'admin/course/get/' + datas, getToken());
     };
+
     data.AddDataCourse = function (datas) {
         return $http.post(api + 'admin/course/add', datas, getToken());
     };
@@ -98,6 +109,11 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataCourse = function (datas) {
         return $http.get(api + 'admin/course/delete/' + datas, getToken());
     };
+
+    data.GetClass = function (datas) {
+        return $http.get(api + 'admin/course/class/get/' + datas, getToken());
+    };
+
     data.AddDataClassCourse = function (datas) {
         return $http.post(api + 'admin/course/class/add', datas, getToken());
     };
@@ -110,6 +126,19 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.AssigneTeacherCourseClass = function (datas) {
         return $http.post(api + 'admin/course/teacher/class/add', datas, getToken());
     };
+
+    data.GetCourseSchedule = function (datas) {
+        return $http.get(api + 'admin/course/schedule/get/' + datas, getToken());
+    };
+
+    data.DeleteCourseSchedule = function (datas) {
+        return $http.get(api + 'admin/course/schedule/delete/' + datas, getToken());
+    };
+
+    data.EditCourseSchedule = function (datas) {
+        return $http.post(api + 'admin/course/schedule_put', datas, getToken());
+    };
+
 
     // Teacher / DOSEN    
     data.GetAllTeacher = function () {
@@ -133,6 +162,7 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.AddCourseTeacher = function (datas) {
         return $http.post(api + 'admin/teacher/course/add', datas, getToken());
     };
+
     data.DeleteCourseTeacher = function (datas) {
         return $http.get(api + 'admin/teacher/course/delete/' + datas, getToken());
     };
@@ -141,11 +171,19 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.AddDataDay = function (datas) {
         return $http.post(api + 'admin/day/add', datas, getToken());
     };
+
+    data.AddDayHour = function (datas) {
+        return $http.post(api + 'admin/day/hour/add', datas, getToken());
+    };
+
     data.GetAllDay = function () {
         return $http.get(api + 'admin/day/all', getToken());
     };
     data.GetDay = function (datas) {
         return $http.get(api + 'admin/day/get/' + datas, getToken());
+    };
+    data.GetDayHour = function (datas) {
+        return $http.get(api + 'admin/day/hour/get/' + datas, getToken());
     };
     data.PutDataDay = function (datas) {
         return $http.post(api + 'admin/day/put/' + datas.seq, datas, getToken());
@@ -153,7 +191,10 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     data.DeleteDataDay = function (datas) {
         return $http.get(api + 'admin/day/delete/' + datas, getToken());
     };
-    
+    data.DeleteDayHour = function (datas) {
+        return $http.get(api + 'admin/day/hour/delete/' + datas, getToken());
+    };
+
     // Hour / JAM
     data.AddDataHour = function (datas) {
         return $http.post(api + 'admin/hour/add', datas, getToken());
@@ -171,6 +212,20 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
         return $http.get(api + 'admin/hour/delete/' + datas, getToken());
     };
 
+    // Schedule / penjadwalan    
+
+    data.ScheduleCourseGetDayHour = function (datas) {
+        return $http.get(api + 'admin/schedule/course/' + datas, getToken());
+    };
+
+    data.ScheduleCourseCheckRoom = function (datas) {
+        return $http.post(api + 'admin/schedule/check_room', datas, getToken());
+    };
+
+    data.ScheduleSubmitRoom = function (datas) {
+        return $http.post(api + 'admin/schedule/add_room', datas, getToken());
+    };
+
     return data;
 });
 
@@ -180,9 +235,10 @@ factories.factory('AdminTokenFactory', function ($http, api) {
         return $http({
             method: 'POST',
             url: api + 'admin/checktoken',
-            headers: {'data-token': datas},
+            headers: {
+                'data-token': datas
+            },
         });
     };
     return data;
 })
-

@@ -51,11 +51,7 @@ class hour extends admin {
     private function _add() {
         try {
             $datas = json_decode(file_get_contents('php://input'));
-            if ($datas != "") {
-//                $params = new stdClass();
-//                $params->name = $datas->name;                
-//                $params->start = $datas->start;                
-//                $params->end = $datas->end;                
+            if ($datas != "") {                
                 $add = $this->hour_model->add($datas);
                 if ($add['response'] == OK_STATUS) {
                     $data = response_success();
@@ -108,16 +104,13 @@ class hour extends admin {
         }
         return $data;
     }
-
+       
     private function _put() {
         try {
             $datas = json_decode(file_get_contents('php://input'));
             $seq = $this->uri->segment(5);
-            if ($datas != "" AND $seq != "") {
-                $params = new stdClass();
-                $params->name = $datas->name;                
-                $params->seq = $seq;
-                $put = $this->hour_model->put($params);
+            if ($datas != "" AND $seq != "") {                
+                $put = $this->hour_model->put($datas);
                 if ($put['response'] == OK_STATUS) {
                     $data = response_success();
                 } else {
