@@ -14,7 +14,7 @@
                     <th>Nama</th>
                     <th>Jumlah Jurusan </th>
                     <th>Jumlah Mata Kuliah</th>
-                    <th>Jumlah Dosen</th>
+                    <th>Gedung Belajar</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -24,7 +24,7 @@
                         <td>{{item.name}}</td>
                         <td>{{item.major_count}} Jurusan </td>
                         <td>{{item.course_count}} Mata Kuliah</td>
-                        <td>Orang</td>
+                        <td>{{item.building_name}}</td>
                         <td>
                             <a href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
                             <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
@@ -92,6 +92,9 @@
         </div>
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Deskripsi" ng-model="dataFaculty.description">
+        </div>
+        <div class="form-group">
+            <select class='form-control' ng-model="dataFaculty.pick_building_seq" ng-options="item.building_seq as item.name for item in dataBuilding" ng-placeholder="Gedung Belajar"></select>
         </div>
     </div>
     <div class="modal-footer">

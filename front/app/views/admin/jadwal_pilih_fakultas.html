@@ -1,0 +1,5 @@
+<br> Pilih fakultas yang akan dijadwalkan :
+<br>
+<br>
+<!--{{dataFaculty}}-->
+<select class='form-control' ng-model="data_input.pick_fac_seq" ng-options="item.seq as item.name for item in dataFaculty" ng-change="setFaculty()"></select>

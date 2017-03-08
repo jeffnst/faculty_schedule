@@ -77,9 +77,11 @@ $route['v1/admin/faculty/add'] = 'v1/admin/faculty/add';
 $route['v1/admin/faculty/get/(:any)'] = 'v1/admin/faculty/get';
 $route['v1/admin/faculty/delete/(:any)'] = 'v1/admin/faculty/delete';
 $route['v1/admin/faculty/put/(:any)'] = 'v1/admin/faculty/put';
+$route['v1/admin/faculty/schedule/get/(:any)'] = 'v1/admin/faculty/get_schedule';
 //admin major
 $route['v1/admin/major/all'] = 'v1/admin/major/all';
 $route['v1/admin/major/add'] = 'v1/admin/major/add';
+$route['v1/admin/major/faculty/(:any)'] = 'v1/admin/major/get_by_faculty';
 $route['v1/admin/major/get/(:any)'] = 'v1/admin/major/get';
 $route['v1/admin/major/delete/(:any)'] = 'v1/admin/major/delete';
 $route['v1/admin/major/put/(:any)'] = 'v1/admin/major/put';
@@ -98,6 +100,7 @@ $route['v1/admin/course/teacher/class/add'] = 'v1/admin/course/add_teacher_class
 $route['v1/admin/course/schedule/delete/(:any)'] = 'v1/admin/course/delete_schedule';
 $route['v1/admin/course/schedule_put'] = 'v1/admin/course/put_schedule';
 $route['v1/admin/course/schedule/get/(:any)'] = 'v1/admin/course/get_schedule';
+$route['v1/admin/course/major/(:any)'] = 'v1/admin/course/get_by_major';
 
 //admin teacher
 $route['v1/admin/teacher/all'] = 'v1/admin/teacher/all';
@@ -127,5 +130,6 @@ $route['v1/admin/hour/put/(:any)'] = 'v1/admin/hour/put';
 //admin schedule
 //$route['v1/admin/schedule/get/(:any'] = 'v1/admin/schedule/get';
 $route['v1/admin/schedule/course/(:any)'] = 'v1/admin/schedule/get_course';
+$route['v1/admin/schedule/course/(:any)/generate'] = 'v1/admin/schedule/get_course_generate';
 $route['v1/admin/schedule/check_room'] = 'v1/admin/schedule/check_room';
 $route['v1/admin/schedule/add_room'] = 'v1/admin/schedule/add_room';

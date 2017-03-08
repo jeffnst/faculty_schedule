@@ -55,6 +55,29 @@ class major_model extends admin_model {
         return $data;
     }
 
+    
+     public function get_by_faculty($seq) {
+        try {
+            $sql = $this->db->select('*')->from('major')->where('faculty_seq', $seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+    
     public function add($params) {
         try {
             $data = array('name' => $params->name, 'faculty_seq' => $params->faculty_seq, 'description' => $params->description);

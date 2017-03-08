@@ -48,6 +48,32 @@ class schedule_model extends admin_model {
         return $data;
     }
 
+    public function get_class($course_seq) {
+        try {
+            $sql = $this->db
+                    ->select('cl.*')
+                    ->from('class as cl')
+                    ->join('course as c', 'cl.course_seq = c.seq')
+                    ->where('c.seq', $course_seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
     public function get_building($course_seq) {
         try {
             $sql = $this->db
@@ -136,11 +162,11 @@ class schedule_model extends admin_model {
                     ->select('cl.seq as class_seq')
                     ->select('cl.label as class_label')
                     ->select('sc.day_hour_seq as day_hour_seq')
-                    ->select('sc.room_seq as room_seq')                    
-                    ->select('r.name as room_name')          
+                    ->select('sc.room_seq as room_seq')
+                    ->select('r.name as room_name')
                     ->select('d.seq as day_seq')
                     ->select('d.name as day_name')
-                    ->select('h.seq as hour_seq')                    
+                    ->select('h.seq as hour_seq')
                     ->select('h.name as hour_name')
                     ->select('h.start_hour')
                     ->select('h.start_min')
@@ -151,7 +177,7 @@ class schedule_model extends admin_model {
                     ->join('day_hour as dh', 'sc.day_hour_seq = dh.seq')
                     ->join('day as d', 'dh.day_seq = d.seq')
                     ->join('hour as h', 'dh.hour_seq = h.seq')
-                    ->join('room as r','sc.room_seq = r.seq')
+                    ->join('room as r', 'sc.room_seq = r.seq')
 //                    ->join('course as cs', 'cl.course_seq = cs.seq')                                                            
 //                    ->where('sc.day_hour_seq', $day_hour_seq)
                     ->where('cl.course_seq', $course_seq);
@@ -165,6 +191,40 @@ class schedule_model extends admin_model {
 //                } else {
 //                    $rows = "NO";
 //                }
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function get_day_hour_all() {
+        try {
+            $sql = $this->db
+                    ->select('dh.seq as day_hour_seq')
+                    ->select('d.name as day_name')                    
+                    ->select('h.name as hour_name')
+                    ->select('h.start_hour as start_hour')
+                    ->select('h.start_min as start_min')
+                    ->select('h.end_hour as end_hour')
+                    ->select('h.end_min as end_min')
+                    ->from('day_hour as dh')
+                    ->join('hour as h', 'dh.hour_seq = h.seq')                    
+                    ->join('day as d', 'dh.day_seq = d.seq')                    
+                    ->order_by(`dh.hour_seq`, 'ASC');
+            $query = $this->db->get();
+            $datas = $query->result();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $datas;
             } else {
                 $response = FAIL_STATUS;
                 $message = FAIL_MESSAGE;
@@ -278,7 +338,7 @@ class schedule_model extends admin_model {
         return $data;
     }
 
-    public function delete($filter,$value) {
+    public function delete($filter, $value) {
         try {
             $query = $this->db->delete('schedule', array($filter => $value));
             if ($query == TRUE) {

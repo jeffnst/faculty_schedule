@@ -14,6 +14,10 @@ class schedule extends admin {
         echo json_encode($this->_get());
     }
 
+    public function get_course_generate() {
+        echo json_encode($this->_get_course_generate());
+    }
+
     public function check_room() {
         echo json_encode($this->_check_room());
     }
@@ -100,6 +104,56 @@ class schedule extends admin {
                 } else {
                     $data = response_fail();
                 }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _get_course_generate() {
+        try {
+            $course_seq = $this->uri->segment(5);
+            if ($course_seq != "") {
+                $days = $this->schedule_model->get_days();
+                $building = $this->schedule_model->get_building($course_seq);
+                $building_seq = $building['data']->building_seq;
+                $get_rooms = $this->schedule_model->get_room($building_seq);
+                $get_class = $this->schedule_model->get_class($course_seq);
+                $get_all_day_hour = $this->schedule_model->get_day_hour_all();
+                $rooms = $get_rooms['data'];
+//                print_r($rooms);exit();
+                if ($get_class['response'] == OK_STATUS) {
+                    foreach ($get_class['data'] as $class) {
+                        //cek ketersediaan waktu & ruang
+                        foreach ($get_all_day_hour['data'] as $dh) {
+                            foreach ($rooms as $room) {
+                                $check = $this->schedule_model->check_room_availability($dh->day_hour_seq, $room->seq);
+                                $check_data = array('room_name' => $room->name, 'availability' => $check['data']);
+                            }                            
+                            $day_data[] = array('day_name' => $dh->day_name, 'hour_name' => $dh->hour_name, 'room_availability' => $check_data);
+                        }
+                        $class_data[] = array('class_seq' => $class->seq, 'label' => $class->label, 'schedule_availability' => $day_data);
+                    }
+                    $data = get_success($class_data);
+                } else {
+                    $data = response_fail();
+                }
+//                if ($days['response'] == OK_STATUS) {
+//                    foreach ($days['data'] as $day) {
+//                        $day_hour = $this->schedule_model->get_day_hour($day->seq, $rooms);
+//                        $day_hours_data[] = array("day_seq" => $day->seq, "day_name" => $day->name, "hour" => $day_hour['data'], "rooms" => $rooms);
+//                    }
+//                    $res = new stdClass();
+//                    $res->class = $get_class['data'];
+//                    $res->day_hours = $day_hours_data;
+//                    $res->rooms = $rooms;
+//                    $data = get_success($res);
+//                } else {
+//                    $data = response_fail();
+//                }
             } else {
                 $data = response_fail();
             }

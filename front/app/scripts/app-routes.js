@@ -95,16 +95,34 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
 
     // ADMIN FAKULTAS
     .state('admin.fakultas', {
-            url: '/fakultas',
-            templateUrl: viewsPrefix + 'admin/fakultas.html',
-            controller: 'AdminFacultyController',
-        })
-        //ADMIN JURUSAN
-        .state('admin.jurusan', {
-            url: '/jurusan',
-            templateUrl: viewsPrefix + 'admin/jurusan.html',
-            controller: 'AdminMajorController',
-        })
+        url: '/fakultas',
+        templateUrl: viewsPrefix + 'admin/fakultas.html',
+        controller: 'AdminFacultyController',
+    })
+
+    .state('admin.fakultas_detail', {
+        url: '/fakultas/detail/:fakultasSeq',
+        templateUrl: viewsPrefix + 'admin/detail-fakultas.html',
+        controller: 'AdminFacultyController',
+        //        resolve: {
+        //            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //                return $ocLazyLoad.load([{
+        //                    insertBefore: '#load_styles_before',
+        //                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
+        //                                    }, {
+        //                    serie: true,
+        //                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
+        //                                    }])
+        //                            }]
+        //        },
+    })
+
+    //ADMIN JURUSAN
+    .state('admin.jurusan', {
+        url: '/jurusan',
+        templateUrl: viewsPrefix + 'admin/jurusan.html',
+        controller: 'AdminMajorController',
+    })
 
     //ADMIN MATKUL
 
@@ -118,17 +136,17 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
         url: '/matakuliah/detail/:matakuliahSeq',
         templateUrl: viewsPrefix + 'admin/detail-matakuliah.html',
         controller: 'AdminCourseController',
-        resolve: {
-            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                return $ocLazyLoad.load([{
-                    insertBefore: '#load_styles_before',
-                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
-                                    }, {
-                    serie: true,
-                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
-                                    }])
-                            }]
-        },
+        //        resolve: {
+        //            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //                return $ocLazyLoad.load([{
+        //                    insertBefore: '#load_styles_before',
+        //                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
+        //                                    }, {
+        //                    serie: true,
+        //                    files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
+        //                                    }])
+        //                            }]
+        //        },
     })
 
     //ADMIN Dosen

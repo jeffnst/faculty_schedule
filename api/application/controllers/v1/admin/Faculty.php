@@ -29,8 +29,19 @@ class faculty extends admin {
     public function put() {
         echo json_encode($this->_put());
     }
+    
+    public function get_schedule() {
+        echo json_encode($this->_get_schedule());
+    }
 
 //Custom Function
+    
+    private function _get_schedule() {
+        $fac_seq = $this->uri->segment(6);
+        $get_schedule = $this->faculty_model->get_schedule($fac_seq);
+        return $get_schedule;
+    }
+    
     private function _get_course_option($faculty_seq) {
         $get_course_option = $this->faculty_model->get_course_option($faculty_seq);
         return $get_course_option['data'];
@@ -63,8 +74,9 @@ class faculty extends admin {
                     $get_course_count = $this->_get_course_option($each->seq, GET_COUNT);
                     $datas[] = array(
                         "seq" => $each->seq,
-                        "name" => $each->name,
-                        "description" => $each->description,
+                        "name" => $each->faculty_name,
+                        "building_name" => $each->building_name,
+                        "description" => $each->faculty_description,
                         "major_count" => count($get_major_count),
                         "course_count" => count($get_course_count)
                     );
@@ -86,6 +98,7 @@ class faculty extends admin {
                 $params = new stdClass();
                 $params->name = $datas->name;
                 $params->description = $datas->description;
+                $params->building_seq = $datas->building_seq;
                 $addbuilding = $this->faculty_model->add($params);
                 if ($addbuilding['response'] == OK_STATUS) {
                     $data = response_success();
@@ -149,6 +162,7 @@ class faculty extends admin {
                 $params->name = $datas->name;
                 $params->description = $datas->description;
                 $params->seq = $seq;
+                $params->building_seq = $datas->building_seq;
                 $putbuilding = $this->faculty_model->put($params);
                 if ($putbuilding['response'] == OK_STATUS) {
                     $data = response_success();

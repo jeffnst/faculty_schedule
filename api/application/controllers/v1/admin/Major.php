@@ -26,6 +26,10 @@ class major extends admin {
         echo json_encode($this->_get());
     }
 
+    public function get_by_faculty() {
+        echo json_encode($this->_get_by_faculty());
+    }
+    
     public function put() {
         echo json_encode($this->_put());
     }
@@ -33,6 +37,12 @@ class major extends admin {
 //Custom Function
     private function _get_faculty_option() {
         $get_faculty = $this->major_model->get_faculty_option();
+        return $get_faculty;
+    }
+    
+    private function _get_by_faculty() {
+        $fac_seq = $this->uri->segment(5);
+        $get_faculty = $this->major_model->get_by_faculty($fac_seq);
         return $get_faculty;
     }
 

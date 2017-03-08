@@ -63,10 +63,20 @@ class course extends admin {
         echo json_encode($this->_delete_class());
     }
 
+    public function get_by_major() {
+        echo json_encode($this->_get_by_major());
+    }
+
 //Custom Function
     private function _get_major_option() {
         $get_major = $this->course_model->get_major_option();
         return $get_major;
+    }
+
+    private function _get_by_major() {
+        $major_seq = $this->uri->segment(5);
+        $get = $this->course_model->get_by_major($major_seq);
+        return $get;
     }
 
     private function _get_schedule() {

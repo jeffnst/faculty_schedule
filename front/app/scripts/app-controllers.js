@@ -330,7 +330,8 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
                 }
                 input = {
                     name: data_input.name,
-                    description: data_input.description
+                    description: data_input.description,
+                    building_seq: data_input.pick_building_seq
                 };
                 AdminFactory.AddDataFaculty(input).success(function (response) {
                     if (response.response != "FAIL") {
@@ -370,22 +371,48 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
             }
             // FUNCTION TO GET Faculty DETAIL
         var getFaculty = function (seq) {
-                AdminFactory.GetFaculty(seq).success(function (response) {
+            AdminFactory.GetFaculty(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.dataFaculty = response.data;
+                } else {
+                    $scope.dataFaculty = "";
+                }
+            })
+        }
+        var getFacultySchedule = function (seq) {
+            AdminFactory.GetFacultySchedule(seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.dataFacultySchedule = response.data;
+                    $scope.dataFacultyScheduleSelected = response.data;
+                } else {
+                    $scope.dataFacultySchedule = "";
+                    $scope.dataFacultyScheduleSelected = "";
+                }
+            })
+        }
+
+        var getAllDay = function () {
+                AdminFactory.GetAllDay().success(function (response) {
                     if (response.response != "FAIL") {
-                        $scope.dataFaculty = response.data;
+                        $scope.dataDays = response.data;
                     } else {
-                        $scope.dataFaculty = "";
+                        $scope.dataDays = "";
                     }
                 })
             }
             // IF DETAIL Faculty
-        if ($stateParams.gedungSeq) {
-            var seq = $stateParams.gedungSeq
+        if ($stateParams.fakultasSeq) {
+            var seq = $stateParams.fakultasSeq;
             getFaculty(seq);
+            getFacultySchedule(seq);
+            getAllDay();
+            //            $scope.data_filter = {};
         }
+
         // EDIT MODAL
         $scope.editModal = function (seq) {
             getFaculty(seq);
+            getBuildingdata();
             $scope.$uibModalInstance = $uibModal.open({
                 scope: $scope,
                 animation: true,
@@ -405,7 +432,8 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
                 input = {
                     name: dataFaculty.name,
                     description: dataFaculty.description,
-                    seq: $scope.dataFaculty.seq
+                    seq: $scope.dataFaculty.seq,
+                    building_seq: dataFaculty.pick_building_seq
                 };
                 AdminFactory.PutDataFaculty(input).success(function (response) {
                     if (response.response != "FAIL") {
@@ -417,6 +445,39 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
                     }
                 });
             }
+        }
+
+        //Schedule
+        //        var setDataFacultySchedule = function () {
+        //            $scope.dataFacultySchedule.pick_day_seq;
+        //            if ($scope.dataFacultySchedule.pick_day_seq != '') {
+        //                console.log($scope.dataDays);
+        //                var found = $filter('filter')($scope.dataFacultySchedule, {
+        //                    day_seq: $scope.dataDays.pick_day_seq
+        //                }, true);
+        //
+        //                $scope.dataFacultyScheduleSelected = found;
+        //            } else {
+        //                console.log("no index");
+        //            }
+        //        }
+        $scope.changeScheduleData = function () {
+            //            console.log($scope.dataDays);
+            var found = $filter('filter')($scope.dataFacultySchedule, {
+                day_seq: $scope.dataDays.pick_day_seq
+            }, true);
+
+            $scope.dataFacultyScheduleSelected = found;
+
+            //            if (found.length) {
+            //                found[0].pick_room_seq = "";
+            //                found[0].availability = "";
+            //                var remove_btn = angular.element(document.querySelector('#remove_btn_' + pick_day_hour_seq));
+            //                var availability_status = angular.element(document.querySelector('#availability_status_' + pick_day_hour_seq));
+            //                remove_btn.css('display', 'none');
+            //                availability_status.css('display', 'none');
+            //
+            //            }
         }
     })
     //MAJOR CONTROLLER
@@ -1532,35 +1593,67 @@ controllers.controller('AdminScheduleController', function ($rootScope, $filter,
     $scope.roomPicked = [];
     $scope.steps = [
         {
-            templateUrl: viewsPrefix + 'admin/tambah_jadwal_step_1.html',
+            templateUrl: viewsPrefix + 'admin/jadwal_pilih_fakultas.html',
+            title: 'Fakultas',
+            hasForm: true,
+            isolatedScope: true,
+            controller: 'AdminScheduleController'
+        },
+        {
+            templateUrl: viewsPrefix + 'admin/jadwal_pilih_jurusan.html',
+            title: 'Jurusan',
+            hasForm: true,
+            isolatedScope: true,
+            controller: 'AdminScheduleController'
+        },
+        {
+            templateUrl: viewsPrefix + 'admin/jadwal_pilih_matkul.html',
             title: 'Mata Kuliah',
             hasForm: true,
             isolatedScope: true,
             controller: 'AdminScheduleController'
         }
         , {
-            templateUrl: viewsPrefix + 'admin/tambah_jadwal_step_2.html',
+            templateUrl: viewsPrefix + 'admin/jadwal_pilih_kelas.html',
             title: 'Kelas',
             hasForm: true,
             controller: 'AdminScheduleController'
         }
         , {
-            templateUrl: viewsPrefix + 'admin/tambah_jadwal_step_3.html',
+            templateUrl: viewsPrefix + 'admin/jadwal_pilih_hari.html',
             title: 'Hari',
             hasForm: true,
             controller: 'AdminScheduleController'
         }
 
     ];
-    var getFaculty = function (seq) {
-        AdminFactory.GetAllCourse(seq).success(function (response) {
+
+    var getFaculties = function () {
+        AdminFactory.GetAllFaculty().success(function (response) {
             if (response.response != "FAIL") {
-                $scope.dataCourse = response.data;
+                $scope.dataFaculty = response.data;
             } else {
-                $scope.dataCourse = "";
+                $scope.dataFaculty = "";
             }
         })
     }
+
+    var getCourses = function (seq) {
+
+    }
+
+    $scope.setFaculty = function () {
+        $rootScope.step = "step_0";
+        $rootScope.LastStep = "";
+        $rootScope.pick_fac_seq = $scope.data_input.pick_fac_seq;
+    }
+
+    $scope.setMajor = function () {
+        $rootScope.step = "step_1";
+        $rootScope.LastStep = "";
+        $rootScope.pick_major_seq = $scope.data_input.pick_major_seq;
+    }
+
 
     // Go To Step 2
     $scope.setCourse = function () {
@@ -1577,6 +1670,31 @@ controllers.controller('AdminScheduleController', function ($rootScope, $filter,
     }
 
     var step = function () {
+        if ($rootScope.step == 'step_0') {
+            $rootScope.LastStep = "";
+            var pick_fac_seq = $rootScope.pick_fac_seq;
+            AdminFactory.GetMajorByFaculty(pick_fac_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.dataMajor = response.data;
+                } else {
+                    $scope.dataMajor = "";
+                }
+            })
+        }
+
+        if ($rootScope.step == 'step_1') {
+            $rootScope.LastStep = "";
+            var pick_major_seq = $rootScope.pick_major_seq;
+            //SET course by majority seq
+            AdminFactory.GetCourseByMajor(pick_major_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.dataCourse = response.data;
+                } else {
+                    $scope.dataCourse = "";
+                }
+            })
+        }
+
         if ($rootScope.step == 'step_2') {
             $rootScope.LastStep = "";
             var course_seq = $rootScope.pick_course_seq;
@@ -1740,5 +1858,6 @@ controllers.controller('AdminScheduleController', function ($rootScope, $filter,
         })
     }
     step();
-    getFaculty();
+    getFaculties();
+    getCourses();
 })

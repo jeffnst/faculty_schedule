@@ -60,6 +60,28 @@ class course_model extends admin_model {
     }
     
     
+    public function get_by_major($seq) {
+        try {
+            $sql = $this->db->select('*')->from('course')->where('major_seq', $seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+    
     
     public function get_schedule($seq) {
         try {
