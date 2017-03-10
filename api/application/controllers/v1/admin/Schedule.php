@@ -18,6 +18,10 @@ class schedule extends admin {
         echo json_encode($this->_get_course_generate());
     }
 
+    public function get_course_generate_new() {
+        echo json_encode($this->_get_course_generate_new());
+    }
+
     public function check_room() {
         echo json_encode($this->_check_room());
     }
@@ -132,7 +136,7 @@ class schedule extends admin {
                             foreach ($rooms as $room) {
                                 $check = $this->schedule_model->check_room_availability($dh->day_hour_seq, $room->seq);
                                 $check_data = array('room_name' => $room->name, 'availability' => $check['data']);
-                            }                            
+                            }
                             $day_data[] = array('day_name' => $dh->day_name, 'hour_name' => $dh->hour_name, 'room_availability' => $check_data);
                         }
                         $class_data[] = array('class_seq' => $class->seq, 'label' => $class->label, 'schedule_availability' => $day_data);
@@ -154,6 +158,56 @@ class schedule extends admin {
 //                } else {
 //                    $data = response_fail();
 //                }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _get_course_generate_new() {
+        try {
+            $course_seq = $this->uri->segment(5);
+            if ($course_seq != "") {
+                $building = $this->schedule_model->get_building($course_seq);
+                $building_seq = $building['data']->building_seq;
+                $get_rooms = $this->schedule_model->get_room($building_seq);
+                $rooms = $get_rooms['data'];
+                $check_free_day_hour = $this->schedule_model->check_room_schedule();
+                foreach ($rooms as $room) {
+                    unset($check_schedule_data);
+                    foreach ($check_free_day_hour['data'] as $each) {
+                        $check_schedule = $this->schedule_model->check_room_dh_schedule($each->seq, $room->seq);
+                        if ($check_schedule['data'] == 'YES') {
+                            $check_schedule_data[] = array('dh_seq' => $each->seq, 'room_seq' => $room->seq, 'availability' => $check_schedule['data']);
+                        }
+                    }
+                    $free_schedule[] = array('room_seq' => $room->seq, 'room_name' => $room->name, 'room_free_schedule' => $check_schedule_data);
+                }
+                $ready = [];
+                foreach ($free_schedule as $each) {
+                    foreach ($each['room_free_schedule'] as $free) {
+                        $array = array('dh_seq' => $free['dh_seq'], 'room_seq' => $free['room_seq']);
+                        array_push($ready, $array);
+                    }
+                }
+                $free = array("free_schedule" => $ready);
+                $get_course = $this->schedule_model->get_course($course_seq);
+                $course_sks = $get_course['data']->sks;
+                $get_class = $this->schedule_model->get_class($course_seq);
+                $count_pick_schedule_total = $course_sks * count($get_class['data']);
+                $slice = array_slice($free['free_schedule'], 0, $count_pick_schedule_total);
+                foreach ($get_class['data'] as $class) {
+                    $pick_free_schedule = array_slice($slice, 0, $course_sks);
+                    foreach ($pick_free_schedule as $each) {
+                        $new_class_schedule[] = array('dh_seq' => $each['dh_seq'], 'room_seq' => $each['room_seq'], 'class_seq' => $class->seq);
+                    }
+                    $slice = array_slice($slice, $course_sks);
+                }
+                $ready_schedule = array("course_generate_schedule" => $new_class_schedule);
+                $data = get_success($ready_schedule);
             } else {
                 $data = response_fail();
             }
