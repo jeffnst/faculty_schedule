@@ -48,6 +48,28 @@ class schedule_model extends admin_model {
         return $data;
     }
 
+    public function get_courses_by_major($major_seq) {
+        try {
+            $sql = $this->db->select('*')->from('course')->where('major_seq', $major_seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
     public function get_class($course_seq) {
         try {
             $sql = $this->db
@@ -74,7 +96,7 @@ class schedule_model extends admin_model {
         return $data;
     }
 
-    public function get_building($course_seq) {
+    public function get_building_by_course($course_seq) {
         try {
             $sql = $this->db
                     ->select('f.building_seq')
@@ -101,7 +123,7 @@ class schedule_model extends admin_model {
         return $data;
     }
 
-    public function get_room($building_seq) {
+    public function get_room_by_building($building_seq) {
         try {
             $sql = $this->db->select('seq')->select('name')->from('room')->where('building_seq', $building_seq);
             $query = $this->db->get();
@@ -151,23 +173,57 @@ class schedule_model extends admin_model {
     }
 
 //    public function check_room_schedule($room_seq) {
-    public function check_room_schedule() {
+    public function check_dh_schedule() {
         try {
 
 //            $sql = $this->db->select('*')->from('schedule')->where('room_seq', $room_seq);
-            $sql = $this->db->select('seq')->from('day_hour');
-//            $sql = $this->db->select('dh.seq as dh_seq')
-//                    ->from('day_hour as dh')
-//                    ->join('schedule as sc', 'sc.day_hour_seq = dh.seq', 'right')
-//                    ->join('course as cs', 'cl.course_seq = cs.seq')                                                            
-//                    ->where('sc.seq IS NULL');
-            $sql = "SELECT * FROM `day_hour`";
+//            $sql = $this->db->select('seq')->from('day_hour');
+            $sql = $this->db->select('dh.seq as dh_seq')
+                    ->select('dy.name as day_name')
+                    ->select('hr.name as hour_name')
+                    ->select('hr.start_hour')
+                    ->select('hr.start_min')
+                    ->select('hr.end_hour')
+                    ->select('hr.end_min')
+                    ->from('day_hour as dh')
+                    ->join('day as dy', 'dh.day_seq = dy.seq')
+                    ->join('hour as hr', 'dh.hour_seq = hr.seq')
+                    ->order_by("dh.day_seq", "asc")
+                    ->order_by("dh.hour_seq", "asc");
+//            $sql = "SELECT * FROM `day_hour`";
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;
                 $message = OK_MESSAGE;
                 $res = $query->result();
 //                $res = $this->db->last_query();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $res = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $res = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $res);
+        return $data;
+    }
+
+    public function check_room_dh_schedule($dh_seq, $room_seq) {
+        try {
+            $sql = $this->db->select('*')->from('schedule')->where('day_hour_seq', $dh_seq)->where('room_seq', $room_seq);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $res = $query->row();
+                if ($res == "") {
+                    $rows = "YES";
+                } else {
+                    $rows = "NO";
+                }
             } else {
                 $response = FAIL_STATUS;
                 $message = FAIL_MESSAGE;
@@ -178,13 +234,13 @@ class schedule_model extends admin_model {
             $message = FAIL_MESSAGE;
             $rows = "";
         }
-        $data = array("response" => $response, "message" => $message, "data" => $res);
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
 
-    public function check_room_dh_schedule($dh_seq, $room_seq) {
+    public function check_room_dh_schedule_tmp($dh_seq, $room_seq) {
         try {
-            $sql = $this->db->select('*')->from('schedule')->where('day_hour_seq', $dh_seq)->where('room_seq', $room_seq);
+            $sql = $this->db->select('*')->from('schedule_tmp')->where('day_hour_seq', $dh_seq)->where('room_seq', $room_seq);
             $query = $this->db->get();
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -375,6 +431,25 @@ class schedule_model extends admin_model {
             $rows = "";
         }
         $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function add_schedule_tmp($dh_seq, $room_seq, $class_seq, $major_seq) {
+        try {
+            $data = array('day_hour_seq' => $dh_seq, 'room_seq' => $room_seq, 'class_seq' => $class_seq, 'approved' => NEW_CONTENT_STATUS, 'created_by' => $major_seq);
+            $query = $this->db->insert('schedule_tmp', $data);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
         return $data;
     }
 

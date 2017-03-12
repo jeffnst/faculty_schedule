@@ -132,5 +132,6 @@ $route['v1/admin/hour/put/(:any)'] = 'v1/admin/hour/put';
 $route['v1/admin/schedule/course/(:any)'] = 'v1/admin/schedule/get_course';
 $route['v1/admin/schedule/course/(:any)/generate'] = 'v1/admin/schedule/get_course_generate';
 $route['v1/admin/schedule/course/(:any)/generate_new'] = 'v1/admin/schedule/get_course_generate_new';
+$route['v1/admin/schedule/major/generate/(:any)'] = 'v1/admin/schedule/get_major_generate';
 $route['v1/admin/schedule/check_room'] = 'v1/admin/schedule/check_room';
 $route['v1/admin/schedule/add_room'] = 'v1/admin/schedule/add_room';
