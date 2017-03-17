@@ -79,6 +79,7 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
         return $http.get(api + 'admin/faculty/schedule/get/' + datas, getToken());
     };
 
+
     // MAJOR / JURUSAN
     data.GetAllMajor = function () {
         return $http.get(api + 'admin/major/all', getToken());
@@ -97,6 +98,13 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     };
     data.GetMajorByFaculty = function (datas) {
         return $http.get(api + 'admin/major/faculty/' + datas, getToken());
+    };
+    data.GenerateMajorSchedule = function (datas) {
+        return $http.get(api + 'admin/schedule/major/generate/' + datas, getToken());
+    };
+
+    data.SaveGenerateMajorSchedule = function (datas) {
+        return $http.post(api + 'admin/schedule/major/add', datas, getToken());
     };
 
     // COURSE / MATAKULIAH

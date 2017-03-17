@@ -74,8 +74,11 @@ class schedule_model extends admin_model {
         try {
             $sql = $this->db
                     ->select('cl.*')
+                    ->select('t.name as teacher_name')
                     ->from('class as cl')
                     ->join('course as c', 'cl.course_seq = c.seq')
+                    ->join('teacher_classes as tc', 'tc.class_seq = cl.seq')
+                    ->join('teacher as t', 'tc.teacher_seq = t.seq')
                     ->where('c.seq', $course_seq);
             $query = $this->db->get();
             if ($query == TRUE) {
@@ -265,14 +268,30 @@ class schedule_model extends admin_model {
         return $data;
     }
 
+    public function get_schedule_tmp($generate_key) {
+        try {
+            $sql = $this->db->select('*')->from('schedule_tmp')->where('generate_key', $generate_key);
+            $query = $this->db->get();
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = $query->result();
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
     public function check_schedule($day_hour_seq, $course_seq) {
         try {
-//            $sql = $this->db->select('*')
-//                    ->from('schedule as sc')
-//                    ->join('class as cl','sc.class_seq = cl.seq')
-//                    ->join('course as cs','cl.course_seq = cs.seq')
-//                    ->where('sc.day_hour_seq', $day_hour_seq)
-//                    ->where('cs.seq',$course_seq);
             $sql = $this->db->select('sc.seq as schedule_seq')
                     ->select('cl.seq as class_seq')
                     ->select('cl.label as class_label')
@@ -434,9 +453,15 @@ class schedule_model extends admin_model {
         return $data;
     }
 
-    public function add_schedule_tmp($dh_seq, $room_seq, $class_seq, $major_seq) {
+    public function add_schedule_tmp($dh_seq, $room_seq, $class_seq, $major_seq, $generate_key) {
         try {
-            $data = array('day_hour_seq' => $dh_seq, 'room_seq' => $room_seq, 'class_seq' => $class_seq, 'approved' => NEW_CONTENT_STATUS, 'created_by' => $major_seq);
+            $data = array(
+                'generate_key' => $generate_key,
+                'day_hour_seq' => $dh_seq,
+                'room_seq' => $room_seq,
+                'class_seq' => $class_seq,
+                'approved' => NEW_CONTENT_STATUS,
+                'created_by' => $major_seq);
             $query = $this->db->insert('schedule_tmp', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;

@@ -1,0 +1,117 @@
+
+<br>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        Di bawah ini adalah data fakultas dan jurusan yang akan dijadwalkan : 
+
+    </div>
+</div>
+<div class="row">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Fakultas</label>
+            <div class="col-sm-10">
+                <p >{{dataFacultyPick.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Jurusan</label>
+            <div class="col-sm-10">
+                <p >{{dataPickMajor.name}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Mata Kuliah</label>
+            <div class="col-sm-10">
+                <!--{{dataCourse}}-->
+                <p ng-repeat="item in dataCourse">{{item.course_name}} - {{item.course_sks}} SKS - {{item.course_class_total}} Kelas</p>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row" >
+    <div class="col-md-12 ">
+        <div class='card card-block' ng-show="scheduleStart == 'YES'" ng-attr-id="{{ 'proccessing_icon'}}">            
+        </div>
+    </div>
+</div>
+<div class="row"  ng-attr-id="{{ 'proccessing_result'}}" style="display:none;">
+    <div class="col-md-12 ">
+        <div ng-repeat="each in majorSchedule.major_courses">
+
+            <div class="card card-default card-collapsed">
+                <div class="card-header">
+                    {{each.course_name}} - {{each.class_total}} Kelas - {{each.course_sks}} SKS 
+                    <div class="card-controls">
+                        <a href="javascript:;" class="card-collapse" card-control-collapse=""></a>
+                    </div>
+                </div>
+                <div class="card-block">                    
+                    <div ng-repeat="item in each.course_class">
+                        <div ng-repeat="items in item">
+                            <strong>Jadwal untuk kelas {{items.class_label}}:</strong> <br><br>                            
+                            <table class="table table-bordered" >
+                                <thead>
+                                <th>Hari</th>
+                                <th>Jam</th>
+                                <th>Durasi</th>                                                        
+                                <th>Pengajar</th>
+                                <th>Ruangan</th>
+                                </thead>
+                                <tbody>                              
+                                    <tr ng-repeat="each in items.class_schedule">
+                                        <td>{{each.day}}</td>
+                                        <td>{{each.hour}}</td>
+                                        <td>{{each.duration}}</td>
+                                        <td>{{each.class_teacher}}</td>
+                                        <td>{{each.room_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="footer">
+        <div class="col-md-12 ">
+
+            <button class="pull-right btn-icon btn btn-primary " ng-click="ConfirmScheduleGo()" ng-attr-id="{{'right_button'}}">
+                <i class='fa fa-paper-plane'></i>    Mulai penjadwalan
+            </button>
+            <button ng-show="majorScheduleStatus == 'YES'" class="pull-left btn-icon btn btn-info " ng-click="reschedule()" ng-attr-id="{{'left_button'}}">
+                <i class='fa fa-refresh'></i> Hasilkan Ulang
+            </button>
+
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="confirm-process.html">
+    <div class="modal-header"> <h5>Konfirmasi</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+    <h5>Anda yakin untuk melakukan penjadwalan ini?</h5>
+    </div>
+    <div class="modal-footer">            
+    <button class="btn btn-icon btn-success" type="button" ng-click="scheduleStartGo()"><i class="fa fa-check"></i>&nbsp;Ya</button> 
+    <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="schedule-result.html">
+    <div class="modal-header"> <h5>Konfirmasi</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+    <h5>{{scheduleStart}}</h5>
+    </div>
+    <div class="modal-footer">            
+    //    <button class="btn btn-icon btn-success" type="button" ng-click="scheduleStart()"><i class="fa fa-check"></i>&nbsp;Ya</button> 
+    //    <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
+</script>

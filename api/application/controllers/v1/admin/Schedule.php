@@ -22,6 +22,10 @@ class schedule extends admin {
         echo json_encode($this->_get_major_generate());
     }
 
+    public function add_major_generate() {
+        echo json_encode($this->_add_major_generate());
+    }
+
     //stable version
     public function get_course_generate_new() {
         echo json_encode($this->_get_course_generate_new());
@@ -123,17 +127,21 @@ class schedule extends admin {
     }
 
     private function _get_major_generate() {
+        $this->load->helper('key_helper');
         try {
             $major_seq = $this->uri->segment(6);
+            $generate_key = generate_key();
             if ($major_seq != "") {
                 $courses = $this->schedule_model->get_courses_by_major($major_seq);
                 foreach ($courses['data'] as $each) {
                     $class = $this->schedule_model->get_class($each->seq);
                     $total_class = count($class['data']);
-                    $generate = $this->_get_course_generate_by_major($each->seq, $major_seq);
-                    $array[] = array('course_name' => $each->name, 'course_sks' => $each->sks, 'class_total' => $total_class, 'class_schedule' => $generate);
+                    $generate = $this->_get_course_generate_by_major($each->seq, $major_seq, $generate_key);
+                    $array[] = array('course_name' => $each->name, 'course_sks' => $each->sks, 'class_total' => $total_class, 'course_class' => $generate);
                 }
-                $data = get_success($array);
+//                print_r($result);exit();
+                $result = array("generate_key" => $generate_key, "major_courses" => $array,);
+                $data = get_success($result);
             } else {
                 $data = response_fail();
             }
@@ -143,16 +151,22 @@ class schedule extends admin {
         return $data;
     }
 
-    private function _get_course_generate_by_major($course_seq, $major_seq) {
+    private function _get_course_generate_by_major($course_seq, $major_seq, $generate_key) {
         try {
             if ($course_seq != "") {
+                //AMBIL SEQ DARI BUILDING
                 $building = $this->schedule_model->get_building_by_course($course_seq);
                 $building_seq = $building['data']->building_seq;
+                //AMBIL SEQ DARI TIAP RUANGAN BERDASARKAN SEQ BUILDING
                 $get_rooms = $this->schedule_model->get_room_by_building($building_seq);
                 $rooms = $get_rooms['data'];
+                //AMBIL SEMUA DAY_HOUR_SLOT
                 $check_free_day_hour = $this->schedule_model->check_dh_schedule();
                 foreach ($rooms as $room) {
-                    unset($check_schedule_data);
+                    if (isset($check_schedule_data)) {
+                        // JIKA ADA ARAY $check_schedule_data maka kosongkan untuk diisi yang baru
+                        unset($check_schedule_data);
+                    }
                     foreach ($check_free_day_hour['data'] as $each) {
                         $check_schedule = $this->schedule_model->check_room_dh_schedule($each->dh_seq, $room->seq);
                         if ($check_schedule['data'] == 'YES') {
@@ -168,7 +182,9 @@ class schedule extends admin {
                             }
                         }
                     }
-                    $free_schedule[] = array('room_seq' => $room->seq, 'room_name' => $room->name, 'room_free_schedule' => $check_schedule_data);
+                    if (isset($check_schedule_data)) {
+                        $free_schedule[] = array('room_seq' => $room->seq, 'room_name' => $room->name, 'room_free_schedule' => $check_schedule_data);
+                    }
                 }
                 $ready = [];
                 foreach ($free_schedule as $each) {
@@ -201,7 +217,8 @@ class schedule extends admin {
                             'hour' => $each['hour'],
                             'duration' => $each['duration'],
                             'class_seq' => $class->seq,
-                            'class_sks' => $course_sks);
+                            'class_sks' => $course_sks,
+                            'class_teacher' => $class->teacher_name);
                     }
                     $slice = array_slice($slice, $course_sks);
                     $schedule_class[] = array("class_label" => $class->label, "class_schedule" => $new_class_schedule);
@@ -209,13 +226,35 @@ class schedule extends admin {
                 if (isset($schedule_class)) {
                     foreach ($schedule_class as $each) {
                         foreach ($each['class_schedule'] as $params)
-                            $insert = $this->schedule_model->add_schedule_tmp($params['dh_seq'], $params['room_seq'], $params['class_seq'], $major_seq);
+                            $insert = $this->schedule_model->add_schedule_tmp($params['dh_seq'], $params['room_seq'], $params['class_seq'], $major_seq, $generate_key);
                     }
                     $ready_schedule = array($schedule_class);
                     $data = $ready_schedule;
                 } else {
                     $data = get_not_found();
                 }
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _add_major_generate() {
+        $datas = json_decode(file_get_contents('php://input'));
+        print_r($datas);exit();
+        try {
+            if ($datas != "") {
+                $generate_key = $datas->generate_key;
+                $faculty_seq = $datas->faculty_seq;
+                $get_schedule_tmp = $this->schedule_mode->get_schedule_tmp($generate_key);
+                $result = $get_schedule_tmp['data'];
+                $data = get_success($result);
+//                if ($get_schedule_tmp['data'] != "") {
+//                $migrate = $this->schedule_mode->migrate_schedule_tmp($generate_key);
+//                }
             } else {
                 $data = response_fail();
             }

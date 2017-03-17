@@ -76,7 +76,13 @@ class course extends admin {
     private function _get_by_major() {
         $major_seq = $this->uri->segment(5);
         $get = $this->course_model->get_by_major($major_seq);
-        return $get;
+        foreach ($get['data'] as $each) {
+            $class = $this->course_model->get_classes($each->seq);
+            $count_class = count($class['data']);
+            $array[] = array('course_name' => $each->name, 'course_sks' => $each->sks, 'course_class_total' => $count_class);
+        }
+        $data = get_success($array);
+        return $data;
     }
 
     private function _get_schedule() {
