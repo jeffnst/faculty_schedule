@@ -244,17 +244,36 @@ class schedule extends admin {
 
     private function _add_major_generate() {
         $datas = json_decode(file_get_contents('php://input'));
-        print_r($datas);exit();
+
         try {
             if ($datas != "") {
                 $generate_key = $datas->generate_key;
                 $faculty_seq = $datas->faculty_seq;
-                $get_schedule_tmp = $this->schedule_mode->get_schedule_tmp($generate_key);
+                $get_schedule_tmp = $this->schedule_model->get_schedule_tmp($generate_key);
                 $result = $get_schedule_tmp['data'];
-                $data = get_success($result);
-//                if ($get_schedule_tmp['data'] != "") {
-//                $migrate = $this->schedule_mode->migrate_schedule_tmp($generate_key);
-//                }
+                if ($get_schedule_tmp['data'] != "") {
+                    foreach ($get_schedule_tmp['data'] as $each) {
+                        $migrate = $this->schedule_model->migrate_schedule_tmp($each->class_seq, $each->day_hour_seq, $each->room_seq);
+                        if ($migrate['response'] == OK_STATUS) {
+                            $data_migrate[] = TRUE;
+                        } else {
+                            $data_migrate[] = FALSE;
+                        }
+                    }
+                }
+                $delete_tmp = $this->schedule_model->delete_migrate_schedule_tmp($generate_key);
+
+                if ($delete_tmp['response'] == OK_STATUS) {
+                    $delete_tmp = TRUE;
+                } else {
+                    $delete_tmp = FALSE;
+                }
+
+                if ($data_migrate == TRUE AND $delete_tmp == TRUE) {
+                    $data = response_success();
+                } else {
+                    $data = response_fail();
+                }
             } else {
                 $data = response_fail();
             }

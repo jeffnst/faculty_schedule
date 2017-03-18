@@ -32,7 +32,7 @@
 </div>
 <div class="row" >
     <div class="col-md-12 ">
-        <div class='card card-block' ng-show="scheduleStart == 'YES'" ng-attr-id="{{ 'proccessing_icon'}}">            
+        <div class='card card-block' ng-show="scheduleStartProcess == 'YES'" ng-attr-id="{{ 'proccessing_icon'}}">            
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
 
             <div class="card card-default card-collapsed">
                 <div class="card-header">
-                    {{each.course_name}} - {{each.class_total}} Kelas - {{each.course_sks}} SKS 
+                    {{each.course_name}} - {{each.course_sks}} SKS - {{each.class_total}} Kelas
                     <div class="card-controls">
                         <a href="javascript:;" class="card-collapse" card-control-collapse=""></a>
                     </div>
@@ -82,10 +82,12 @@
 
 <div class="row">
     <div class="footer">
-        <div class="col-md-12 ">
-
-            <button class="pull-right btn-icon btn btn-primary " ng-click="ConfirmScheduleGo()" ng-attr-id="{{'right_button'}}">
+        <div class="col-md-12 ">            
+            <button ng-if=" scheduleStart == 'NO' " class="pull-right btn-icon btn btn-primary " ng-click="ConfirmScheduleGo()" ng-attr-id="{{'right_button'}}">
                 <i class='fa fa-paper-plane'></i>    Mulai penjadwalan
+            </button>
+            <button ng-if=" scheduleStart == 'YES' " class="pull-right btn-icon btn btn-success " ng-click="scheduleSaveModal()" ng-attr-id="{{'right_button'}}">
+                <i class="fa fa-check fa-1x" ></i> &nbsp; Simpan penjadwalan
             </button>
             <button ng-show="majorScheduleStatus == 'YES'" class="pull-left btn-icon btn btn-info " ng-click="reschedule()" ng-attr-id="{{'left_button'}}">
                 <i class='fa fa-refresh'></i> Hasilkan Ulang
@@ -105,13 +107,13 @@
     </div>
 </script>
 
-<script type="text/ng-template" id="schedule-result.html">
+<script type="text/ng-template" id="schedule-save-confirm.html">
     <div class="modal-header"> <h5>Konfirmasi</h5></div>
     <div class="modal-body" id="modal-body-{{name}}">
-    <h5>{{scheduleStart}}</h5>
+    <h5>Anda yakin untuk menyimpan penjadwalan ini?</h5>
     </div>
     <div class="modal-footer">            
-    //    <button class="btn btn-icon btn-success" type="button" ng-click="scheduleStart()"><i class="fa fa-check"></i>&nbsp;Ya</button> 
-    //    <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        <button class="btn btn-icon btn-success" type="button" ng-click="scheduleSave()"><i class="fa fa-check"></i>&nbsp;Ya</button> 
+        <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
     </div>
 </script>

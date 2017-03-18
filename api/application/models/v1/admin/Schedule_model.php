@@ -290,6 +290,50 @@ class schedule_model extends admin_model {
         return $data;
     }
 
+    public function migrate_schedule_tmp($class_seq, $dh_seq, $room_seq) {
+        try {
+            $data = array(
+                'day_hour_seq' => $dh_seq,
+                'room_seq' => $room_seq,
+                'class_seq' => $class_seq
+            );
+            $query = $this->db->insert('schedule', $data);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = "";
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
+
+    public function delete_migrate_schedule_tmp($generate_key) {
+        try {
+            $query = $this->db->delete('schedule_tmp', array('generate_key' => $generate_key));
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
+
     public function check_schedule($day_hour_seq, $course_seq) {
         try {
             $sql = $this->db->select('sc.seq as schedule_seq')

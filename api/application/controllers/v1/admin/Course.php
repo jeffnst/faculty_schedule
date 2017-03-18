@@ -88,9 +88,9 @@ class course extends admin {
     private function _get_schedule() {
         $get_day = $this->schedule_model->get_days();
         $course_seq = $this->uri->segment(6);
-        $building = $this->schedule_model->get_building($course_seq);
+        $building = $this->schedule_model->get_building_by_course($course_seq);
         $building_seq = $building['data']->building_seq;
-        $get_rooms = $this->schedule_model->get_room($building_seq);
+        $get_rooms = $this->schedule_model->get_room_by_building($building_seq);
         $rooms = $get_rooms['data'];
         $course_schedule = $this->schedule_model->check_schedule('', $course_seq);
         $results = $course_schedule;

@@ -1737,22 +1737,18 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
             };
             $scope.scheduleStartGo = function () {
                 $scope.$uibModalInstance.dismiss('cancel');
-                $scope.scheduleStart = 'YES';
                 var pick_major_seq = $rootScope.pick_major_seq;
                 var processing_icon = angular.element(document.querySelector('#proccessing_icon'));
                 var processing_result = angular.element(document.querySelector('#proccessing_result'));
                 var right_button = angular.element(document.querySelector('#right_button'));
                 var left_button = angular.element(document.querySelector('#left_button'));
+                $scope.scheduleStartProcess = 'YES';
                 processing_icon.html('<h5><span class="text-warning"><strong><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" ></i> &nbsp; Sedang memproses .... </strong></span></h5>');
                 AdminFactory.GenerateMajorSchedule(pick_major_seq).success(function (response) {
                     if (response.response != "FAIL") {
                         $timeout(function () {
                             processing_icon.html('<h5><span class="text-success"><strong><i class="fa fa-check fa-1x" ></i> &nbsp; Proses selesai</strong></span></h5>');
-                            right_button.html('<i class="fa fa-check fa-1x" ></i> &nbsp; Simpan jadwal');
-                            right_button.removeClass('btn btn-primary');
-                            right_button.addClass('btn btn-success');
-                            right_button.removeAttr('ng-click');
-                            right_button.attr('ng-click', 'saveSchedule()');
+                            $scope.scheduleStart = 'YES';
                         }, 500);
                         processing_result.css('display', '');
                         $scope.majorScheduleStatus = 'YES';
@@ -1766,6 +1762,32 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
             }
         }
 
+        $scope.scheduleSaveModal = function () {
+            $scope.$uibModalInstance = $uibModal.open({
+                scope: $scope,
+                animation: true,
+                ariaLabelledBy: 'modal-title-top',
+                ariaDescribedBy: 'modal-body-top',
+                templateUrl: 'schedule-save-confirm.html',
+                controller: 'AdminScheduleController',
+                size: 'lg'
+            });
+            $scope.closeConfirmModal = function () {
+                $scope.$uibModalInstance.dismiss('cancel');
+            };
+            $scope.scheduleSave = function () {
+                var input = {"generate_key": $scope.majorSchedule.generate_key, "faculty_seq": $rootScope.pick_major_seq};
+                AdminFactory.SaveGenerateMajorSchedule(JSON.stringify(input)).success(function (response) {
+                    if (response.response != "FAIL") {
+                        $scope.$uibModalInstance.dismiss('cancel');
+                        toastr.success(response.message);
+                        $state.go('admin.fakultas_detail', {fakultasSeq: $rootScope.pick_major_seq});
+                    } else {
+                        toastr.warning(response.message);
+                    }
+                });
+            }
+        }
 
 
         $scope.reschedule = function () {
@@ -1795,17 +1817,6 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
             });
         }
 
-        $scope.saveSchedule = function () {
-            var input = {"generate_key": $scope.majorSchedule.generate_key, "faculty_seq": $rootScope.pick_major_seq};
-
-            AdminFactory.SaveGenerateMajorSchedule(JSON.stringify(input)).success(function (response) {
-                if (response.response != "FAIL") {
-
-                } else {
-
-                }
-            });
-        }
 
         if ($rootScope.step == 'step_2') {
             $rootScope.LastStep = "";
@@ -1962,10 +1973,9 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
         }
         AdminFactory.ScheduleSubmitRoom(JSON.stringify(input)).success(function (response) {
             if (response.response != "FAIL") {
-                toastr.success(response.message)
-                $state.go('admin.dashboard');
+                toastr.success(response.message);
             } else {
-                toastr.warning(response.message)
+                toastr.warning(response.message);
             }
         })
     }
