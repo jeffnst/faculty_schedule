@@ -462,22 +462,10 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
     //            }
     //        }
     $scope.changeScheduleData = function () {
-        //            console.log($scope.dataDays);
         var found = $filter('filter')($scope.dataFacultySchedule, {
             day_seq: $scope.dataDays.pick_day_seq
         }, true);
-
         $scope.dataFacultyScheduleSelected = found;
-
-        //            if (found.length) {
-        //                found[0].pick_room_seq = "";
-        //                found[0].availability = "";
-        //                var remove_btn = angular.element(document.querySelector('#remove_btn_' + pick_day_hour_seq));
-        //                var availability_status = angular.element(document.querySelector('#availability_status_' + pick_day_hour_seq));
-        //                remove_btn.css('display', 'none');
-        //                availability_status.css('display', 'none');
-        //
-        //            }
     }
 })
 //MAJOR CONTROLLER
@@ -615,6 +603,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
                 $scope.data = response.data.courses;
                 $scope.majorOption = response.data.major_option;
                 $scope.sksOption = ["1", "2", "3"];
+                $scope.smtOption = ["1", "2", "3", "4", "5", "6", "7", "8"];
             } else {
                 toastr.error(response.message);
             }
@@ -644,7 +633,8 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
                 name: data_input.name,
                 major_seq: data_input.major_seq,
                 description: data_input.description,
-                sks: data_input.sks
+                sks: data_input.sks,
+                smt: data_input.smt
             };
             AdminFactory.AddDataCourse(input).success(function (response) {
                 if (response.response != "FAIL") {
@@ -765,7 +755,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
                 toastr.warning(response.message);
             }
         })
-        console.log(input);
+//        console.log(input);
     }
 
     $scope.ChangeCourseScheduleModal = function (item) {
@@ -830,6 +820,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
     var getCourse = function (seq) {
         AdminFactory.GetCourse(seq).success(function (response) {
             if (response.response != "FAIL") {
+                console.log(response.data);
                 $scope.dataCourse = response.data.course_data;
                 $scope.dataCourseClasses = response.data.course_classes;
             } else {
@@ -863,7 +854,7 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
             })
 
         }
-        console.log($scope.dataCourseSchedule);
+//        console.log($scope.dataCourseSchedule);
     }
 
     //FUNCTION TO GET TEACHER ON COURSE
@@ -908,7 +899,8 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
                 major_seq: dataCourse.major_seq,
                 description: dataCourse.description,
                 seq: $scope.dataCourse.seq,
-                sks: dataCourse.sks
+                sks: dataCourse.sks,
+                smt: dataCourse.semester
             };
             AdminFactory.PutDataCourse(input).success(function (response) {
                 if (response.response != "FAIL") {
@@ -1664,13 +1656,11 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
         $rootScope.step = 'step_2';
         $rootScope.LastStep = "";
         $rootScope.pick_course_seq = $scope.data_input.pick_course_seq;
-        //        console.log($rootScope.step);
     }
 
     $scope.setClass = function () {
         $rootScope.step = 'step_3';
         $rootScope.pick_class_seq = $scope.data_input.pick_class_seq;
-        //        console.log($rootScope.pick_class_seq);
     }
 
     var step = function () {
@@ -1982,4 +1972,48 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
     step();
     getFaculties();
     getCourses();
+})
+
+controllers.controller('UserController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal) {
+    $rootScope.title = "User";
+    var GetAllFaculty = function () {
+        AdminFactory.GetAllFaculty().success(function (response) {
+            if (response.response == "OK") {
+                $scope.dataFaculty = response.data;
+            } else {
+                toastr.error(response.message);
+            }
+        });
+    }
+
+    $scope.getFacultySchedule = function (seq) {        
+        AdminFactory.GetFacultySchedule(seq).success(function (response) {
+            if (response.response != "FAIL") {                
+                $scope.submit_status = 'YES';
+                $scope.dataFacultySchedule = response.data;
+                $scope.dataFacultyScheduleSelected = response.data;
+            } else {
+                $scope.dataFacultySchedule = "";
+                $scope.dataFacultyScheduleSelected = "";
+            }
+        })
+
+        AdminFactory.GetAllDay().success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.dataDays = response.data;
+            } else {
+                $scope.dataDays = "";
+            }
+        })
+    }
+
+    $scope.changeScheduleData = function () {
+        var found = $filter('filter')($scope.dataFacultySchedule, {
+            day_seq: $scope.dataDays.pick_day_seq
+        }, true);
+        $scope.dataFacultyScheduleSelected = found;
+    }
+    $scope.submit_status = 'NO';
+    GetAllFaculty();
+
 })

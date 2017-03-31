@@ -5,78 +5,23 @@
             <!--{{dataCourse}}-->
             <div class="form-group">
                 <label class="label">Nama {{title}}</label>
-                <span class="form-control">{{dataCourse.name}}</span>
+                <span class="form-control">{{dataFaculty.name}}</span>
             </div>
 
             <div class="form-group">
                 <label class="label">Deskriptsi {{title}}</label>
-                <span class="form-control">{{dataCourse.description}}</span>
-            </div>
-            <div class="form-group">
-                <label class="label">SKS {{title}}</label>
-                <span class="form-control">{{dataCourse.sks}}</span>
-            </div>
+                <span class="form-control">{{dataFaculty.description}}</span>
+            </div>            
         </uib-tab>
-        <uib-tab index="1" heading="Jurusan">
 
-            Kelas yang ada di mata kuliah ini :
-
-            <br>
-            <br>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card card-block">
-                        <h5 class="card-title">
-                            Buat Kelas
-                        </h5>
-                        <p class="card-text">
-                            Klik di bawah ini untuk membuat kelas.
-                        </p>
-                        <button class="btn btn-info btn-icon btn-sm" ng-click="addClassModal()"><i class="fa fa-paper-plane-o"></i>Buat kelas</button>
-                    </div>
-                </div>
-
-                <div ng-repeat="item in dataCourseClasses">
-                    <div class="col-lg-6 " style="margin-bottom: 10px;">
-                        <div class="card card-block">
-                            <div class="col-lg-2">
-                                <span style="text-align: center;font-size: 60px; ">
-                                    {{item.class_label}}
-                                </span>
-                            </div>
-                            <div class="col-lg-10">
-                                <p class="card-text">
-                                    <strong>Dosen : {{item.class_teacher.name}}</strong>
-                                    <br>
-                                    <strong>Jumlah : {{item.class_student_total}} Orang</strong>
-                                </p>
-                                <hr>
-                                <button class="btn btn-icon btn-sm btn-danger" ng-click="deleteClassModal(item.class_seq)"><i class="fa fa-trash"></i> Hapus</button>
-                                <button class="btn btn-icon btn-sm btn-instagram" ng-click="modalSchedule(item.class_seq)"><i class="fa fa-bars"></i> Penjadwalan</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </uib-tab>
-        <uib-tab index="2" heading="Penjadwalan">
-            <!--{{dataCourse}}-->
-            <!--            {{dataCourseSchedule}}-->
-
-            <!--            {{dataFacultySchedule}}{{dataDays}}-->
+        <uib-tab index="2" heading="Penjadwalan">        
             <div class="card-block">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon3">Hari :    </span>
                             <select class="form-control input-sm" ng-model="dataDays.pick_day_seq" ng-options="item.seq as item.name for item in dataDays" ng-change="changeScheduleData()">
-                            </select>
-                            <!--
-</di <select class="form-control" ng-model="dataDays.pick_day_seq" ng-options="item.seq for item.name in dataDays" ng-change="changeScheduleData()">
-<option ng-repeat="item in dataDays" value="{{item.seq}}"> {{item.name}}</option>
-</select>-->
-
+                            </select>                           
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -88,14 +33,14 @@
                     <div class="col-md-12">
                         <table class="table table-bordered">
                             <thead>
-                                <th>Hari</th>
-                                <th>Jam</th>
-                                <th>Durasi</th>
-                                <th>Jurusan</th>
-                                <th>Matakuliah</th>
-                                <th>Kelas</th>
-                                <th>Ruangan</th>
-                                <th>Aksi</th>
+                            <th>Hari</th>
+                            <th>Jam</th>
+                            <th>Durasi</th>
+                            <th>Jurusan</th>
+                            <th>Matakuliah</th>
+                            <th>Kelas</th>
+                            <th>Ruangan</th>
+                            <th>Aksi</th>
                             </thead>
                             <tbody>
 
@@ -108,8 +53,8 @@
                                     <td>{{ item.class_label}}</td>
                                     <td>{{item.room_name}}</td>
                                     <td>
-                                        <button class="btn btn-flat btn-sm btn-warning" ng-click="ChangeCourseScheduleModal(item)" ng-attr-id="{{ 'remove_btn_' + item.schedule_seq }}" title="Ganti"><i class="fa fa-gear"></i></button>
-                                        <button class="btn btn-flat btn-sm btn-danger" ng-click="DeleteCourseSchedule(item)" ng-attr-id="{{ 'remove_btn_' + item.schedule_seq }}"><i class="fa fa-trash" title="Hapus"></i></button>
+                                        <button class="btn btn-flat btn-sm btn-warning" ng-click="ChangeCourseScheduleModal(item)" ng-attr-id="{{ 'remove_btn_' + item.schedule_seq}}" title="Ganti"><i class="fa fa-gear"></i></button>
+                                        <button class="btn btn-flat btn-sm btn-danger" ng-click="DeleteCourseSchedule(item)" ng-attr-id="{{ 'remove_btn_' + item.schedule_seq}}"><i class="fa fa-trash" title="Hapus"></i></button>
                                     </td>
                                 </tr>
 
@@ -130,119 +75,119 @@
     </div>
     <script type="text/ng-template" id="add-class-modal.html">
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-title-{{name}}">Tambahkan Kelas</h4>
+        <h4 class="modal-title" id="modal-title-{{name}}">Tambahkan Kelas</h4>
         </div>
         <div class="modal-body" id="modal-body-{{name}}">
-            <div class="form-group">
-                <label>Label Kelas</label>
-                <select style="margin-bottom:3px;" ng-model="datainput.first_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>
-                <select ng-model="datainput.last_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-icon btn-success" type="button" ng-click="addClassSubmit(datainput)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
-                <button class="btn btn-warning btn-icon" ng-click="closeClassModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-            </div>
+        <div class="form-group">
+        <label>Label Kelas</label>
+        <select style="margin-bottom:3px;" ng-model="datainput.first_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>
+        <select ng-model="datainput.last_selected" ng-options="item for item in alphabetics" class="form-control">{{item}}</select>
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-icon btn-success" type="button" ng-click="addClassSubmit(datainput)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeClassModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
     </script>
 
     <script type="text/ng-template" id="teacher-course-delete-modal.html">
         <div class="modal-header">
-            <h5>Konfirmasi</h5></div>
+        <h5>Konfirmasi</h5></div>
         <div class="modal-body" id="modal-body-{{name}}">
-            <h5>Anda yakin menghapus data ini ?</h5>
+        <h5>Anda yakin menghapus data ini ?</h5>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-icon btn-danger" type="button" ng-click="teacherCourseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
-            <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        <button class="btn btn-icon btn-danger" type="button" ng-click="teacherCourseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
     </script>
     <script type="text/ng-template" id="course-assigne-teacher-modal.html">
 
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-title-{{name}}">Pilih Dosen</h4>
+        <h4 class="modal-title" id="modal-title-{{name}}">Pilih Dosen</h4>
         </div>
         <div class="modal-body" id="modal-body-{{name}}">
-            <div class="form-group">
-                <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
-            </div>
-            <div class="form-group">
-                <div ng-repeat="item in dataTeacherCourse | filter:search">
-                    <div>
-                        <input class="to-labelauty" type="radio" name="rd1" data-labelauty="{{item.teacher_name}}" ng-value="item.teacher_seq" ng-model="dataTeacherCourse.pick_teacher_seq" checked ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
+        <div class="form-group">
+        <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
+        </div>
+        <div class="form-group">
+        <div ng-repeat="item in dataTeacherCourse | filter:search">
+        <div>
+        <input class="to-labelauty" type="radio" name="rd1" data-labelauty="{{item.teacher_name}}" ng-value="item.teacher_seq" ng-model="dataTeacherCourse.pick_teacher_seq" checked ui-jq="labelauty" ui-options="{class: 'labelauty btn-block'}" />
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
 
-                <button class="btn btn-icon btn-success" type="button" ng-click="assigneTeacherSubmit(dataTeacherCourse.pick_teacher_seq)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
-                <button class="btn btn-warning btn-icon" ng-click="CloseAssigneTeacherModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-            </div>
+        <button class="btn btn-icon btn-success" type="button" ng-click="assigneTeacherSubmit(dataTeacherCourse.pick_teacher_seq)"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+        <button class="btn btn-warning btn-icon" ng-click="CloseAssigneTeacherModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        </div>
     </script>
 
     <script type="text/ng-template" id="course-delete-class-modal.html">
         <div class="modal-header">
-            <h5>Konfirmasi</h5></div>
+        <h5>Konfirmasi</h5></div>
         <div class="modal-body" id="modal-body-{{name}}">
-            <h5>Anda yakin menghapus data ini ?</h5>
+        <h5>Anda yakin menghapus data ini ?</h5>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-icon btn-danger" type="button" ng-click="classDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
-            <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        <button class="btn btn-icon btn-danger" type="button" ng-click="classDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
     </script>
 
     <script type="text/ng-template" id="course-schedule-modal.html">
         <div class="modal-header">
-            <h5>Penjadwalan</h5></div>
+        <h5>Penjadwalan</h5></div>
         <div class="modal-body" id="modal-body-{{name}}">
-            <h5>hahaah</h5>
+        <h5>hahaah</h5>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-icon btn-danger" type="button" ng-click="classDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
-            <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+        <button class="btn btn-icon btn-danger" type="button" ng-click="classDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+        <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
         </div>
     </script>
-    </div>
+</div>
 
-    <script type="text/ng-template" id="course-schedule-change-modal.html">
-        <div class="modal-header">
-            <h5>Ganti Jadwal</h5></div>
-        <div class="modal-body" id="modal-body-{{name}}">
-            <div class="form-group">
-                <label>Hari</label>
-                <select class="form-control input-sm" ng-model="data_input.pick_day_seq" ng-options="item.seq as item.name for item in DayOption" ng-change="dayOptionSelected()">
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Kelas</label>
-                <select class="form-control " ng-model="data_input.pick_class_seq" ng-change="">
-                    <option ng-repeat="item in dataCourseClasses" value="{{item.class_seq}}"> {{item.class_label}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Jam</label>
-                <select class="form-control " ng-model="data_input.pick_day_hour_seq" ng-change="dayHourOptionSelected()">
-                    <option ng-repeat="item in DayHourOption.picked_hour" value="{{item.day_hour_seq}}">{{item.hour_name}} ({{item.start_hour}}:{{item.start_min}} - {{item.end_hour}}:{{item.end_min}}) </option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Ruangan</label>
-                <select class="form-control input-sm" ng-model="data_input.pick_room_seq" ng-options="item.room_seq as item.room_name for item in RoomsOption" ng-change="roomOptionSelected()">
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Ketersediaan</label>
-                <div ng-attr-id="{{ 'availability_status'}}">
-                </div>
-                <div ng-attr-id="{{'show_status'}}" style="display:none">{{scheduleCheck}}</div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-icon btn-success" type="button" ng-click="editCourseSchedule()"><i class="fa fa-check"></i>&nbsp;Simpan</button>
-            <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
-        </div>
-    </script>
-
-    <div ng-show="dataFaculty == ''">
-        <!--<div ng-include src="'views/404.html'"></div>-->
-        Data tidak ditemukan
+<script type="text/ng-template" id="course-schedule-change-modal.html">
+    <div class="modal-header">
+    <h5>Ganti Jadwal</h5></div>
+    <div class="modal-body" id="modal-body-{{name}}">
+    <div class="form-group">
+    <label>Hari</label>
+    <select class="form-control input-sm" ng-model="data_input.pick_day_seq" ng-options="item.seq as item.name for item in DayOption" ng-change="dayOptionSelected()">
+    </select>
     </div>
+    <div class="form-group">
+    <label>Kelas</label>
+    <select class="form-control " ng-model="data_input.pick_class_seq" ng-change="">
+    <option ng-repeat="item in dataCourseClasses" value="{{item.class_seq}}"> {{item.class_label}}</option>
+    </select>
+    </div>
+    <div class="form-group">
+    <label>Jam</label>
+    <select class="form-control " ng-model="data_input.pick_day_hour_seq" ng-change="dayHourOptionSelected()">
+    <option ng-repeat="item in DayHourOption.picked_hour" value="{{item.day_hour_seq}}">{{item.hour_name}} ({{item.start_hour}}:{{item.start_min}} - {{item.end_hour}}:{{item.end_min}}) </option>
+    </select>
+    </div>
+    <div class="form-group">
+    <label>Ruangan</label>
+    <select class="form-control input-sm" ng-model="data_input.pick_room_seq" ng-options="item.room_seq as item.room_name for item in RoomsOption" ng-change="roomOptionSelected()">
+    </select>
+    </div>
+    <div class="form-group">
+    <label>Ketersediaan</label>
+    <div ng-attr-id="{{ 'availability_status'}}">
+    </div>
+    <div ng-attr-id="{{'show_status'}}" style="display:none">{{scheduleCheck}}</div>
+    </div>
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-icon btn-success" type="button" ng-click="editCourseSchedule()"><i class="fa fa-check"></i>&nbsp;Simpan</button>
+    <button class="btn btn-warning btn-icon" ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+    </div>
+</script>
+
+<div ng-show="dataFaculty == ''">
+    <!--<div ng-include src="'views/404.html'"></div>-->
+    Data tidak ditemukan
+</div>

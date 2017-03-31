@@ -9,6 +9,7 @@ class course_model extends admin_model {
             $sql = $this->db
                     ->select('course.seq as seq')
                     ->select('course.name as name')
+                    ->select('course.semester as semester')
                     ->select('course.description as description')
                     ->select('course.major_seq as major_seq')
                     ->select('major.name as major_name')
@@ -58,8 +59,7 @@ class course_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
-    
-    
+
     public function get_by_major($seq) {
         try {
             $sql = $this->db->select('*')->from('course')->where('major_seq', $seq);
@@ -81,8 +81,7 @@ class course_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
-    
-    
+
     public function get_schedule($seq) {
         try {
             $sql = $this->db->select('*')->from('course')->where('seq', $seq);
@@ -105,8 +104,7 @@ class course_model extends admin_model {
         return $data;
     }
 
-    
-     public function get_class($seq) {
+    public function get_class($seq) {
         try {
             $sql = $this->db->select('*')->from('class')->where('course_seq', $seq);
             $query = $this->db->get();
@@ -127,10 +125,15 @@ class course_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
-    
+
     public function add($params) {
         try {
-            $data = array('name' => $params->name, 'major_seq' => $params->major_seq, 'description' => $params->description, 'sks' => $params->sks);
+            $data = array(
+                'name' => $params->name,
+                'major_seq' => $params->major_seq,
+                'description' => $params->description,
+                'sks' => $params->sks,
+                'semester' => $params->smt);
             $query = $this->db->insert('course', $data);
             if ($query == TRUE) {
                 $response = OK_STATUS;
@@ -167,7 +170,11 @@ class course_model extends admin_model {
 
     public function put($params) {
         try {
-            $data = array('name' => $params->name, 'major_seq' => $params->major_seq, 'description' => $params->description, 'sks' => $params->sks);
+            $data = array('name' => $params->name, 
+                'major_seq' => $params->major_seq, 
+                'description' => $params->description, 
+                'sks' => $params->sks,
+                'semester' => $params->smt);
             $where = $this->db->where('seq', $params->seq);
             $query = $this->db->update('course', $data);
             if ($query == TRUE) {
@@ -184,9 +191,9 @@ class course_model extends admin_model {
         $data = array("response" => $response, "message" => $message);
         return $data;
     }
-    
-    public function put_schedule($params) {        
-        try {            
+
+    public function put_schedule($params) {
+        try {
             $where = $this->db->where('seq', $params['seq']);
             $query = $this->db->update('schedule', $params);
             if ($query == TRUE) {
@@ -372,7 +379,7 @@ class course_model extends admin_model {
                     ->where('teacher_seq', $params->teacher_seq);
 //                    ->where('class_seq', $params->class_seq);
             $query = $this->db->get();
-            $count = $query->num_rows();            
+            $count = $query->num_rows();
 //            print_r($row);exit();
             if ($query == TRUE) {
                 $row = $query->row();

@@ -13,6 +13,7 @@
                 <tr>
                     <th>Nama</th>
                     <th>Jurusan</th>
+                    <th>Semester</th>
                     <th>Jumlah SKS</th>
                     <th>Jumlah Kelas</th>
                     <th>Jumlah Dosen</th>
@@ -23,6 +24,7 @@
                 <tr dir-paginate="item in data|filter:search|itemsPerPage:20">
                     <td>{{ item.name}}</td>
                     <td>{{ item.major_name}}</td>
+                    <td>{{item.semester}}</td>
                     <td>{{ item.sks}} SKS</td>
                     <td>0 Kelas</td>
                     <td>{{item.teacher_count}} Dosen</td>
@@ -33,13 +35,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
-        <!--            <dir-pagination-controls
-                        max-size="5"
-                        direction-links="true"
-                        boundary-links="true"                 >
-                    </dir-pagination-controls>-->
-        <!--<table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-striped  "></table>-->
+        </table>        
     </div>
 </div>
 </div>
@@ -61,6 +57,11 @@
         <div class="form-group">
             <label class="label">Pilih SKS</label>
             <select class='form-control' ng-model="data_input.sks" ng-options="item for item in sksOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih Semester</label>
+            <select class='form-control' ng-model="data_input.smt" ng-options="item for item in smtOption">
             </select>
         </div>
         <div class="form-group">
@@ -104,6 +105,11 @@
         <div class="form-group">
             <label class="label">Pilih SKS</label>
             <select class='form-control' ng-model="dataCourse.sks" ng-options="item for item in sksOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="label">Pilih Semester</label>
+            <select class='form-control' ng-model="dataCourse.semester" ng-options="item for item in smtOption">
             </select>
         </div>
         <div class="form-group">

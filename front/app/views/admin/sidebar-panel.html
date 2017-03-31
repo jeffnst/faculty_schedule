@@ -20,19 +20,7 @@
             {{ main.user.fname}} {{ main.user.lname}}
             <small class="bold">Administrator</small>
         </div>
-    </a>
-    <!--  <div class="dropdown-menu" uib-dropdown-menu>
-        <a class="dropdown-item" href="javascript:;">Settings</a>
-        <a class="dropdown-item" href="javascript:;">Upgrade</a>
-        <a class="dropdown-item" href="javascript:;">
-          <span>Notifications</span>
-          <span class="tag bg-primary">34</span>
-        </a>
-        <div class="dropdown-divider">
-        </div>
-        <a class="dropdown-item" href="javascript:;">Help</a>
-        <a class="dropdown-item" ui-sref="user.signin">Logout</a>
-      </div>-->
+    </a>    
 </div>
 <!-- main navigation -->
 <nav role="navigation" side-navigation>
@@ -40,8 +28,7 @@
     <ul class="nav">
         <!-- dashboard -->
         <li>
-            <a ui-sref="admin.dashboard">        
-                <!--<i class="material-icons text-danger">account ballance</i>-->
+            <a ui-sref="admin.dashboard">                
                 <i class="fa fa-2x fa-dashboard text-primary"></i>&nbsp;&nbsp;&nbsp;
                 <span>Beranda</span>
             </a>            
@@ -137,13 +124,7 @@
                 <i class="fa fa-2x fa-list-alt text-info"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Jadwal</span>
             </a>  
-            <ul class="sub-menu">                                
-                <li>
-                    <a ui-sref="admin.hari" href="#">        
-                        <i class="fa fa-square fa-lg text-info"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>Data Penjadwalan</span>
-                    </a>            
-                </li>
+            <ul class="sub-menu">                                                
                 <li>
                     <a ui-sref="admin.tambah_jadwal" href="#">            
                         <i class="fa fa-square fa-lg text-info"></i>&nbsp;&nbsp;&nbsp;&nbsp;

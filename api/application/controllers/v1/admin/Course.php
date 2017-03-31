@@ -147,6 +147,7 @@ class course extends admin {
                     $record[] = array(
                         "seq" => $each->seq,
                         "name" => $each->name,
+                        "semester" => $each->semester,
                         "description" => $each->description,
                         "major_seq" => $each->major_seq,
                         "major_name" => $each->major_name,
@@ -175,6 +176,7 @@ class course extends admin {
                 $params->major_seq = $datas->major_seq;
                 $params->description = $datas->description;
                 $params->sks = $datas->sks;
+                $params->smt = $datas->smt;
                 $add = $this->course_model->add($params);
                 if ($add['response'] == OK_STATUS) {
                     $data = response_success();
@@ -257,6 +259,7 @@ class course extends admin {
                 $params->description = $datas->description;
                 $params->major_seq = $datas->major_seq;
                 $params->sks = $datas->sks;
+                $params->smt = $datas->smt;
                 $params->seq = $seq;
                 $putmajor = $this->course_model->put($params);
                 if ($putmajor['response'] == OK_STATUS) {
