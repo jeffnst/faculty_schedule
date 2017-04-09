@@ -79,7 +79,7 @@ class course extends admin {
         foreach ($get['data'] as $each) {
             $class = $this->course_model->get_classes($each->seq);
             $count_class = count($class['data']);
-            $array[] = array('course_name' => $each->name, 'course_sks' => $each->sks, 'course_class_total' => $count_class);
+            $array[] = array('course_seq' => $each->seq,'course_name' => $each->name, 'course_sks' => $each->sks, 'course_class_total' => $count_class);
         }
         $data = get_success($array);
         return $data;

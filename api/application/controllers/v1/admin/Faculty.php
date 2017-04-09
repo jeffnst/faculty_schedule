@@ -29,19 +29,65 @@ class faculty extends admin {
     public function put() {
         echo json_encode($this->_put());
     }
-    
+
     public function get_schedule() {
         echo json_encode($this->_get_schedule());
     }
 
+    public function put_schedule() {
+        echo json_encode($this->_put_schedule());
+    }
+
+    public function delete_schedule_all() {
+        echo json_encode($this->_delete_schedule_all());
+    }
+
 //Custom Function
-    
+
     private function _get_schedule() {
         $fac_seq = $this->uri->segment(6);
         $get_schedule = $this->faculty_model->get_schedule($fac_seq);
         return $get_schedule;
     }
-    
+
+    private function _put_schedule() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            if ($datas != "") {
+                $params = array('day_hour_seq' => $datas->pick_dh_seq,
+                    'class_seq' => $datas->pick_class_seq,
+                    'room_seq' => $datas->pick_room_seq,
+                    'seq' => $datas->schedule_seq);
+                $put = $this->faculty_model->put_schedule($params);
+                if ($put['response'] == OK_STATUS) {
+                    $data = response_success();
+                } else {
+                    $data = response_fail();
+                }
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _delete_schedule_all() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            if ($datas != "") {
+                foreach ($datas as $each) {
+                    $delete = $this->faculty_model->delete_schedule($each);
+                }
+                $data = response_success();
+            } else {
+                $data = response_fail();
+            }
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
     private function _get_course_option($faculty_seq) {
         $get_course_option = $this->faculty_model->get_course_option($faculty_seq);
         return $get_course_option['data'];
@@ -70,7 +116,7 @@ class faculty extends admin {
             $get_all_faculty = $this->faculty_model->all();
             if ($get_all_faculty['response'] == OK_STATUS) {
                 foreach ($get_all_faculty['data'] as $each) {
-                    $get_major_count = $this->_get_major_option($each->seq, GET_COUNT);                                       
+                    $get_major_count = $this->_get_major_option($each->seq, GET_COUNT);
                     $get_course_count = $this->_get_course_option($each->seq, GET_COUNT);
                     $datas[] = array(
                         "seq" => $each->seq,
@@ -80,7 +126,7 @@ class faculty extends admin {
                         "major_count" => count($get_major_count),
                         "course_count" => count($get_course_count)
                     );
-                }                
+                }
                 $data = get_success($datas);
             } else {
                 $data = response_fail();

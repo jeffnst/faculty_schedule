@@ -161,10 +161,10 @@ class faculty_model extends admin_model {
         return $data;
     }
 
-    
     public function get_schedule($fac_seq) {
         try {
             $sql = "SELECT "
+                    . "`sc`.`seq` as `schedule_seq`,"
                     . "`d`.`seq` as `day_seq`,"
                     . "`d`.`name` as `day_name`,"
                     . "`mj`.`name` as `major_name`,"
@@ -205,5 +205,44 @@ class faculty_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
-    
+
+    public function put_schedule($params) {
+        try {
+            $where = $this->db->where('seq', $params['seq']);
+            $query = $this->db->update('schedule', $params);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
+
+    public function delete_schedule($seq) {
+        try {
+            $where = $this->db->where('seq',$seq);            
+            $query = $this->db->delete('schedule');
+
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
+
 }

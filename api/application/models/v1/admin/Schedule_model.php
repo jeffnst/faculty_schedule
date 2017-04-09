@@ -679,5 +679,32 @@ class schedule_model extends admin_model {
         $data = array("response" => $response, "message" => $message, "data" => $rows);
         return $data;
     }
+    
+    public function add_manual($params) {
+        try {
+//            $data = array(
+//                'day_hour_seq' => $dh_seq,
+//                'room_seq' => $room_seq,
+//                'class_seq' => $class_seq
+//            );
+//            print_r($params);exit();
+            $query = $this->db->insert('schedule', $params);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+                $rows = "";
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+                $rows = "";
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+            $rows = "";
+        }
+        $data = array("response" => $response, "message" => $message, "data" => $rows);
+        return $data;
+    }
 
 }

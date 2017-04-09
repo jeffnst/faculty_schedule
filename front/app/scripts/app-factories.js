@@ -79,6 +79,10 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
         return $http.get(api + 'admin/faculty/schedule/get/' + datas, getToken());
     };
 
+    data.DeleteFacultyScheduleAll = function (datas) {
+        return $http.post(api + 'admin/faculty/schedule/delete_all', datas, getToken());
+    };
+
 
     // MAJOR / JURUSAN
     data.GetAllMajor = function () {
@@ -151,12 +155,12 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
         return $http.get(api + 'admin/course/schedule/get/' + datas, getToken());
     };
 
-    data.DeleteCourseSchedule = function (datas) {
+    data.DeleteFacultySchedule = function (datas) {
         return $http.get(api + 'admin/course/schedule/delete/' + datas, getToken());
     };
 
-    data.EditCourseSchedule = function (datas) {
-        return $http.post(api + 'admin/course/schedule_put', datas, getToken());
+    data.EditFacultySchedule = function (datas) {
+        return $http.post(api + 'admin/faculty/schedule/put', datas, getToken());
     };
 
 
@@ -244,6 +248,10 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
 
     data.ScheduleSubmitRoom = function (datas) {
         return $http.post(api + 'admin/schedule/add_room', datas, getToken());
+    };
+    
+    data.AddManualFacultySchedule = function (datas) {
+        return $http.post(api + 'admin/schedule/add_manual', datas, getToken());
     };
 
     return data;

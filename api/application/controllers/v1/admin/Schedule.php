@@ -39,6 +39,10 @@ class schedule extends admin {
         echo json_encode($this->_add_room());
     }
 
+    public function add_manual() {
+        echo json_encode($this->_add_manual());
+    }
+
 //Custom Function   
 //PRIVATE FUNCTION
 
@@ -248,7 +252,6 @@ class schedule extends admin {
         try {
             if ($datas != "") {
                 $generate_key = $datas->generate_key;
-                $faculty_seq = $datas->faculty_seq;
                 $get_schedule_tmp = $this->schedule_model->get_schedule_tmp($generate_key);
                 $result = $get_schedule_tmp['data'];
                 if ($get_schedule_tmp['data'] != "") {
@@ -423,6 +426,22 @@ class schedule extends admin {
             $check_result = $check_room_availability['data'];
             $result = array("room_seq" => $room_seq, "room_availability" => $check_result);
             $data = get_success($result);
+        } catch (Exception $e) {
+            $data = response_fail();
+        }
+        return $data;
+    }
+
+    private function _add_manual() {
+        try {
+            $datas = json_decode(file_get_contents('php://input'));
+            
+            if ($datas != "") {
+                $add = $this->schedule_model->add_manual($datas);
+                $data = response_success();
+            } else {
+                $data = response_fail();
+            }
         } catch (Exception $e) {
             $data = response_fail();
         }

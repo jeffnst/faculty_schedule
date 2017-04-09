@@ -288,7 +288,7 @@ controllers.controller('AdminRoomController', function ($rootScope, $scope, $loc
     }
 })
 //FACULTY CONTROLLER
-controllers.controller('AdminFacultyController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal) {
+controllers.controller('AdminFacultyController', function ($rootScope, $timeout, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal) {
     $rootScope.title = "Fakultas";
     var refreshFacultyData = function () {
         AdminFactory.GetAllFaculty().success(function (response) {
@@ -433,8 +433,9 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
                 name: dataFaculty.name,
                 description: dataFaculty.description,
                 seq: $scope.dataFaculty.seq,
-                building_seq: dataFaculty.pick_building_seq
+                building_seq: dataFaculty.building_seq
             };
+//            console.log(input);
             AdminFactory.PutDataFaculty(input).success(function (response) {
                 if (response.response != "FAIL") {
                     $scope.$uibModalInstance.dismiss();
@@ -447,20 +448,160 @@ controllers.controller('AdminFacultyController', function ($rootScope, $scope, $
         }
     }
 
-    //Schedule
-    //        var setDataFacultySchedule = function () {
-    //            $scope.dataFacultySchedule.pick_day_seq;
-    //            if ($scope.dataFacultySchedule.pick_day_seq != '') {
-    //                console.log($scope.dataDays);
-    //                var found = $filter('filter')($scope.dataFacultySchedule, {
-    //                    day_seq: $scope.dataDays.pick_day_seq
-    //                }, true);
-    //
-    //                $scope.dataFacultyScheduleSelected = found;
-    //            } else {
-    //                console.log("no index");
-    //            }
-    //        }
+    $scope.DeleteFacultySchedule = function (item) {
+        if (confirm("Yakin menghapus data ini ?")) {
+            var schedule_seq = item.schedule_seq;
+            AdminFactory.DeleteFacultySchedule(schedule_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    getFacultySchedule($scope.dataFaculty.seq);
+                    $scope.changeScheduleData();
+                    toastr.success(response.message);
+                }
+            })
+
+        }
+    }
+
+    $scope.DeleteFacultyScheduleAll = function (item) {
+        if (confirm("Yakin menghapus data ini ?")) {
+            var array_schedule = [];
+            var datas = $scope.dataFacultySchedule;
+            angular.forEach(datas, function (data, key) {
+                this.push(data.schedule_seq);
+            }, array_schedule);
+            AdminFactory.DeleteFacultyScheduleAll(JSON.stringify(array_schedule)).success(function (response) {
+                if (response.response != "FAIL") {
+                    getFacultySchedule($scope.dataFaculty.seq);
+                    toastr.success(response.message);
+                }
+            })
+
+        }
+    }
+
+    $scope.AddFacultyScheduleModal = function (item) {
+//        $scope.schedule_seq = item.schedule_seq;
+        AdminFactory.GetAllDay().success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.DayOption = response.data;
+            }
+        });
+
+        $scope.dayOptionSelected = function (data_input) {
+            var day_seq = data_input.pick_day_seq;
+            AdminFactory.GetDayHour(day_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.DayHourOption = response.data;
+                }
+            });
+        }
+
+        AdminFactory.GetMajorByFaculty($scope.dataFaculty.seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.MajorOption = response.data;
+            }
+        });
+
+        $scope.getThisMajorCourses = function (data_input) {
+            AdminFactory.GetCourseByMajor(data_input.pick_major_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.CoursesOption = response.data;
+                }
+            });
+        }
+
+        $scope.getThisCourseClasses = function (data_input) {
+            AdminFactory.GetClass(data_input.pick_course_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.ClassesOption = response.data;
+                }
+            });
+
+            AdminFactory.GetRoomsByCourse(data_input.pick_course_seq).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.RoomsOption = response.data;
+                }
+            });
+
+        }
+
+        AdminFactory.GetMajorByFaculty($scope.dataFaculty.seq).success(function (response) {
+            if (response.response != "FAIL") {
+                $scope.MajorOption = response.data;
+            }
+        });
+
+        $scope.CheckAvailability = function (data_input) {
+            var error = "NO";
+            if (error == "NO") {
+                var submit_btn = angular.element(document.querySelector('#submitBtnChange'));
+                var availability_status = angular.element(document.querySelector('#availability_status'));
+                var show_status = angular.element(document.querySelector('#show_status'));
+                show_status.css('display', '');
+                show_status.html('<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw" ></i>');
+                var pick_dh_seq = data_input.pick_day_hour_seq;
+                var pick_room_seq = data_input.pick_room_seq;
+                var input = {
+                    "pick_dh_seq": pick_dh_seq,
+                    "pick_room_seq": pick_room_seq,
+                };
+                AdminFactory.ScheduleCourseCheckRoom(JSON.stringify(input)).success(function (response) {
+                    if (response.response != "FAIL") {
+                        $scope.scheduleCheck = response.data;
+                        if (response.data.room_availability == 'NO') {
+                            submit_btn.css('display', 'none');
+                            var availability_result = "Tidak Tersedia";
+                        } else {
+                            submit_btn.css('display', '');
+                            var availability_result = "Tersedia";
+                        }
+                        $timeout(function () {
+                            show_status.html(availability_result);
+                        }, 90);
+                    }
+                });
+            } else {
+                toastr.warning(message);
+            }
+
+        }
+
+        $scope.AddFacultySchedule = function (data_input) {
+            var input = {
+                "day_hour_seq": data_input.pick_day_hour_seq,
+                "class_seq": data_input.pick_class_seq,
+                "room_seq": data_input.pick_room_seq,
+//                "schedule_seq": $scope.schedule_seq
+            }
+
+            AdminFactory.AddManualFacultySchedule(JSON.stringify(input)).success(function (response) {
+                if (response.response != "FAIL") {
+                    $scope.$uibModalInstance.dismiss();
+                    getFacultySchedule($scope.dataFaculty.seq);                    
+                    toastr.success(response.message);
+                } else {
+                    toastr.warning(response.message);
+                }
+            })
+        }
+
+
+
+        $scope.$uibModalInstance = $uibModal.open({
+            scope: $scope,
+            animation: true,
+            ariaLabelledBy: 'modal-title-top',
+            ariaDescribedBy: 'modal-body-top',
+            templateUrl: 'faculty-schedule-add-modal.html',
+            controller: 'AdminFacultyController',
+            size: 'lg',
+            backdrop: 'static'
+        });
+        $scope.closeDeleteModal = function () {
+            $scope.$uibModalInstance.dismiss('cancel');
+        };       
+    }
+  
     $scope.changeScheduleData = function () {
         var found = $filter('filter')($scope.dataFacultySchedule, {
             day_seq: $scope.dataDays.pick_day_seq
@@ -715,48 +856,6 @@ controllers.controller('AdminCourseController', function ($rootScope, $timeout, 
         });
     }
 
-    $scope.roomOptionSelected = function () {
-        var availability_status = angular.element(document.querySelector('#availability_status'));
-        var show_status = angular.element(document.querySelector('#show_status'));
-        availability_status.css('display', '');
-        show_status.css('display', 'none');
-        availability_status.html('<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw" ></i>');
-        var pick_dh_seq = $scope.data_input.pick_day_hour_seq;
-        var pick_room_seq = $scope.data_input.pick_room_seq;
-        var input = {
-            "pick_dh_seq": pick_dh_seq,
-            "pick_room_seq": pick_room_seq,
-        };
-        AdminFactory.ScheduleCourseCheckRoom(JSON.stringify(input)).success(function (response) {
-            if (response.response != "FAIL") {
-                $scope.scheduleCheck = response.data;
-                $timeout(function () {
-                    availability_status.css('display', 'none');
-                    show_status.css('display', '');
-                }, 90);
-            }
-        });
-    }
-
-    $scope.editCourseSchedule = function (schedule_seq) {
-        var course_seq = $scope.dataCourse.seq;
-        var input = {
-            "pick_dh_seq": $scope.data_input.pick_day_hour_seq,
-            "pick_class_seq": $scope.data_input.pick_class_seq,
-            "pick_room_seq": $scope.data_input.pick_room_seq,
-            "schedule_seq": $scope.schedule_seq
-        }
-        AdminFactory.EditCourseSchedule(JSON.stringify(input)).success(function (response) {
-            if (response.response != "FAIL") {
-                $scope.$uibModalInstance.dismiss();
-                refreshCourseData();
-                toastr.success(response.message);
-            } else {
-                toastr.warning(response.message);
-            }
-        })
-//        console.log(input);
-    }
 
     $scope.ChangeCourseScheduleModal = function (item) {
         $scope.schedule_seq = item.schedule_seq;
@@ -1766,12 +1865,12 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
                 $scope.$uibModalInstance.dismiss('cancel');
             };
             $scope.scheduleSave = function () {
-                var input = {"generate_key": $scope.majorSchedule.generate_key, "faculty_seq": $rootScope.pick_major_seq};
+                var input = {"generate_key": $scope.majorSchedule.generate_key};
                 AdminFactory.SaveGenerateMajorSchedule(JSON.stringify(input)).success(function (response) {
                     if (response.response != "FAIL") {
                         $scope.$uibModalInstance.dismiss('cancel');
                         toastr.success(response.message);
-                        $state.go('admin.fakultas_detail', {fakultasSeq: $rootScope.pick_major_seq});
+                        $state.go('admin.fakultas_detail', {fakultasSeq: $rootScope.pick_fac_seq});
                     } else {
                         toastr.warning(response.message);
                     }
@@ -1986,9 +2085,9 @@ controllers.controller('UserController', function ($rootScope, $scope, $localSto
         });
     }
 
-    $scope.getFacultySchedule = function (seq) {        
+    $scope.getFacultySchedule = function (seq) {
         AdminFactory.GetFacultySchedule(seq).success(function (response) {
-            if (response.response != "FAIL") {                
+            if (response.response != "FAIL") {
                 $scope.submit_status = 'YES';
                 $scope.dataFacultySchedule = response.data;
                 $scope.dataFacultyScheduleSelected = response.data;
