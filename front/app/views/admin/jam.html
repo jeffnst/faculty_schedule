@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>             
-                <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                                            
+                <tr ng-repeat="item in data|filter:search">                                            
                     <td>{{ item.name}}</td> 
                     <td>{{ item.start_hour}} : {{item.start_min}}</td>     
                     <td>{{ item.end_hour}} : {{item.end_min}}</td>     

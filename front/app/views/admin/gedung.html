@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <!--<tr ng-repeat="item in data">-->
-                <tr dir-paginate="item in data|filter:search|itemsPerPage:20">                        
+                <tr ng-repeat="item in data|filter:search">                        
                     <td>{{ item.name}}</td>
                     <td>{{ item.rooms_count}} Ruangan</td>
                     <td></td>
