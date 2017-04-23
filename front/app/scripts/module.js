@@ -22,6 +22,6 @@ var apps = angular.module('app', [
     'pascalprecht.translate',
     'toastr',
     'multiStepForm',
-//    'datatables',     
+//    'datatables',       
     'angularUtils.directives.dirPagination'
 ]);
