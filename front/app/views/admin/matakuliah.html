@@ -16,7 +16,6 @@
                     <th>Semester</th>
                     <th>Jumlah SKS</th>
                     <th>Jumlah Kelas</th>
-                    <th>Jumlah Dosen</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -24,10 +23,9 @@
                 <tr ng-repeat="item in data|filter:search">
                     <td>{{ item.name}}</td>
                     <td>{{ item.major_name}}</td>
-                    <td>{{item.semester}}</td>
+                    <td>Semester {{item.semester}}</td>
                     <td>{{ item.sks}} SKS</td>
-                    <td>0 Kelas</td>
-                    <td>{{item.teacher_count}} Dosen</td>
+                    <td>{{ item.class_count}} Kelas</td>
                     <td>
                         <a href="#" ui-sref="admin.detail_matakuliah({matakuliahSeq : item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
                         <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
@@ -35,7 +33,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>        
+        </table>
     </div>
 </div>
 </div>
@@ -79,7 +77,7 @@
     <div class="modal-header">
         <h5>Konfirmasi</h5></div>
     <div class="modal-body" id="modal-body-{{name}}">
-        <h5>Anda yakin menghapus data ini ?</h5>
+        <h5>Menghapus data ini akan menghapus data lain yang terkait, Anda yakin menghapus data ini ?</h5>
     </div>
     <div class="modal-footer">
         <button class="btn btn-icon btn-danger" type="button" ng-click="courseDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>

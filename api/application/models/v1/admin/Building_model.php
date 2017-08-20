@@ -116,7 +116,7 @@ class building_model extends admin_model {
             }
             if ($query == TRUE) {
                 $response = OK_STATUS;
-                $message = OK_MESSAGE;                
+                $message = OK_MESSAGE;
             } else {
                 $response = FAIL_STATUS;
                 $message = FAIL_MESSAGE;

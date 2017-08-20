@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+exit('No direct script access allowed');
 
 class admin_model extends CI_Model {
 
@@ -26,6 +26,26 @@ class admin_model extends CI_Model {
             $data = array("response" => $response, "results" => $rows);
         }
         return $data;
-    }    
+    }
+
+
+    public function mass_delete($table= NULL ,$column = NULL , $value = NULL) {
+        try {
+            $where = $this->db->where($column, $value);
+            $query = $this->db->delete($table);
+            if ($query == TRUE) {
+                $response = OK_STATUS;
+                $message = OK_MESSAGE;
+            } else {
+                $response = FAIL_STATUS;
+                $message = FAIL_MESSAGE;
+            }
+        } catch (Exception $e) {
+            $response = FAIL_STATUS;
+            $message = FAIL_MESSAGE;
+        }
+        $data = array("response" => $response, "message" => $message);
+        return $data;
+    }
 
 }

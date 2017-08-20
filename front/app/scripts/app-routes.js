@@ -1,7 +1,7 @@
 var routes = angular.module('app.routes', [])
 routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider, $urlRouterProvider) {
         var viewsPrefix = 'views/';
-        // For any unmatched url, send to /        
+        // For any unmatched url, send to /
         $stateProvider
                 .state('front', {
                     url: '/front',
@@ -168,6 +168,24 @@ routes.config(['$stateProvider', '$urlRouterProvider', (function ($stateProvider
                     url: '/tambah_jadwal',
                     templateUrl: viewsPrefix + 'admin/tambah_jadwal.html',
                     title: 'Tambah Jadwal',
+                    controller: 'AdminScheduleController',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([{
+                                        insertBefore: '#load_styles_before',
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.css']
+                                    }, {
+                                        serie: true,
+                                        files: ['vendor/jquery-labelauty/source/jquery-labelauty.js']
+                                    }])
+                            }]
+                    },
+                })
+
+                .state('admin.jadwal', {
+                    url: '/jadwal',
+                    templateUrl: viewsPrefix + 'admin/jadwal.html',
+                    title: 'Log Jadwal',
                     controller: 'AdminScheduleController',
                     resolve: {
                         deps: ['$ocLazyLoad', function ($ocLazyLoad) {

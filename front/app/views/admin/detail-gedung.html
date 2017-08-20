@@ -1,23 +1,31 @@
-<div class="card">    
-    <div class="card-block">        
+<div class="card">
+    <div class="card-block">
         <div class="form-group">
             <label class="label">Nama</label>
-            <span class="form-control">{{dataBuilding.name}}</span>           
+            <span class="form-control">{{dataBuilding.name}}</span>
         </div>
         <div class="form-group">
             <label class="label">Deskripsi</label>
-            <span class="form-control">{{dataBuilding.description}}</span>                       
+            <span class="form-control">{{dataBuilding.description}}</span>
         </div>
         <div class="form-group">
-            
+
             <label class="label">Ruang Kelas</label>
             <div>
-                <button ui-sref="admin.ruangan_detail" class="btn btn-info btn-sm" ng-repeat="room in dataBuilding.rooms" style="margin-right: 15px;">{{room.name}}</button>      
+                <button ui-sref="admin.ruangan_detail" class="btn btn-info btn-sm" ng-repeat="room in dataBuilding.rooms" style="margin-right: 15px;">{{room.name}}</button>
             </div>
         </div>
-    </div>    
+
+        <div class="form-group">
+
+            <label class="label">Fakultas Pengguna</label>
+            <div>
+                <button class="btn btn-warning btn-sm" ng-repeat="faculty in dataBuilding.faculty" style="margin-right: 15px;">{{faculty.name}}</button>
+            </div>
+        </div>
+    </div>
     <div class="card-header">
-        <a href="#" ui-sref="admin.gedung" class="btn btn-icon  btn-success" ><i class="fa fa-arrow-left"></i>Kembali</a>        
-    </div>    
+        <a href="#" ui-sref="admin.gedung" class="btn btn-icon  btn-success" ><i class="fa fa-arrow-left"></i>Kembali</a>
+    </div>
 </div>
 </div>

@@ -77,7 +77,7 @@
 		'dsn'	=> '',
 		'hostname' => 'localhost',
 		'username' => 'root',
-		'password' => 'mysql',
+		'password' => '',
 		'database' => 'faculty_schedule',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',

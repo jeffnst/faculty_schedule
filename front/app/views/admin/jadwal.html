@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-block">
-    <button class="btn btn-icon btn-info" ng-click="addModal()"><i class="fa fa-plus"></i>Tambah {{title}}</button>
+    <a ui-sref="admin.tambah_jadwal" href="#" class="btn btn-icon btn-info" > <i class="fa fa-plus"></i> {{title}}  </a>
     <form class="form-inline pull-right">
       <div class="form-group">
         <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
@@ -11,24 +11,25 @@
     <table class="table table-hover ">
       <thead class="thead-default">
         <tr >
-          <th >Nama</th>
-          <th>Jumlah Ruangan</th>
-          <th>Jumlah Fakultas</th>
-          <th>Deskripsi</th>
+          <th>Key</th>
+          <th>Fakultas</th>
+          <th>Jurusan</th>
+          <th>Status</th>
+          <th>Terakhir Update</th>
           <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
         <!--<tr ng-repeat="item in data">-->
         <tr ng-repeat="item in data|filter:search">
-          <td>{{ item.name}}</td>
-          <td>{{ item.rooms_count}} Ruangan</td>
-          <td>{{ item.faculty_count}} Fakultas</td>
-          <td>{{ item.description}}</td>
+          <td>{{ item.generate_key}}</td>
+          <td>{{ item.faculty_name}}</td>
+          <td>{{ item.major_name}}</td>
+          <td><span ng-if="item.status == 'P' " class="label label-warning">Pending</span> <span ng-if="item.status == 'D' " class="label label-success">Done</span></td>
+          <td>{{ item.update_at}}</td>
           <td>
-            <a href="#" ui-sref="admin.gedung_detail({gedungSeq: item.seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
-            <button type="button" class="btn btn-warning btn-sm" title="Edit" ng-click="editModal(item.seq)"><i class="fa fa-pencil"></i></button>
-            <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.seq)"><i class="fa fa-trash"></i></button>
+            <a href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.faculty_seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
+            <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.generate_key)"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>
@@ -61,13 +62,13 @@
   </div>
 </script>
 
-<script type="text/ng-template" id="building-delete-modal.html">
+<script type="text/ng-template" id="schedule-delete-modal.html">
   <div class="modal-header"> <h5>Konfirmasi</h5></div>
   <div class="modal-body" id="modal-body-{{name}}">
     <h5>Menghapus data ini dapat menghapus data terkait lainnya . Anda yakin menghapus data ini ?</h5>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-icon btn-danger" type="button" ng-click="buildingDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
+    <button class="btn btn-icon btn-danger" type="button" ng-click="scheduleDelete()"><i class="fa fa-trash"></i>&nbsp;Ya</button>
     <button class="btn btn-warning btn-icon"  ng-click="closeDeleteModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
   </div>
 </script>
