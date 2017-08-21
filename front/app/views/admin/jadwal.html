@@ -15,6 +15,7 @@
           <th>Fakultas</th>
           <th>Jurusan</th>
           <th>Status</th>
+          <th>Metode</th>
           <th>Terakhir Update</th>
           <th>Aksi</th>
         </tr>
@@ -26,20 +27,17 @@
           <td>{{ item.faculty_name}}</td>
           <td>{{ item.major_name}}</td>
           <td><span ng-if="item.status == 'P' " class="label label-warning">Pending</span> <span ng-if="item.status == 'D' " class="label label-success">Done</span></td>
+          <td><span ng-if="item.methode == 'A' " class="label label-warning">Auto Generate</span> <span ng-if="item.methode == 'M' " class="label label-success">Manual</span></td>
           <td>{{ item.update_at}}</td>
           <td>
-            <a href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.faculty_seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
+            <!-- <a ng-if="item.status == 'P' " href="#" ui-sref="admin.jadwal_tmp_detail({key: item.generate_key})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a> -->
+            <!-- <a ng-if="item.status == 'D' " href="#" ui-sref="admin.fakultas_detail({fakultasSeq: item.faculty_seq})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a> -->
+            <a href="#" ui-sref="admin.jadwal_detail({Detailkey: item.generate_key})" class="btn btn-success btn-sm" title="Detail"><i class="fa fa-eye"></i></a>
             <button type="button" class="btn btn-danger btn-sm" title="Hapus" ng-click="deleteModal(item.generate_key)"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>
     </table>
-    <!--            <dir-pagination-controls
-    max-size="5"
-    direction-links="true"
-    boundary-links="true"                 >
-  </dir-pagination-controls>-->
-  <!--<table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-striped  "></table>-->
 </div>
 </div>
 </div>

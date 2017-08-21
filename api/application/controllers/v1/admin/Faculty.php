@@ -130,6 +130,7 @@ class faculty extends admin {
   private function _all() {
     try {
       $get_all_faculty = $this->faculty_model->all();
+      $datas = [];
       if ($get_all_faculty['response'] == OK_STATUS) {
         foreach ($get_all_faculty['data'] as $each) {
           $get_major_count = $this->_get_major_option($each->seq, GET_COUNT);
@@ -347,5 +348,6 @@ class faculty extends admin {
     }
     return $data;
   }
+
 
 }

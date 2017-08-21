@@ -19,9 +19,11 @@
         <div class="row">
           <div class="col-md-4">
             <div class="input-group">
-              <span class="input-group-addon" id="basic-addon3">Hari :    </span>
+              <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
+              <!-- <span class="input-group-addon" id="basic-addon3">Hari :    </span>
               <select class="form-control input-sm" ng-model="dataDays.pick_day_seq" ng-options="item.seq as item.name for item in dataDays" ng-change="changeScheduleData()">
-              </select>
+              </select> -->
+
             </div>
           </div>
           <div class="col-md-8">
@@ -44,7 +46,7 @@
                 <th>Aksi</th>
               </thead>
               <tbody>
-                <tr ng-repeat="item in dataFacultyScheduleSelected">
+                <tr ng-repeat="item in dataFacultyScheduleSelected | filter : search">
                   <td>{{ item.day_name}}</td>
                   <td>{{ item.hour_name}}</td>
                   <td>{{ item.start_hour}} : {{item.start_min}} - {{ item.end_hour}} : {{item.end_min}} </td>

@@ -1,21 +1,33 @@
+<br><br><br><br><br><br><br><br><br><br>
+<div class="container">
 
-<div class="session-content">
-    <div class="card card-block form-layout">
-        <fieldset class="form-group">
-            <label for="username">
-                Masukkan Username
-            </label>
-            <input type="text" class="form-control form-control-lg" id="username" placeholder="username" required ng-model="inputdata.username"/>
-        </fieldset>
-        <fieldset class="form-group">
-            <label for="password">
-                Masukkan Password
-            </label>
-            <input type="password" class="form-control form-control-lg" id="password" placeholder="********" required ng-model="inputdata.password"/>
-        </fieldset>
-        <button class="btn btn-primary btn-block btn-lg" ng-click="doLogin(inputdata)">
-            Login
+        <div class="col-md-8">
+            <div class="card card-block ">
+                <br>
+                <div class="m-b-3"><h5>Selamat Datang di Sistem Informasi Penjadwalan Fakultas</h5><p >Sistem Informasi Penjadwalan Fakultas adalah sistem yang dibuat untuk memudahkan kegiatan penjadwalan yang dilaksanakan di fakultas & jurusan. Tekan tombol di bawah ini untuk melihat hasil penjadwalan. </p>
+                <p><a href="#" ui-sref="front.schedule" class="btn btn-success btn-lg" >Lihat Hasil Penjadwalan</a></p>
+                <p>Atau silahkan masuk sebagai administrator untuk memulai kegiatan penjadwalan.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-block ">
+            <fieldset class="form-group">
+                <label for="username">
+                    Masukkan Username
+                </label>
+                <input type="text" class="form-control form-control-lg input-sm" id="username"  required ng-model="inputdata.username"/>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="password">
+                    Masukkan Password
+                </label>
+                <input type="password" class="form-control form-control-lg" id="password"  required ng-model="inputdata.password"/>
+            </fieldset>
+            <button class="btn btn-primary btn-block btn-lg" ng-click="doLogin(inputdata)">
+                Login
+            </button>
         </button>
     </div>
-</div>  
-
+</div>
+</div>

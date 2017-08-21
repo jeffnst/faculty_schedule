@@ -44,7 +44,7 @@ class building extends admin {
   public function _get_faculty($build_seq){
     $params = new stdClass();
     $params->dest_table_as = 'faculty';
-    $params->select_values = array('*');
+    $params->select_values = array('seq');
     $params->where_tables = array(array("where_column" => 'building_seq', "where_value" => $build_seq));
     $get = $this->data_model->get($params);
     return $get['results'];
@@ -62,6 +62,7 @@ class building extends admin {
   private function _all() {
     try {
       $get_all_building = $this->building_model->all();
+      $datas = [];
       if ($get_all_building['response'] == OK_STATUS) {
         foreach ($get_all_building['data'] as $each) {
           $get_rooms_count = $this->_get_rooms($each->seq, GET_COUNT);
@@ -131,10 +132,10 @@ class building extends admin {
       $seq = $this->uri->segment(5);
       if ($seq != "") {
         $get_rooms = $this->_get_room($seq);
+        $get_faculty = $this->_get_faculty($seq);
         foreach($get_rooms as $room){
           $delroom = $this->_delete_room($room->seq);
         }
-        $get_faculty = $this->_get_faculty($seq);
         foreach($get_faculty as $fac){
           $params_update = new stdClass();
           $params_update->new_data = array("building_seq" => NULL);
@@ -142,10 +143,10 @@ class building extends admin {
           $where = array("where_column" => 'seq', "where_value" => $fac->seq);
           $params_update->where_tables = array($where);
           $update = $this->data_model->update($params_update);
-          // print_r($update);
         }
 
-        $del = $this->building_model->delete($seq);      
+        $del = $this->building_model->delete($seq);
+
         if ($del['response'] == OK_STATUS) {
           $data = response_success();
         } else {

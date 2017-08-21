@@ -683,13 +683,7 @@ class schedule_model extends admin_model {
     }
 
     public function add_manual($params) {
-      try {
-        //            $data = array(
-        //                'day_hour_seq' => $dh_seq,
-        //                'room_seq' => $room_seq,
-        //                'class_seq' => $class_seq
-        //            );
-        //            print_r($params);exit();
+      try {        
         $query = $this->db->insert('schedule', $params);
         if ($query == TRUE) {
           $response = OK_STATUS;

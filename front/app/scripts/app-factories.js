@@ -18,6 +18,12 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
     return $http.post(api + 'admin/login', datas);
   };
 
+  // Dashboard
+  data.GetDashboard = function () {
+    return $http.get(api + 'admin/dashboard', getToken());
+  };
+
+
   // BUILDING
   data.GetAllBuilding = function () {
     return $http.get(api + 'admin/building/all', getToken());
@@ -58,6 +64,14 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
   };
 
 
+//USER
+data.GetUserAllFaculty = function () {
+  return $http.get(api + 'faculty/all');
+};
+
+data.GetUserFacultySchedule = function (datas) {
+  return $http.get(api + 'faculty/schedule/get/' + datas);
+};
   //FACULTY
   data.GetAllFaculty = function () {
     return $http.get(api + 'admin/faculty/all', getToken());
@@ -241,6 +255,12 @@ factories.factory('AdminFactory', function ($http, api, $localStorage) {
   data.GetAllScheduleLog = function () {
     return $http.get(api + 'admin/schedule/log', getToken());
   };
+
+
+  data.GetFacultyScheduleDetail = function (datas) {
+    return $http.get(api + 'admin/schedule/detail/' + datas, getToken());
+  };
+
 
   data.ScheduleCourseGetDayHour = function (datas) {
     return $http.get(api + 'admin/schedule/course/' + datas, getToken());

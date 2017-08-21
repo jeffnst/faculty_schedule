@@ -48,6 +48,17 @@ controllers.controller('AdminLoginController', function ($scope, $rootScope, $lo
   }
 })
 //BUILDING CONTROLLER
+controllers.controller('AdminDashboardController', function($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal){
+  $rootScope.title = "Dashboard";
+  AdminFactory.GetDashboard().success(function (response) {
+    if (response.response == "OK") {
+      $scope.data = response.data;
+    } else {
+      toastr.error(response.message);
+    }
+  });
+})
+
 controllers.controller('AdminBuildingController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal) {
   $rootScope.title = "Gedung";
   var refreshBuildingData = function () {
@@ -528,6 +539,7 @@ controllers.controller('AdminFacultyController', function ($rootScope, $timeout,
     AdminFactory.GetMajorByFaculty($scope.dataFaculty.seq).success(function (response) {
       if (response.response != "FAIL") {
         $scope.MajorOption = response.data;
+        console.log(response.data);
       }
     });
 
@@ -568,10 +580,10 @@ controllers.controller('AdminFacultyController', function ($rootScope, $timeout,
 
     $scope.AddFacultySchedule = function (data_input) {
       var input = {
+        "major_seq" : data_input.pick_major_seq,
         "day_hour_seq": data_input.pick_day_hour_seq,
         "class_seq": data_input.pick_class_seq,
         "room_seq": data_input.pick_room_seq,
-        //                "schedule_seq": $scope.schedule_seq
       }
 
       AdminFactory.AddManualFacultySchedule(JSON.stringify(input)).success(function (response) {
@@ -1704,26 +1716,9 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
       isolatedScope: true,
       controller: 'AdminScheduleController'
     }
-    //        {
-    //            templateUrl: viewsPrefix + 'admin/jadwal_pilih_matkul.html',
-    //            title: 'Mata Kuliah',
-    //            hasForm: true,
-    //            isolatedScope: true,
-    //            controller: 'AdminScheduleController'
-    //        }
-    //        , {
-    //            templateUrl: viewsPrefix + 'admin/jadwal_pilih_kelas.html',
-    //            title: 'Kelas',
-    //            hasForm: true,
-    //            controller: 'AdminScheduleController'
-    //        }
-    //        , {
-    //            templateUrl: viewsPrefix + 'admin/jadwal_pilih_hari.html',
-    //            title: 'Hari',
-    //            hasForm: true,
-    //            controller: 'AdminScheduleController'
-    //        }
   ];
+
+
 
   var refreshScheduleLogData = function () {
     AdminFactory.GetAllScheduleLog().success(function (response) {
@@ -1737,6 +1732,44 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
 
   refreshScheduleLogData();
 
+
+  // IF DETAIL BUILDING
+  if ($stateParams.Detailkey) {
+    var key = $stateParams.Detailkey
+    getScheduleDetail(key);
+    // GetAllDay();
+  }
+
+  function GetAllDay(){
+    AdminFactory.GetAllDay().success(function (response) {
+      if (response.response != "FAIL") {
+        $scope.dataDays = response.data;
+      } else {
+        $scope.dataDays = "";
+      }
+    })
+  }
+
+  $scope.changeScheduleData = function () {
+    var found = $filter('filter')($scope.dataSelected, {
+      day_seq: $scope.dataDays.pick_day_seq
+    }, true);
+    $scope.dataSelected = found;
+  }
+
+  function getScheduleDetail(key){
+    AdminFactory.GetFacultyScheduleDetail(key).success(function (response) {
+      if (response.response != "FAIL") {
+        $scope.data = response.data;
+        $scope.dataSelected = response.data;
+        console.log($scope.dataSelected);
+        $scope.majorSchedule = {"generate_key" : key };
+      } else {
+        $scope.dataSelected = "";
+      }
+    })
+  }
+
   var getFaculties = function () {
     AdminFactory.GetAllFaculty().success(function (response) {
       if (response.response != "FAIL") {
@@ -1745,10 +1778,6 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
         $scope.dataFaculty = "";
       }
     })
-  }
-
-  var getCourses = function (seq) {
-
   }
 
   $scope.setFaculty = function () {
@@ -1864,30 +1893,30 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
     }
 
     $scope.deleteModal = function (key) {
-    $scope.$uibModalInstance = $uibModal.open({
-      scope: $scope,
-      animation: true,
-      ariaLabelledBy: 'modal-title-top',
-      ariaDescribedBy: 'modal-body-top',
-      templateUrl: 'schedule-delete-modal.html',
-      controller: 'AdminScheduleController',
-      size: 'lg'
-    });
-    $scope.closeDeleteModal = function () {
-      $scope.$uibModalInstance.dismiss('cancel');
-    };
-    $scope.scheduleDelete = function () {
-      AdminFactory.DeleteDataschedule(key).success(function (response) {
-        if (response.response != "FAIL") {
-          $scope.$uibModalInstance.dismiss();
-          refreshScheduleLogData();
-          toastr.success(response.message);
-        } else {
-          toastr.warning(response.message);
-        }
-      })
+      $scope.$uibModalInstance = $uibModal.open({
+        scope: $scope,
+        animation: true,
+        ariaLabelledBy: 'modal-title-top',
+        ariaDescribedBy: 'modal-body-top',
+        templateUrl: 'schedule-delete-modal.html',
+        controller: 'AdminScheduleController',
+        size: 'lg'
+      });
+      $scope.closeDeleteModal = function () {
+        $scope.$uibModalInstance.dismiss('cancel');
+      };
+      $scope.scheduleDelete = function () {
+        AdminFactory.DeleteDataschedule(key).success(function (response) {
+          if (response.response != "FAIL") {
+            $scope.$uibModalInstance.dismiss();
+            refreshScheduleLogData();
+            toastr.success(response.message);
+          } else {
+            toastr.warning(response.message);
+          }
+        })
+      }
     }
-  }
 
     $scope.scheduleSaveModal = function () {
       $scope.$uibModalInstance = $uibModal.open({
@@ -2108,13 +2137,12 @@ controllers.controller('AdminScheduleController', function ($rootScope, $timeout
   }
   step();
   getFaculties();
-  getCourses();
 })
 
 controllers.controller('UserController', function ($rootScope, $scope, $localStorage, $state, $stateParams, $filter, toastr, AdminFactory, $uibModal) {
   $rootScope.title = "User";
   var GetAllFaculty = function () {
-    AdminFactory.GetAllFaculty().success(function (response) {
+    AdminFactory.GetUserAllFaculty().success(function (response) {
       if (response.response == "OK") {
         $scope.dataFaculty = response.data;
       } else {
@@ -2124,7 +2152,7 @@ controllers.controller('UserController', function ($rootScope, $scope, $localSto
   }
 
   $scope.getFacultySchedule = function (seq) {
-    AdminFactory.GetFacultySchedule(seq).success(function (response) {
+    AdminFactory.GetUserFacultySchedule(seq).success(function (response) {
       if (response.response != "FAIL") {
         $scope.submit_status = 'YES';
         $scope.dataFacultySchedule = response.data;

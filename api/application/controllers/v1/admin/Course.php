@@ -157,6 +157,7 @@ class course extends admin {
     try {
       $get_all_course = $this->course_model->all();
       $get_major_option = $this->_get_major_option();
+      $record = [];
       if ($get_all_course ['response'] == OK_STATUS) {
         foreach ($get_all_course["data"] as $each) {
           $get_class = $this->_get_class_option($each->seq);

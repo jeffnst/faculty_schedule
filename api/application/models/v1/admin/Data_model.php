@@ -92,8 +92,8 @@ class data_model extends admin_model {
       $pagination = $this->db->limit($pagination['offset'],$pagination['start']);
     }
 
-    $query = $this->db->get();    
-    // ?print_r($query);exit();
+    $query = $this->db->get();
+    // print_r($this->db->last_query());exit();
     $res = $query->result();
 
 

@@ -1,57 +1,58 @@
-<div class="session-panel" ui-view>
-    <br>
-    <div class="container">
-        <div class="card">
-            <div class="card-block">
-                <div class="form-group">
-                    <label class="label">Pilih Fakultas</label>
-                    <select class='form-control' ng-model="faculty_seq" ng-options="item.seq as item.name for item in dataFaculty">
-                    </select>
-                </div>                    
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-success btn-icon pull-right" ng-click="getFacultySchedule(faculty_seq)"><i class="fa fa-paper-plane"></i>Penjadwalan</button>
-            </div>            
+<div class="session-panel">
+  <br>
+  <div class="container">
+    <div class="card">
+      <div class="card-block">
+        <div class="form-group">
+          <label class="label">Pilih Fakultas</label>
+          <select class='form-control' ng-model="faculty_seq" ng-options="item.seq as item.name for item in dataFaculty">
+          </select>
         </div>
-        <div class="card" ng-if="submit_status == 'YES' ">
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-md-4">                        
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon3">Hari :    </span>
-                            <select class="form-control input-sm" ng-model="dataDays.pick_day_seq" ng-options="item.seq as item.name for item in dataDays" ng-change="changeScheduleData()">
-                            </select>                           
-                        </div>
-                    </div>                    
-                    <br>
-                    <br>
-                    <br>
-                    <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead>
-                            <th>Hari</th>
-                            <th>Jam</th>
-                            <th>Durasi</th>
-                            <th>Jurusan</th>
-                            <th>Matakuliah</th>
-                            <th>Kelas</th>
-                            <th>Ruangan</th>                          
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in dataFacultyScheduleSelected">
-                                    <td>{{ item.day_name}}</td>
-                                    <td>{{ item.hour_name}}</td>
-                                    <td>{{ item.start_hour}} : {{item.start_min}} - {{ item.end_hour}} : {{item.end_min}} </td>
-                                    <td>{{ item.major_name}}</td>
-                                    <td>{{ item.course_name}}</td>
-                                    <td>{{ item.class_label}}</td>
-                                    <td>{{item.room_name}}</td>                                    
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" ui-sref="front.login-admin" class="btn btn-icon  btn-warning"><i class="fa fa-arrow-left"></i>Kembali</a>
+        <button class="btn btn-success btn-icon pull-right" ng-click="getFacultySchedule(faculty_seq)"><i class="fa fa-paper-plane"></i>Penjadwalan</button>
+      </div>
     </div>
+    <div class="card" ng-if="submit_status == 'YES' ">
+      <div class="card-block">
+        <div class="row">
+          <div class="col-md-4">
+            <form class="form-inline pull-left">
+              <div class="form-group">
+                <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
+              </div>
+            </form>
+          </div>
+          <br>
+          <br>
+          <br>
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <thead>
+                <th>Hari</th>
+                <th>Jam</th>
+                <th>Durasi</th>
+                <th>Jurusan</th>
+                <th>Matakuliah</th>
+                <th>Kelas</th>
+                <th>Ruangan</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in dataFacultyScheduleSelected | filter : search">
+                  <td>{{ item.day_name}}</td>
+                  <td>{{ item.hour_name}}</td>
+                  <td>{{ item.start_hour}} : {{item.start_min}} - {{ item.end_hour}} : {{item.end_min}} </td>
+                  <td>{{ item.major_name}}</td>
+                  <td>{{ item.course_name}}</td>
+                  <td>{{ item.class_label}}</td>
+                  <td>{{item.room_name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

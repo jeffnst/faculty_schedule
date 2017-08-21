@@ -53,11 +53,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
+//USER
+$route['v1/faculty/all'] = 'v1/user/user/get_faculty';
+$route['v1/faculty/schedule/get/(:any)'] = 'v1/user/user/schedule_faculty';
 //ROUTE FOR ADMIN
 //admin auth
+
+
 $route['v1/admin/login'] = 'v1/admin/authentication/login';
 $route['v1/admin/checktoken'] = 'v1/admin/admin/json_checktoken';
+$route['v1/admin/dashboard'] = 'v1/admin/dashboard/index';
 // admin building
 $route['v1/admin/building/all'] = 'v1/admin/building/all';
 $route['v1/admin/building/add'] = 'v1/admin/building/add';
@@ -140,3 +145,4 @@ $route['v1/admin/schedule/check_room'] = 'v1/admin/schedule/check_room';
 $route['v1/admin/schedule/add_room'] = 'v1/admin/schedule/add_room';
 $route['v1/admin/schedule/add_manual'] = 'v1/admin/schedule/add_manual';
 $route['v1/admin/schedule/delete/(:any)'] = 'v1/admin/schedule/delete';
+$route['v1/admin/schedule/detail/(:any)'] = 'v1/admin/schedule/get_detail';

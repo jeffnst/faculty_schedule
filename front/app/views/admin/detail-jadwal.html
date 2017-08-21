@@ -1,0 +1,71 @@
+<div class="card" >
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" ng-model="search" class="form-control" placeholder="Pencarian">
+          <!-- <span class="input-group-addon" id="basic-addon3">Hari :    </span>
+          <select class="form-control input-sm" ng-model="dataDays.pick_day_seq" ng-options="item.seq as item.name for item in dataDays" ng-change="changeScheduleData()">
+          </select> -->
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <thead>
+            <th>Hari</th>
+            <th>Jam</th>
+            <th>Durasi</th>
+            <th>Jurusan</th>
+            <th>Matakuliah</th>
+            <th>Kelas</th>
+            <th>Ruangan</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in data.schedule">
+              <td>{{ item.day_name}}</td>
+              <td>{{ item.hour_name}}</td>
+              <td>{{ item.start_hour}} : {{item.start_min}} - {{ item.end_hour}} : {{item.end_min}} </td>
+              <td>{{ item.major_name}}</td>
+              <td>{{ item.course_name}}</td>
+              <td>{{ item.class_label}}</td>
+              <td>{{item.room_name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-header">
+    <a href="#" ui-sref="admin.jadwal" class="btn btn-icon  btn-warning"><i class="fa fa-arrow-left"></i>Kembali</a>
+    <button ng-if="data.status == 'P' " class="pull-right btn-icon btn btn-success " ng-click="scheduleSaveModal()" ng-attr-id="{{'right_button'}}">
+      <i class="fa fa-check fa-1x" ></i> &nbsp; Simpan penjadwalan
+    </button>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="confirm-process.html">
+  <div class="modal-header"> <h5>Konfirmasi</h5></div>
+  <div class="modal-body" id="modal-body-{{name}}">
+    <h5>Anda yakin untuk melakukan penjadwalan ini?</h5>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-icon btn-success" type="button" ng-click="scheduleStartGo()"><i class="fa fa-check"></i>&nbsp;Ya</button>
+    <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="schedule-save-confirm.html">
+  <div class="modal-header"> <h5>Konfirmasi</h5></div>
+  <div class="modal-body" id="modal-body-{{name}}">
+    <h5>Anda yakin untuk menyimpan penjadwalan ini?</h5>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-icon btn-success" type="button" ng-click="scheduleSave()"><i class="fa fa-check"></i>&nbsp;Ya</button>
+    <button class="btn btn-warning btn-icon"  ng-click="closeConfirmModal()"><i class="fa fa-close"></i>&nbsp;Tutup</button>
+  </div>
+</script>

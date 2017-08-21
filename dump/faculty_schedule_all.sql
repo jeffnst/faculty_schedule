@@ -349,7 +349,7 @@ CREATE TABLE `faculty` (
   `seq` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  `building_seq` int(11) NOT NULL
+  `building_seq` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
