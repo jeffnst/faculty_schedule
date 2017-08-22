@@ -159,6 +159,17 @@ class major extends admin {
     return $data;
   }
 
+
+  public function _get_schedule_log_by_major($major_seq){
+    $params = new stdClass();
+    $params->dest_table_as = 'schedule_log';
+    $params->select_values = array('generate_key');
+    $params->where_tables = array(array("where_column" => 'major_seq', "where_value" => $major_seq));
+    $get = $this->data_model->get($params);
+    return $get['results'];
+
+  }
+
   private function _delete() {
     try {
       $seq = $this->uri->segment(5);
@@ -167,6 +178,12 @@ class major extends admin {
         foreach($get_courses as $course){
           $del_course = $this->_delete_courses($course->seq);
         }
+        $get_schedule_log = $this->_get_schedule_log_by_major($seq);
+        foreach($get_schedule_log as $tmp){
+          $delete_schedule_tmp = parent::mass_delete('schedule_tmp','generate_key',$tmp->generate_key);
+          $delete_schedule = parent::mass_delete('schedule','generate_key',$tmp->generate_key);
+        }
+        $delete_schedule_log = parent::mass_delete('schedule_log','major_seq',$seq);
         $del = $this->major_model->delete($seq);
         if ($del['response'] == OK_STATUS) {
           $data = response_success();

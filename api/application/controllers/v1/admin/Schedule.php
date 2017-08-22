@@ -188,9 +188,8 @@ class schedule extends admin {
           "update_at" => date('d-m-Y h:m')
         );
         $dest_table = 'schedule_log';
-        $add = $this->data_model->add($params_data, $dest_table);
+        $add = $this->data_model->add($params_data, $dest_table);        
         $result = array("generate_key" => $generate_key, "major_courses" => $array,);
-
         $data = get_success($result);
       } else {
         $data = response_fail();
@@ -518,7 +517,7 @@ class schedule extends admin {
         }
         return $data;
       }
-      
+
       public function get_detail(){
         $key = $this->uri->segment(5);
         $params = new stdClass();

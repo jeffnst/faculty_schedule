@@ -121,6 +121,7 @@ class data_model extends admin_model {
       $res = $this->db->insert_id();
       $response = OK_STATUS;
       $data = array("response" => $response, "data" => $res);
+      // $data = array("response" => $response, "results" => $this->db->last_query());
     } else {
       $response = FAIL_STATUS;
       $data = array("response" => $response, "data" => "");
